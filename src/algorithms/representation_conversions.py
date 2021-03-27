@@ -30,6 +30,7 @@ def convert_from_IM_to_AM(g):
                     first_index = i
                 else:
                     new_data[first_index][i] = new_data[i][first_index] = 1
+                    break
     g.data = new_data
     g.mode = "AM"
 

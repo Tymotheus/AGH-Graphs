@@ -22,3 +22,9 @@ class Sequence:
             res = res + "," + str(self.data[i])
         res = res + ")"
         return res
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        return self.data[index]

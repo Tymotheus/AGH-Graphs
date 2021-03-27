@@ -7,6 +7,12 @@ from src.algorithms.representation_conversions import convert_graph_representati
 def isDegreeSequence(seq, show_steps=False):
     if isinstance(seq, Sequence):
         s = seq.data.copy()
+        count_odd = 0
+        for elem in s:
+            if elem % 2 == 1:
+                count_odd += 1
+        if count_odd % 2 == 1:
+            return False
         while True:
             s.sort(reverse=True)
             if show_steps:
@@ -18,8 +24,8 @@ def isDegreeSequence(seq, show_steps=False):
                 return True
             if s[-1] == -1 or s[0] >= len(s):
                 return False
-            for i in range(1, s[0]+1):
-                s[i] = s[i]-1
+            for i in range(1, s[0] + 1):
+                s[i] += - 1
             del s[0]
     else:
         print("Passed argument is not a sequence.")
@@ -42,3 +48,31 @@ def get_degree_sequence_from_graph(g):
         return s
     else:
         print("Passed argument is not a graph.")
+
+
+def construct_graph_from_degree_sequence(seq):
+    if isinstance(seq, Sequence):
+        if isDegreeSequence(seq):
+            g = Graph.Graph()
+            n = len(seq)
+
+            g.mode = "AM"
+            g.data = [[0] * n for _ in range(n)]
+            my = [[i, seq[i]] for i in range(n)]
+
+            second_list_argument = lambda li: li[1]
+
+            while True:
+                my.sort(key=second_list_argument, reverse=True)
+                if my[0][1] == 0:
+                    break
+                for j in range(1, my[0][1]+1):
+                    my[j][1] -= 1
+                    g.data[my[0][0]][my[j][0]] = g.data[my[j][0]][my[0][0]] = 1
+                del my[0]
+
+            return g
+        else:
+            print("Passed sequence is not a degree sequence of a graph.")
+    else:
+        print("Passed argument is not a sequence.")
