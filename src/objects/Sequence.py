@@ -16,6 +16,9 @@ class Sequence:
         else:
             print("Passed argument is not a list.")
 
+    def generate_regular_sequence(self, n, k):
+        self.data = [k for _ in range(0, n)]
+
     def __str__(self):
         res = "(" + str(self.data[0])
         for i in range(1, len(self.data)):

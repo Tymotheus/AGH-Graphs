@@ -37,3 +37,31 @@ print(g1)
 g1.draw(600, 600)
 
 print("\n\n---------------------------------------- AD. 2.2 ----------------------------------------")
+
+
+
+print("\n\n---------------------------------------- AD. 2.5 ----------------------------------------")
+
+# GENERATE A RANDOM K-REGULAR GRAPH
+# TO DO: add randomization ?
+while 1:
+    try:
+        print("Press k to finish")
+        n = input("n = ") 
+        if n == 'k':
+            break
+        n = int(n)
+        k = int(input("k = "))
+
+        seq = Sequence()
+        seq.generate_regular_sequence(n, k)
+        if isDegreeSequence(seq):
+            print("Sequence " + str(seq) + " is a degree sequence of a graph.")
+            g = construct_graph_from_degree_sequence(seq)
+            print(g)
+            g.draw(600, 600)
+        else:
+            print("Cannot create graph sequence for n=" + str(n) + " and k=" + str(k) + ".")
+
+    except ValueError:
+        print("n and k should be an integer")
