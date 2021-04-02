@@ -8,7 +8,7 @@ from src.algorithms.representation_conversions import convert_graph_representati
 
 class Graph:
     def __init__(self):
-        self.data = []
+        self.data = None
         self.mode = None
 
     def read_graph_from_file(self, file_path, mode='AM'):
@@ -42,10 +42,13 @@ class Graph:
             for j in range(0, i):
                 if random() <= p:
                     self.data[i][j] = self.data[j][i] = 1
-        print("Random graph has been created (probability model: n = " + str(n) + ", p = " + "{:.2f}".format(p) + ").")
+        print("Random graph has been created (probability model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")
         print("Graph represented by adjacency matrix.")
 
-    def draw(self, img_width, img_height):
+    def draw(self, img_width=600, img_height=600):
+        if self.data is None:
+            print("Graph is empty (no data) - cannot draw the graph.")
+            return
         starting_representation = self.mode
         if starting_representation != "AM":
             convert_graph_representation(self, "AM")
@@ -86,8 +89,57 @@ class Graph:
         canvas.pack()
         root.mainloop()
 
+    def shuffle_edges(self, number_of_shuffles, show_shuffling_statistics=False):
+        if self.data is None:
+            print("Graph is empty (no data) - cannot shuffle edges.")
+            return
+        if self.mode != "AM":
+            convert_graph_representation(self, "AM")
+        n = len(self.data)
+        list_of_edges = []
+        for i in range(1, n):
+            for j in range(0, i):
+                if self.data[i][j] == 1:
+                    list_of_edges.append([i, j])
+        m = len(list_of_edges)
+        number_of_iterations_arr = []
+        exceeded = 0
+        for i in range(number_of_shuffles):
+            flag_shuffled = False
+            number_of_iterations = 0
+            while flag_shuffled is False and number_of_iterations < 3*m:
+                first_edge_index, second_edge_index = sample(range(0, m), 2)
+                first_edge = list_of_edges[first_edge_index]
+                second_edge = list_of_edges[second_edge_index]
+                if first_edge[0] != second_edge[0] and first_edge[0] != second_edge[1] and first_edge[1] != second_edge[0] and first_edge[1] != second_edge[1]:
+                    if self.data[first_edge[0]][second_edge[1]] == 0 and first_edge[0] != second_edge[1] and self.data[second_edge[0]][first_edge[1]] == 0 and second_edge[0] != first_edge[1]:
+                        self.data[first_edge[0]][second_edge[1]] = self.data[second_edge[0]][first_edge[1]] = self.data[second_edge[1]][first_edge[0]] = self.data[first_edge[1]][second_edge[0]] = 1
+                        self.data[first_edge[0]][first_edge[1]] = self.data[second_edge[0]][second_edge[1]] = self.data[first_edge[1]][first_edge[0]] = self.data[second_edge[1]][second_edge[0]] = 0
+                        list_of_edges.append([first_edge[0], second_edge[1]] if first_edge[0] > second_edge[1] else [second_edge[1], first_edge[0]])
+                        list_of_edges.append([second_edge[0], first_edge[1]] if second_edge[0] > first_edge[1] else [first_edge[1], second_edge[0]])
+                        list_of_edges.pop(first_edge_index if first_edge_index > second_edge_index else second_edge_index)
+                        list_of_edges.pop(second_edge_index if first_edge_index > second_edge_index else first_edge_index)
+                        flag_shuffled = True
+                    elif self.data[first_edge[0]][second_edge[0]] == 0 and first_edge[0] != second_edge[0] and self.data[second_edge[1]][first_edge[1]] == 0 and second_edge[1] != first_edge[1]:
+                        self.data[first_edge[0]][second_edge[0]] = self.data[second_edge[1]][first_edge[1]] = self.data[second_edge[0]][first_edge[0]] = self.data[first_edge[1]][second_edge[1]] = 1
+                        self.data[first_edge[0]][first_edge[1]] = self.data[second_edge[0]][second_edge[1]] = self.data[first_edge[1]][first_edge[0]] = self.data[second_edge[1]][second_edge[0]] = 0
+                        list_of_edges.append([first_edge[0], second_edge[0]] if first_edge[0] > second_edge[0] else [second_edge[0], first_edge[0]])
+                        list_of_edges.append([second_edge[1], first_edge[1]] if second_edge[1] > first_edge[1] else [first_edge[1], second_edge[1]])
+                        list_of_edges.pop(first_edge_index if first_edge_index > second_edge_index else second_edge_index)
+                        list_of_edges.pop(second_edge_index if first_edge_index > second_edge_index else first_edge_index)
+                        flag_shuffled = True
+                number_of_iterations += 1
+                if number_of_iterations >= 3*m:
+                    exceeded += 1
+            number_of_iterations_arr.append(number_of_iterations)
+        print("Shuffled edges of a graph " + str(number_of_shuffles) + " times.")
+        if show_shuffling_statistics:
+            print("n: " + str(n) + ", m: " + str(m) + ", average: " + str(sum(number_of_iterations_arr)/len(number_of_iterations_arr)) + ", exceeded: " + str(exceeded))
+
     def __str__(self):
-        if self.mode == 'AM':
+        if self.data is None:
+            res = "Graph is empty (no data)."
+        elif self.mode == 'AM':
             res = "Adjacency matrix of graph G:\n"
             for row in self.data:
                 for elem in row:

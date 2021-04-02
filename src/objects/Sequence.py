@@ -1,6 +1,12 @@
 class Sequence:
-    def __init__(self):
-        self.data = []
+    def __init__(self, *args):
+        if len(args) == 0:
+            self.data = []
+        elif len(args) == 1 and isinstance(args[0], list):
+            self.data = args[0].copy()
+        else:
+            print("Passed argument should be a list. Creating an empty sequence.")
+            self.data = []
 
     def read_sequence_from_file(self, file_path):
         with open(file_path, 'r') as f:
@@ -15,9 +21,6 @@ class Sequence:
             self.data = li.copy()
         else:
             print("Passed argument is not a list.")
-
-    def generate_regular_sequence(self, n, k):
-        self.data = [k for _ in range(0, n)]
 
     def __str__(self):
         res = "(" + str(self.data[0])

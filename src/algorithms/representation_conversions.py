@@ -102,6 +102,9 @@ conversion_map = {"AM_IM": convert_from_AM_to_IM,
 
 def convert_graph_representation(graph, new_representation):
     if isinstance(graph, Graph.Graph):
+        if graph.data is None:
+            print("Graph is empty (no data) - cannot convert it to any representation.")
+            return
         key = graph.mode + "_" + new_representation
         if graph.mode == new_representation:
             print("Conversion is not needed.")
