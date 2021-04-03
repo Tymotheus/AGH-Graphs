@@ -4,56 +4,58 @@ import src.objects.Graph as Graph
 from src.algorithms.representation_conversions import convert_graph_representation
 
 
-def isDegreeSequence(seq, show_steps=False):
+def is_degree_sequence(seq, show_steps=False):
     if isinstance(seq, Sequence):
-        s = seq.data.copy()
-        count_odd = 0
-        for elem in s:
-            if elem % 2 == 1:
-                count_odd += 1
-        if count_odd % 2 == 1:
-            return False
-        while True:
-            s.sort(reverse=True)
-            if show_steps:
-                print(s)
+        if len(seq.data) > 0:
+            s = seq.data.copy()
+            count_odd = 0
             for elem in s:
-                if elem != 0:
-                    break
-            else:
-                return True
-            if s[-1] == -1 or s[0] >= len(s):
+                if elem % 2 == 1:
+                    count_odd += 1
+            if count_odd % 2 == 1:
                 return False
-            for i in range(1, s[0] + 1):
-                s[i] += - 1
-            del s[0]
+            while True:
+                s.sort(reverse=True)
+                if show_steps:
+                    print(s)
+                for elem in s:
+                    if elem != 0:
+                        break
+                else:
+                    return True
+                if s[-1] == -1 or s[0] >= len(s):
+                    return False
+                for i in range(1, s[0] + 1):
+                    s[i] += - 1
+                del s[0]
+        else:
+            print("Passed argument is an empty sequence.")
     else:
         print("Passed argument is not a sequence.")
+    return False
 
 
 def get_degree_sequence_from_graph(g):
     if isinstance(g, Graph.Graph):
         s = Sequence()
+        if g.data is None:
+            print("Graph is empty (no data) - cannot obtain it's degree sequence.")
+        else:
+            starting_representation = g.mode
+            if starting_representation != "AM":
+                convert_graph_representation(g, "AM")
 
-        starting_representation = g.mode
-        if starting_representation != "AL":
-            convert_graph_representation(g, "AL")
-
-        degree_seq_of_graph = [len(elem) for elem in g.data]
-        s.read_sequence_from_list(degree_seq_of_graph)
-
-        if starting_representation != "AL":
-            convert_graph_representation(g, starting_representation)
-
+            degree_seq_of_graph = [sum(elem) for elem in g.data]
+            s.read_sequence_from_list(degree_seq_of_graph)
         return s
     else:
         print("Passed argument is not a graph.")
 
 
 def construct_graph_from_degree_sequence(seq):
+    g = Graph.Graph()
     if isinstance(seq, Sequence):
-        if isDegreeSequence(seq):
-            g = Graph.Graph()
+        if is_degree_sequence(seq):
             n = len(seq)
 
             g.mode = "AM"
@@ -70,9 +72,8 @@ def construct_graph_from_degree_sequence(seq):
                     my[j][1] -= 1
                     g.data[my[0][0]][my[j][0]] = g.data[my[j][0]][my[0][0]] = 1
                 del my[0]
-
-            return g
         else:
             print("Passed sequence is not a degree sequence of a graph.")
     else:
         print("Passed argument is not a sequence.")
+    return g
