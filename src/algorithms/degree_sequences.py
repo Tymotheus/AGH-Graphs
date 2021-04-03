@@ -1,3 +1,5 @@
+import copy
+
 from src.objects.Sequence import Sequence
 import src.objects.Graph as Graph
 
@@ -7,7 +9,7 @@ from src.algorithms.representation_conversions import convert_graph_representati
 def is_degree_sequence(seq, show_steps=False):
     if isinstance(seq, Sequence):
         if len(seq.data) > 0:
-            s = seq.data.copy()
+            s = copy.deepcopy(seq.data)
             count_odd = 0
             for elem in s:
                 if elem % 2 == 1:

@@ -1,4 +1,4 @@
-from random import random, sample
+from random import random, sample, uniform
 import scipy.special
 import tkinter as tk
 import math
@@ -89,7 +89,7 @@ class Graph:
         canvas.pack()
         root.mainloop()
 
-    def shuffle_edges(self, number_of_shuffles, show_shuffling_statistics=False):
+    def randomize(self, show_shuffling_statistics=False):
         if self.data is None:
             print("Graph is empty (no data) - cannot shuffle edges.")
             return
@@ -104,10 +104,12 @@ class Graph:
         m = len(list_of_edges)
         number_of_iterations_arr = []
         exceeded = 0
+        number_of_shuffles = int(0.5 * m)
         for i in range(number_of_shuffles):
             flag_shuffled = False
             number_of_iterations = 0
-            while flag_shuffled is False and number_of_iterations < 3*m:
+            max_iterations = int(uniform(2, 4) * m)
+            while flag_shuffled is False and number_of_iterations < max_iterations:
                 first_edge_index, second_edge_index = sample(range(0, m), 2)
                 first_edge = list_of_edges[first_edge_index]
                 second_edge = list_of_edges[second_edge_index]
