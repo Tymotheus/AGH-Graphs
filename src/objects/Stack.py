@@ -49,10 +49,12 @@ class Stack:
         return self.data[len(self)-1]
 
     def __str__(self):
-        res = "[" + str(self.data[0])
-        for i in range(1, len(self.data)):
-            res = res + "," + str(self.data[i])
-        res = res + "]"
+        res = "[]"
+        if len(self) > 0:
+            res = "[" + str(self.data[0])
+            for i in range(1, len(self.data)):
+                res = res + "," + str(self.data[i])
+            res = res + "]"
         return res
 
     def __len__(self):

@@ -58,7 +58,7 @@ class Graph:
         g_center_width = img_width / 2
         g_center_height = img_height / 2
         g_r = g_center_width * 2 / 3
-        v_r = g_r / n
+        v_r = g_r / n * (1 if n > 2 else 0.5)
 
         root = tk.Tk()
         root.geometry(str(img_height)+"x"+str(img_width))
@@ -68,14 +68,14 @@ class Graph:
 
         for i in range(n):
             v_angle = i * angle
-            positions[i][0] = g_center_height + g_r * math.sin(v_angle)
-            positions[i][1] = g_center_width - g_r * math.cos(v_angle)
+            positions[i][0] = g_center_height + (g_r * math.sin(v_angle) if n > 1 else 0)
+            positions[i][1] = g_center_width - (g_r * math.cos(v_angle) if n > 1 else 0)
 
             canvas.create_oval(positions[i][0]-v_r, positions[i][1]-v_r,
                                positions[i][0]+v_r, positions[i][1]+v_r,
                                fill="black")
-            canvas.create_text(positions[i][0] + (1 + n/10) * v_r * math.sin(v_angle),
-                               positions[i][1] - (1 + n/10) * v_r * math.cos(v_angle),
+            canvas.create_text(positions[i][0] + (1 + n/7) * v_r * math.sin(v_angle),
+                               positions[i][1] - (1 + n/7) * v_r * math.cos(v_angle),
                                text=i+1, font=("Verdana", max(int(20 - 2*n/10), 10)))
         for i in range(1, n):
             for j in range(0, i):

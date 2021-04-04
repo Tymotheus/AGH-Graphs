@@ -83,7 +83,7 @@ def get_eulerian_cycle_of_graph(g, show_cycle=True):
                         ec_stk.push(v)
 
                 eulerian_cycle = ec_stk.unpack_to_list()
-                if show_cycle is True:
+                if show_cycle is True and len(eulerian_cycle) > 0:
                     print("Eulerian cycle of graph:\n" + str(eulerian_cycle[0]+1), end='')
                     for i in range(1, len(eulerian_cycle)):
                         print(" -> " + str(eulerian_cycle[i]+1), end='')

@@ -6,6 +6,7 @@ from src.algorithms.degree_sequences import is_degree_sequence, get_degree_seque
 from src.algorithms.regularity import construct_k_regular_graph
 from src.algorithms.connectivity import get_maximum_component_of_graph
 from src.algorithms.eulerianity import construct_eulerian_graph, get_eulerian_cycle_of_graph
+from src.algorithms.hamiltonicity import get_hamiltonian_cycle_of_graph
 os.system('cls')
 
 
@@ -76,10 +77,9 @@ g4 = construct_eulerian_graph(10)
 # print(g4)
 
 # GET EULERIAN CYCLE OF A GRAPH
-eulerian_cycle_of_g4 = get_eulerian_cycle_of_graph(g4,
-                                                   show_cycle=True)
+eulerian_cycle_of_g4 = get_eulerian_cycle_of_graph(g4, show_cycle=True)
 print(eulerian_cycle_of_g4)
-g4.draw()
+# g4.draw()
 
 
 print("\n\n---------------------------------------- AD. 2.5 ----------------------------------------")
@@ -95,3 +95,17 @@ g5.randomize(True)
 # g5.draw()
 
 print("\n\n---------------------------------------- AD. 2.6 ----------------------------------------")
+
+# CONSTRUCTING A GRAPH EITHER FROM DEGREE SEQUENCE, FILE OR PROBABILITY MODEL
+g6 = Graph()
+
+# for _ in range(10):
+g6.make_random_graph_probability(1, 1)
+# g6.read_graph_from_file("example_data/proj2_hamiltonian_no1.txt")
+# seq.read_sequence_from_file("example_data/proj2_seq_complete.txt")
+# g6 = construct_graph_from_degree_sequence(seq)
+
+# GET HAMILTONIAN CYCLE OF A GRAPH
+hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=True)
+# print(hamiltonian_cycle_of_g6)
+g6.draw()
