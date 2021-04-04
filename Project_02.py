@@ -1,4 +1,6 @@
 import os
+import time
+from random import randint, uniform
 
 from src.objects.Sequence import Sequence
 from src.objects.Graph import Graph
@@ -6,7 +8,7 @@ from src.algorithms.degree_sequences import is_degree_sequence, get_degree_seque
 from src.algorithms.regularity import construct_k_regular_graph
 from src.algorithms.connectivity import get_maximum_component_of_graph
 from src.algorithms.eulerianity import construct_eulerian_graph, get_eulerian_cycle_of_graph
-from src.algorithms.hamiltonicity import get_hamiltonian_cycle_of_graph
+from src.algorithms.hamiltonicity import get_hamiltonian_cycle_of_graph, get_hamiltonian_cycle_of_graph_opt
 os.system('cls')
 
 
@@ -100,12 +102,47 @@ print("\n\n---------------------------------------- AD. 2.6 --------------------
 g6 = Graph()
 
 # for _ in range(10):
-g6.make_random_graph_probability(1, 1)
+g6.make_random_graph_probability(100, 0.5)
 # g6.read_graph_from_file("example_data/proj2_hamiltonian_no1.txt")
 # seq.read_sequence_from_file("example_data/proj2_seq_complete.txt")
 # g6 = construct_graph_from_degree_sequence(seq)
 
 # GET HAMILTONIAN CYCLE OF A GRAPH
-hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=True)
+time_before_normal = time.time()
+hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=False)
+time_of_normal_ver = time.time() - time_before_normal
 # print(hamiltonian_cycle_of_g6)
-g6.draw()
+print("Normal version elapsed: ", time_of_normal_ver)
+# g6.draw()
+
+# BONUS - COMPARING NORMAL METHOD AND OPTIMIZED ONE
+time_of_normal_ver = time_of_opt_ver = 0.0
+number_of_tests = 1000
+win_number_of_normal_version = 0
+
+tests_start_time = time.time()
+for i in range(number_of_tests):
+    g6.make_random_graph_probability(randint(75, 100), uniform(0.5, 0.75), show_info=False)
+    print("TEST " + str(i+1) + " / " + str(number_of_tests))
+
+    time_before_normal = time.time()
+    hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=False)
+    time_after_normal = time.time()
+    time_of_normal_ver += time_after_normal - time_before_normal
+
+    time_before_opt = time.time()
+    hamiltonian_cycle_of_g6_opt = get_hamiltonian_cycle_of_graph_opt(g6, show_cycle=False)
+    time_after_opt = time.time()
+    time_of_opt_ver += time_after_opt - time_before_opt
+
+    if (time_after_normal - time_before_normal) < (time_after_opt - time_before_opt):
+        win_number_of_normal_version += 1
+tests_finish_time = time.time()
+
+avg_time_of_normal_ver = time_of_normal_ver/number_of_tests
+avg_time_of_opt_ver = time_of_opt_ver/number_of_tests
+print("Testing elapsed: ", tests_finish_time-tests_start_time)
+print("On average normal version elapsed: ", avg_time_of_normal_ver)
+print("On average optimized version elapsed: ", avg_time_of_opt_ver)
+print("Elapsed time ratio (normal version to optimized version): " + "{:.3f}".format(avg_time_of_normal_ver/avg_time_of_opt_ver))
+print("Normal version was faster in " + str(win_number_of_normal_version) + " tests out of " + str(number_of_tests) + ".")

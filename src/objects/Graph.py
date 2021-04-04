@@ -21,7 +21,7 @@ class Graph:
                else ("incidence matrix." if self.mode == "IM"
                      else "adjacency list.")))
 
-    def make_random_graph_edge_number(self, n, m):
+    def make_random_graph_edge_number(self, n, m, show_info=True):
         self.mode = 'AM'
         self.data = [[0] * n for _ in range(n)]
         v_n = scipy.special.comb(n, 2)
@@ -32,18 +32,20 @@ class Graph:
                 if index in smp:
                     self.data[i][j] = self.data[j][i] = 1
                 index = index+1
-        print("Random graph has been created (Erdos-Renyi model: n = " + str(n) + ", m = " + str(m) + ").")
-        print("Graph represented by adjacency matrix.")
+        if show_info is True:
+            print("Random graph has been created (Erdos-Renyi model: n = " + str(n) + ", m = " + str(m) + ").")
+            print("Graph represented by adjacency matrix.")
 
-    def make_random_graph_probability(self, n, p):
+    def make_random_graph_probability(self, n, p, show_info=True):
         self.mode = 'AM'
         self.data = [[0] * n for _ in range(n)]
         for i in range(1, n):
             for j in range(0, i):
                 if random() <= p:
                     self.data[i][j] = self.data[j][i] = 1
-        print("Random graph has been created (probability model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")
-        print("Graph represented by adjacency matrix.")
+        if show_info is True:
+            print("Random graph has been created (probability model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")
+            print("Graph represented by adjacency matrix.")
 
     def draw(self, img_width=600, img_height=600):
         if self.data is None:
