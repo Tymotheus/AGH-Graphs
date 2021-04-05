@@ -4,6 +4,7 @@ import tkinter as tk
 import math
 
 from src.algorithms.representation_conversions import convert_graph_representation
+from src.algorithms.representation_check import *
 
 
 class Graph:
@@ -11,15 +12,20 @@ class Graph:
         self.data = None
         self.mode = None
 
-    def read_graph_from_file(self, file_path, mode='AM'):
+    def read_graph_from_file(self, file_path, mode='AM', show_info=True):
         with open(file_path, 'r') as f:
-            self.data = [[int(num) for num in line.split(' ')] for line in f]
-        print("Graph has been read from file.")
-        self.mode = mode
-        print("Graph represented by " +
-              ("adjacency matrix." if self.mode == "AM"
-               else ("incidence matrix." if self.mode == "IM"
-                     else "adjacency list.")))
+            data = [[int(num) for num in line.split(' ')] for line in f]
+        if conversion_check_map[mode](data) is True:
+            self.data = data
+            self.mode = mode
+            if show_info is True:
+                print("Graph has been read from file.")
+                print("Graph represented by " +
+                      ("adjacency matrix." if self.mode == "AM"
+                       else ("incidence matrix." if self.mode == "IM"
+                             else "adjacency list.")))
+        else:
+            print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
     def make_random_graph_edge_number(self, n, m, show_info=True):
         self.mode = 'AM'

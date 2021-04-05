@@ -43,8 +43,7 @@ def get_degree_sequence_from_graph(g):
         if g.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            starting_representation = g.mode
-            if starting_representation != "AM":
+            if g.mode != "AM":
                 convert_graph_representation(g, "AM")
 
             degree_seq_of_graph = [sum(elem) for elem in g.data]

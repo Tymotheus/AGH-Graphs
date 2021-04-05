@@ -117,7 +117,7 @@ print("Normal version elapsed: ", time_of_normal_ver)
 
 # BONUS - COMPARING NORMAL METHOD AND OPTIMIZED ONE
 time_of_normal_ver = time_of_opt_ver = 0.0
-number_of_tests = 1000
+number_of_tests = 200
 win_number_of_normal_version = 0
 
 tests_start_time = time.time()

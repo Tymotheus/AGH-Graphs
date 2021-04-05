@@ -1,4 +1,5 @@
 import src.objects.Graph as Graph
+from src.algorithms.representation_check import *
 
 
 def convert_from_AM_to_IM(g):
@@ -109,6 +110,9 @@ def convert_graph_representation(graph, new_representation):
         if graph.mode == new_representation:
             print("Conversion is not needed.")
         elif conversion_map.get(key) is not None:
+            if conversion_check_map[graph.mode](graph.data) is False:
+                print("Cannot do a conversion - graph data is not of the form of it's representation.")
+                return
             print("Graph representation is being changed from " + graph.mode + " to " + new_representation + ".")
             conversion_map[key](graph)
         else:
