@@ -5,35 +5,35 @@ from src.algorithms.representation_conversions import convert_graph_representati
 from src.algorithms.connectivity import is_graph_connected
 
 
-def get_hamiltonian_cycle_of_graph(g, show_cycle=True):
+def get_hamiltonian_cycle_of_graph(graph, show_cycle=True):
     hamiltonian_cycle = []
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            if g.mode != "AM":
-                convert_graph_representation(g, "AM")
-            if is_graph_connected(g) is True:
-                n = len(g.data)
-                vertices_visited = [0 for _ in range(n)]
-                hc_stk = Stack()  # HAMILTONIAN CYCLE STACK
+            if graph.representation != "AM":
+                convert_graph_representation(graph, "AM")
+            if is_graph_connected(graph) is True:
+                n = len(graph.data)
+                v_visited = [False for _ in range(n)]
+                hc_stack = Stack()  # HAMILTONIAN CYCLE STACK
 
                 # ADD FIRST VERTEX OF HAMILTONIAN CYCLE
                 if n >= 3:
                     for v in range(n):
-                        if vertices_visited[v] == 0:
-                            vertices_visited[v] = 1
-                            hc_stk.push(v)
-                            hamiltonian_dfs_recursive(g, hc_stk, v, n, vertices_visited, v)
-                            if len(hc_stk) == n and g.data[v][hc_stk.peek()] == 1:
-                                hc_stk.push(v)
+                        if v_visited[v] is False:
+                            v_visited[v] = True
+                            hc_stack.push(v)
+                            hamiltonian_dfs_recursive(graph, hc_stack, v, n, v_visited, v)
+                            if len(hc_stack) == n and graph.data[v][hc_stack.peek()] == 1:
+                                hc_stack.push(v)
                                 break
-                            vertices_visited[v] = 0
-                            hc_stk.pop()
-                if hc_stk.is_empty():
+                            v_visited[v] = False
+                            hc_stack.pop()
+                if hc_stack.is_empty():
                     print("Passed graph does not have a hamiltonian cycle.")
                 else:
-                    hamiltonian_cycle = hc_stk.unpack_to_list()
+                    hamiltonian_cycle = hc_stack.unpack_to_list()
                     if show_cycle is True and len(hamiltonian_cycle) > 0:
                         print("Hamiltonian cycle of graph:\n" + str(hamiltonian_cycle[0]+1), end='')
                         for i in range(1, len(hamiltonian_cycle)):
@@ -46,52 +46,52 @@ def get_hamiltonian_cycle_of_graph(g, show_cycle=True):
     return hamiltonian_cycle
 
 
-def hamiltonian_dfs_recursive(g, hc_stk, v0, n, vertices_visited, v=0):
-    if g.mode != "AM":
-        convert_graph_representation(g, "AM")
+def hamiltonian_dfs_recursive(graph, hc_stack, v0, n, v_visited, v=0):
+    if graph.representation != "AM":
+        convert_graph_representation(graph, "AM")
     for u in range(n):
-        if g.data[v][u] == 1:
-            if vertices_visited[u] == 0:
-                vertices_visited[u] = 1
-                hc_stk.push(u)
-                hamiltonian_dfs_recursive(g, hc_stk, v0, n, vertices_visited, u)
-                if len(hc_stk) == n and g.data[v0][hc_stk.peek()] == 1:
+        if graph.data[v][u] == 1:
+            if v_visited[u] is False:
+                v_visited[u] = True
+                hc_stack.push(u)
+                hamiltonian_dfs_recursive(graph, hc_stack, v0, n, v_visited, u)
+                if len(hc_stack) == n and graph.data[v0][hc_stack.peek()] == 1:
                     break
-                vertices_visited[u] = 0
-                hc_stk.pop()
+                v_visited[u] = False
+                hc_stack.pop()
 
 
-def get_hamiltonian_cycle_of_graph_opt(g, show_cycle=True):
+def get_hamiltonian_cycle_of_graph_optimized(graph, show_cycle=True):
     hamiltonian_cycle = []
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            if g.mode != "AM":
-                convert_graph_representation(g, "AM")
-            if is_graph_connected(g) is True:
-                n = len(g.data)
-                vertices_visited = [[i, sum(g.data[i]), 0] for i in range(n)]   # index, degree, visited
-                hc_stk = Stack()  # HAMILTONIAN CYCLE STACK
+            if graph.representation != "AM":
+                convert_graph_representation(graph, "AM")
+            if is_graph_connected(graph) is True:
+                n = len(graph.data)
+                v_and_d_and_visited = [[i, sum(graph.data[i]), False] for i in range(n)]   # index, degree, visited
+                hc_stack = Stack()  # HAMILTONIAN CYCLE STACK
                 second_list_argument = lambda li: li[1]
-                vertices_visited.sort(key=second_list_argument, reverse=True)
+                v_and_d_and_visited.sort(key=second_list_argument, reverse=True)
 
                 # ADD FIRST VERTEX OF HAMILTONIAN CYCLE
                 if n >= 3:
-                    for v in vertices_visited:
-                        if v[2] == 0:
-                            v[2] = 1
-                            hc_stk.push(v[0])
-                            hamiltonian_dfs_recursive_opt(g, hc_stk, v[0], n, vertices_visited, v[0])
-                            if len(hc_stk) == n and g.data[v[0]][hc_stk.peek()] == 1:
-                                hc_stk.push(v[0])
+                    for v in v_and_d_and_visited:
+                        if v[2] is False:
+                            v[2] = True
+                            hc_stack.push(v[0])
+                            hamiltonian_dfs_recursive_optimized(graph, hc_stack, v[0], n, v_and_d_and_visited, v[0])
+                            if len(hc_stack) == n and graph.data[v[0]][hc_stack.peek()] == 1:
+                                hc_stack.push(v[0])
                                 break
-                            v[2] = 0
-                            hc_stk.pop()
-                if hc_stk.is_empty():
+                            v[2] = False
+                            hc_stack.pop()
+                if hc_stack.is_empty():
                     print("Passed graph does not have a hamiltonian cycle.")
                 else:
-                    hamiltonian_cycle = hc_stk.unpack_to_list()
+                    hamiltonian_cycle = hc_stack.unpack_to_list()
                     if show_cycle is True and len(hamiltonian_cycle) > 0:
                         print("Hamiltonian cycle of graph:\n" + str(hamiltonian_cycle[0]+1), end='')
                         for i in range(1, len(hamiltonian_cycle)):
@@ -104,16 +104,17 @@ def get_hamiltonian_cycle_of_graph_opt(g, show_cycle=True):
     return hamiltonian_cycle
 
 
-def hamiltonian_dfs_recursive_opt(g, hc_stk, v0, n, vertices_visited, v=0):
-    if g.mode != "AM":
-        convert_graph_representation(g, "AM")
+def hamiltonian_dfs_recursive_optimized(graph, hc_stack, v0, n, v_and_d_and_visited, v=0):
+    if graph.representation != "AM":
+        convert_graph_representation(graph, "AM")
     for u in range(n-1, -1, -1):
-        if g.data[v][vertices_visited[u][0]] == 1:
-            if vertices_visited[u][2] == 0:
-                vertices_visited[u][2] = 1
-                hc_stk.push(vertices_visited[u][0])
-                hamiltonian_dfs_recursive_opt(g, hc_stk, v0, n, vertices_visited, vertices_visited[u][0])
-                if len(hc_stk) == n and g.data[v0][hc_stk.peek()] == 1:
+        if graph.data[v][v_and_d_and_visited[u][0]] == 1:
+            if v_and_d_and_visited[u][2] is False:
+                v_and_d_and_visited[u][2] = True
+                hc_stack.push(v_and_d_and_visited[u][0])
+                hamiltonian_dfs_recursive_optimized(graph, hc_stack, v0, n, v_and_d_and_visited,
+                                                    v_and_d_and_visited[u][0])
+                if len(hc_stack) == n and graph.data[v0][hc_stack.peek()] == 1:
                     break
-                vertices_visited[u][2] = 0
-                hc_stk.pop()
+                v_and_d_and_visited[u][2] = False
+                hc_stack.pop()

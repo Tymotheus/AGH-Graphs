@@ -40,22 +40,22 @@ class Stack:
         return self.data.pop()
 
     def unpack_to_list(self):
-        unpacked_stack = []
+        stack_as_list = []
         while len(self) > 0:
-            unpacked_stack.append(self.pop())
-        return unpacked_stack
+            stack_as_list.append(self.pop())
+        return stack_as_list
 
     def peek(self):
         return self.data[len(self)-1]
 
     def __str__(self):
-        res = "[]"
+        stack_as_string = "[]"
         if len(self) > 0:
-            res = "[" + str(self.data[0])
+            stack_as_string = "[" + str(self.data[0])
             for i in range(1, len(self.data)):
-                res = res + "," + str(self.data[i])
-            res = res + "]"
-        return res
+                stack_as_string = stack_as_string + "," + str(self.data[i])
+            stack_as_string = stack_as_string + "]"
+        return stack_as_string
 
     def __len__(self):
         return len(self.data)

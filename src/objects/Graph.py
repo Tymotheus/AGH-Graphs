@@ -1,41 +1,40 @@
 from random import random, sample, uniform
-import scipy.special
 import tkinter as tk
 import math
 
 from src.algorithms.representation_conversions import convert_graph_representation
-from src.algorithms.representation_check import *
+from src.algorithms.representation_checks import *
 
 
 class Graph:
     def __init__(self):
         self.data = None
-        self.mode = None
+        self.representation = None
 
-    def read_graph_from_file(self, file_path, mode='AM', show_info=True):
+    def read_graph_from_file(self, file_path, representation='AM', show_info=True):
         with open(file_path, 'r') as f:
-            data = [[int(num) for num in line.split(' ')] for line in f]
-        if conversion_check_map[mode](data) is True:
+            data = [[int(num) for num in line.split(' ')] if line != '\n' else [] for line in f]
+        if conversion_check_map[representation](data) is True:
             self.data = data
-            self.mode = mode
+            self.representation = representation
             if show_info is True:
                 print("Graph has been read from file.")
                 print("Graph represented by " +
-                      ("adjacency matrix." if self.mode == "AM"
-                       else ("incidence matrix." if self.mode == "IM"
+                      ("adjacency matrix." if self.representation == "AM"
+                       else ("incidence matrix." if self.representation == "IM"
                              else "adjacency list.")))
         else:
             print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
     def make_random_graph_edge_number(self, n, m, show_info=True):
-        self.mode = 'AM'
+        self.representation = 'AM'
         self.data = [[0] * n for _ in range(n)]
-        v_n = scipy.special.comb(n, 2)
-        smp = sample(range(1, int(v_n)), m)
+        max_num_of_edges = n * (n-1) / 2
+        indexes_of_existing_edges = sample(range(1, int(max_num_of_edges)), m)
         index = 1
         for i in range(1, n):
             for j in range(0, i):
-                if index in smp:
+                if index in indexes_of_existing_edges:
                     self.data[i][j] = self.data[j][i] = 1
                 index = index+1
         if show_info is True:
@@ -43,7 +42,7 @@ class Graph:
             print("Graph represented by adjacency matrix.")
 
     def make_random_graph_probability(self, n, p, show_info=True):
-        self.mode = 'AM'
+        self.representation = 'AM'
         self.data = [[0] * n for _ in range(n)]
         for i in range(1, n):
             for j in range(0, i):
@@ -57,8 +56,7 @@ class Graph:
         if self.data is None:
             print("Graph is empty (no data) - cannot draw the graph.")
             return
-        starting_representation = self.mode
-        if starting_representation != "AM":
+        if self.representation != "AM":
             convert_graph_representation(self, "AM")
         n = len(self.data)
         angle = 2 * math.pi / n
@@ -90,9 +88,6 @@ class Graph:
                 if self.data[i][j] == 1:
                     canvas.create_line(positions[i][0], positions[i][1], positions[j][0], positions[j][1])
 
-        if starting_representation != "AM":
-            convert_graph_representation(self, starting_representation)
-
         print("Graph is being drawn.")
         canvas.pack()
         root.mainloop()
@@ -101,7 +96,7 @@ class Graph:
         if self.data is None:
             print("Graph is empty (no data) - cannot shuffle edges.")
             return
-        if self.mode != "AM":
+        if self.representation != "AM":
             convert_graph_representation(self, "AM")
         n = len(self.data)
         list_of_edges = []
@@ -148,26 +143,28 @@ class Graph:
 
     def __str__(self):
         if self.data is None:
-            res = "Graph is empty (no data)."
-        elif self.mode == 'AM':
-            res = "Adjacency matrix of graph G:\n"
+            graph_as_string = "Graph is empty (no data)."
+        elif self.representation == 'AM':
+            graph_as_string = "Adjacency matrix of graph G:\n"
             for row in self.data:
-                for elem in row:
-                    res = res + str(elem) + " "
-                res = res + "\n"
-        elif self.mode == "IM":
-            res = "Incidence matrix of graph G:\n"
+                for element in row:
+                    graph_as_string = graph_as_string + str(element) + " "
+                graph_as_string = graph_as_string + "\n"
+        elif self.representation == "IM":
+            graph_as_string = "Incidence matrix of graph G:\n"
             for row in self.data:
-                for elem in row:
-                    res = res + str(elem) + " "
-                res = res + "\n"
-        else:
-            res = "Adjacency list of graph G:\n"
+                for element in row:
+                    graph_as_string = graph_as_string + str(element) + " "
+                graph_as_string = graph_as_string + "\n"
+        elif self.representation == "AL":
+            graph_as_string = "Adjacency list of graph G:\n"
             i = 0
             for row in self.data:
-                res = res + str(i+1) + " -> "
-                for elem in row:
-                    res = res + "[" + str(elem) + "] "
-                res = res + "\n"
+                graph_as_string = graph_as_string + str(i + 1) + " -> "
+                for element in row:
+                    graph_as_string = graph_as_string + "[" + str(element) + "] "
+                graph_as_string = graph_as_string + "\n"
                 i = i + 1
-        return res
+        else:
+            graph_as_string = "Cannot describe graph - unknown representation."
+        return graph_as_string

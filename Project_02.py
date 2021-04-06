@@ -8,7 +8,7 @@ from src.algorithms.degree_sequences import is_degree_sequence, get_degree_seque
 from src.algorithms.regularity import construct_k_regular_graph
 from src.algorithms.connectivity import get_maximum_component_of_graph
 from src.algorithms.eulerianity import construct_eulerian_graph, get_eulerian_cycle_of_graph
-from src.algorithms.hamiltonicity import get_hamiltonian_cycle_of_graph, get_hamiltonian_cycle_of_graph_opt
+from src.algorithms.hamiltonicity import get_hamiltonian_cycle_of_graph, get_hamiltonian_cycle_of_graph_optimized
 os.system('cls')
 
 
@@ -65,9 +65,7 @@ g3 = Graph()
 g3.make_random_graph_probability(20, 0.07)
 
 # GET MAXIMUM COMPONENT OF A GRAPH
-max_component_of_g3 = get_maximum_component_of_graph(g3,
-                                                     show_maximum_component_result=True,
-                                                     show_components=True,
+max_component_of_g3 = get_maximum_component_of_graph(g3, show_maximum_component_result=True, show_components=True,
                                                      show_vertices_flow=False)
 # print(max_component_of_g3)
 # g3.draw()
@@ -108,41 +106,41 @@ g6.make_random_graph_probability(100, 0.5)
 # g6 = construct_graph_from_degree_sequence(seq)
 
 # GET HAMILTONIAN CYCLE OF A GRAPH
-time_before_normal = time.time()
+time_before_normal_version = time.time()
 hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=False)
-time_of_normal_ver = time.time() - time_before_normal
+time_of_normal_version = time.time() - time_before_normal_version
 # print(hamiltonian_cycle_of_g6)
-print("Normal version elapsed: ", time_of_normal_ver)
+print("Normal version elapsed: ", time_of_normal_version)
 # g6.draw()
 
 # BONUS - COMPARING NORMAL METHOD AND OPTIMIZED ONE
-time_of_normal_ver = time_of_opt_ver = 0.0
+time_of_normal_version = time_of_optimized_version = 0.0
 number_of_tests = 200
-win_number_of_normal_version = 0
+number_of_better_normal_version_tests = 0
 
 tests_start_time = time.time()
 for i in range(number_of_tests):
     g6.make_random_graph_probability(randint(75, 100), uniform(0.5, 0.75), show_info=False)
     print("TEST " + str(i+1) + " / " + str(number_of_tests))
 
-    time_before_normal = time.time()
+    time_before_normal_version = time.time()
     hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=False)
-    time_after_normal = time.time()
-    time_of_normal_ver += time_after_normal - time_before_normal
+    time_after_normal_version = time.time()
+    time_of_normal_version += time_after_normal_version - time_before_normal_version
 
-    time_before_opt = time.time()
-    hamiltonian_cycle_of_g6_opt = get_hamiltonian_cycle_of_graph_opt(g6, show_cycle=False)
-    time_after_opt = time.time()
-    time_of_opt_ver += time_after_opt - time_before_opt
+    time_before_optimized_version = time.time()
+    hamiltonian_cycle_of_g6_opt = get_hamiltonian_cycle_of_graph_optimized(g6, show_cycle=False)
+    time_after_optimized_version = time.time()
+    time_of_optimized_version += time_after_optimized_version - time_before_optimized_version
 
-    if (time_after_normal - time_before_normal) < (time_after_opt - time_before_opt):
-        win_number_of_normal_version += 1
+    if (time_after_normal_version - time_before_normal_version) < (time_after_optimized_version - time_before_optimized_version):
+        number_of_better_normal_version_tests += 1
 tests_finish_time = time.time()
 
-avg_time_of_normal_ver = time_of_normal_ver/number_of_tests
-avg_time_of_opt_ver = time_of_opt_ver/number_of_tests
+average_time_of_normal_version = time_of_normal_version / number_of_tests
+average_time_of_optimized_version = time_of_optimized_version / number_of_tests
 print("Testing elapsed: ", tests_finish_time-tests_start_time)
-print("On average normal version elapsed: ", avg_time_of_normal_ver)
-print("On average optimized version elapsed: ", avg_time_of_opt_ver)
-print("Elapsed time ratio (normal version to optimized version): " + "{:.3f}".format(avg_time_of_normal_ver/avg_time_of_opt_ver))
-print("Normal version was faster in " + str(win_number_of_normal_version) + " tests out of " + str(number_of_tests) + ".")
+print("On average normal version elapsed: ", average_time_of_normal_version)
+print("On average optimized version elapsed: ", average_time_of_optimized_version)
+print("Elapsed time ratio (normal version to optimized version): " + "{:.3f}".format(average_time_of_normal_version / average_time_of_optimized_version))
+print("Normal version was faster in " + str(number_of_better_normal_version_tests) + " tests out of " + str(number_of_tests) + ".")

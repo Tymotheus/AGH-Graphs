@@ -6,18 +6,18 @@ from src.algorithms.representation_conversions import convert_graph_representati
 from src.algorithms.dfs import dfs, dfs_recursive
 
 
-def is_graph_connected(g, show_vertices_flow=False):
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+def is_graph_connected(graph, show_vertices_flow=False):
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            if g.mode != "AM":
-                convert_graph_representation(g, "AM")
-            n = len(g.data)
-            vertices_visits = [-1 for _ in range(n)]
-            vertices_visits[0] = 1
-            dfs_recursive(g, n, vertices_visits, v=0, component_number=1, show_vertices_flow=show_vertices_flow)
-            for vertex_visited in vertices_visits:
+            if graph.representation != "AM":
+                convert_graph_representation(graph, "AM")
+            n = len(graph.data)
+            v_component = [-1 for _ in range(n)]
+            v_component[0] = 1
+            dfs_recursive(graph, n, v_component, v=0, component_number=1, show_vertices_flow=show_vertices_flow)
+            for vertex_visited in v_component:
                 if vertex_visited == -1:
                     return False
             return True
@@ -26,17 +26,17 @@ def is_graph_connected(g, show_vertices_flow=False):
         return False
 
 
-def get_components_of_graph(g, show_components=False, show_vertices_flow=False):
+def get_components_of_graph(graph, show_components=False, show_vertices_flow=False):
     components = None
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            vertices_visits = dfs(g, show_vertices_flow)
-            number_of_components = max(vertices_visits)
+            v_component = dfs(graph, show_vertices_flow)
+            number_of_components = max(v_component)
             components = [[] for _ in range(number_of_components)]
-            for v in range(len(vertices_visits)):
-                components[vertices_visits[v]-1].append(v)
+            for vertex in range(len(v_component)):
+                components[v_component[vertex] - 1].append(vertex)
             if show_components is True:
                 for i in range(len(components)):
                     print(str(i + 1) + ")", end=''),
@@ -48,13 +48,14 @@ def get_components_of_graph(g, show_components=False, show_vertices_flow=False):
     return components
 
 
-def get_maximum_component_of_graph(g, show_maximum_component_result=False, show_components=False, show_vertices_flow=False):
+def get_maximum_component_of_graph(graph, show_maximum_component_result=False, show_components=False, show_vertices_flow=False):
     maximum_component = None
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            components = get_components_of_graph(g, show_components=show_components, show_vertices_flow=show_vertices_flow)
+            components = get_components_of_graph(graph, show_components=show_components,
+                                                 show_vertices_flow=show_vertices_flow)
             maximum_number_of_vertices = len(components[0])
             maximum_component_index = 0
             for i in range(len(components)):

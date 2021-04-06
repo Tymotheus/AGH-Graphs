@@ -3,35 +3,35 @@ import src.objects.Graph as Graph
 from src.algorithms.representation_conversions import convert_graph_representation
 
 
-def dfs(g, show_vertices_flow=False):
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+def dfs(graph, show_vertices_flow=False):
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
             return None
         else:
-            if g.mode != "AM":
-                convert_graph_representation(g, "AM")
-            n = len(g.data)
+            if graph.representation != "AM":
+                convert_graph_representation(graph, "AM")
+            n = len(graph.data)
             component_number = 0
-            vertices_visits = [-1 for _ in range(n)]
+            v_component = [-1 for _ in range(n)]
             for v in range(n):
-                if vertices_visits[v] == -1:
+                if v_component[v] == -1:
                     component_number += 1
-                    vertices_visits[v] = component_number
-                    dfs_recursive(g, n, vertices_visits, v, component_number, show_vertices_flow)
-            return vertices_visits
+                    v_component[v] = component_number
+                    dfs_recursive(graph, n, v_component, v, component_number, show_vertices_flow)
+            return v_component
     else:
         print("Passed argument is not a graph.")
         return None
 
 
-def dfs_recursive(g, n, vertices_visits, v=0, component_number=1, show_vertices_flow=False):
-    if g.mode != "AM":
-        convert_graph_representation(g, "AM")
+def dfs_recursive(graph, n, v_component, v=0, component_number=1, show_vertices_flow=False):
+    if graph.representation != "AM":
+        convert_graph_representation(graph, "AM")
     for u in range(n):
-        if g.data[v][u] == 1:
-            if vertices_visits[u] == -1:
+        if graph.data[v][u] == 1:
+            if v_component[u] == -1:
                 if show_vertices_flow is True:
                     print(str(v+1) + " -> " + str(u+1))
-                vertices_visits[u] = component_number
-                dfs_recursive(g, n, vertices_visits, u, component_number, show_vertices_flow)
+                v_component[u] = component_number
+                dfs_recursive(graph, n, v_component, u, component_number, show_vertices_flow)

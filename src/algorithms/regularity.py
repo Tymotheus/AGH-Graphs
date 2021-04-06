@@ -2,16 +2,19 @@ from src.objects.Sequence import Sequence
 import src.objects.Graph as Graph
 
 from src.algorithms.degree_sequences import construct_graph_from_degree_sequence, is_degree_sequence
+from src.algorithms.representation_conversions import convert_graph_representation
 
 
-def is_graph_regular(g):
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+def is_graph_regular(graph):
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            k = sum(g.data[0])
-            for i in range(1, len(g.data)):
-                if sum(g.data[i]) != k:
+            if graph.representation != "AM":
+                convert_graph_representation(graph, "AM")
+            k = sum(graph.data[0])
+            for i in range(1, len(graph.data)):
+                if sum(graph.data[i]) != k:
                     return False
             return True
     else:

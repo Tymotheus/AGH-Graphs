@@ -54,11 +54,11 @@ print(g)
 g.make_random_graph_probability(10, 0.3)
 print(g)
 
-print("\n\n---------------------------------------- BONUS ----------------------------------------")
-
-number_of_graphs_to_generate = input("How many random graphs do you want to generate and draw? ")
-# draw some random graphs
-for _ in range(int(number_of_graphs_to_generate)):
-    g.make_random_graph_probability(randrange(5, 50), random())
-    print(g)
-    g.draw(600, 600)
+# print("\n\n---------------------------------------- BONUS ----------------------------------------")
+#
+# number_of_graphs_to_generate = input("How many random graphs do you want to generate and draw? ")
+# # draw some random graphs
+# for _ in range(int(number_of_graphs_to_generate)):
+#     g.make_random_graph_probability(randrange(5, 50), random())
+#     print(g)
+#     g.draw(600, 600)

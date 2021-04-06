@@ -6,16 +6,19 @@ from src.objects.Stack import Stack
 
 from src.algorithms.degree_sequences import construct_graph_from_degree_sequence, is_degree_sequence
 from src.algorithms.connectivity import get_components_of_graph
+from src.algorithms.representation_conversions import convert_graph_representation
 from random import randrange
 
 
-def is_graph_eulerian(g):
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+def is_graph_eulerian(graph):
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
+            if graph.representation != "AM":
+                convert_graph_representation(graph, "AM")
             # IS COMPOSED OF MAXIMUM ONE COMPONENT WHICH IS NOT ISOLATED VERTEX
-            components = get_components_of_graph(g)
+            components = get_components_of_graph(graph)
             number_of_nontrivial_components = 0
             for component in components:
                 if len(component) > 1:
@@ -25,8 +28,8 @@ def is_graph_eulerian(g):
             elif number_of_nontrivial_components > 1:
                 return False
             # EVEN DEGREES OF VERTICES
-            for i in range(len(g.data)):
-                if sum(g.data[i]) % 2 != 0:
+            for i in range(len(graph.data)):
+                if sum(graph.data[i]) % 2 != 0:
                     return False
             return True
     else:
@@ -41,48 +44,50 @@ def construct_eulerian_graph(n):
         seq = Sequence(even_degree_list)
         if is_degree_sequence(seq) is True:
             break
-    g = construct_graph_from_degree_sequence(seq)
-    while is_graph_eulerian(g) is False:
-        g.randomize()
-    return g
+    graph = construct_graph_from_degree_sequence(seq)
+    while is_graph_eulerian(graph) is False:
+        graph.randomize()
+    return graph
 
 
-def get_eulerian_cycle_of_graph(g, show_cycle=True):
+def get_eulerian_cycle_of_graph(graph, show_cycle=True):
     eulerian_cycle = []
-    if isinstance(g, Graph.Graph):
-        if g.data is None:
+    if isinstance(graph, Graph.Graph):
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            if is_graph_eulerian(g) is True:
-                g_copy = copy.deepcopy(g)
+            if is_graph_eulerian(graph) is True:
+                if graph.representation != "AM":
+                    convert_graph_representation(graph, "AM")
+                g_copy = copy.deepcopy(graph)
                 n = len(g_copy.data)
-                stk_tmp = Stack()   # AUXILIARY STACK
-                ec_stk = Stack()    # EULERIAN CYCLE STACK
+                tmp_stack = Stack()   # AUXILIARY STACK
+                ec_stack = Stack()    # EULERIAN CYCLE STACK
 
                 # ADD FIRST VERTEX OF EULERIAN CYCLE
                 for i in range(1, n):
                     for j in range(0, i):
                         if g_copy.data[i][j] == 1:
-                            stk_tmp.push(j)
+                            tmp_stack.push(j)
                             break
                     else:
                         continue
                     break
 
-                while stk_tmp.is_empty() is False:
-                    v = stk_tmp.peek()
+                while tmp_stack.is_empty() is False:
+                    v = tmp_stack.peek()
                     u = 0
                     while u < n:
                         if g_copy.data[v][u] == 1:
-                            stk_tmp.push(u)
+                            tmp_stack.push(u)
                             g_copy.data[v][u] = g_copy.data[u][v] = 0
                             break
                         u += 1
                     if u == n:
-                        stk_tmp.pop()
-                        ec_stk.push(v)
+                        tmp_stack.pop()
+                        ec_stack.push(v)
 
-                eulerian_cycle = ec_stk.unpack_to_list()
+                eulerian_cycle = ec_stack.unpack_to_list()
                 if show_cycle is True and len(eulerian_cycle) > 0:
                     print("Eulerian cycle of graph:\n" + str(eulerian_cycle[0]+1), end='')
                     for i in range(1, len(eulerian_cycle)):

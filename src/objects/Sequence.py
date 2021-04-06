@@ -26,11 +26,11 @@ class Sequence:
             print("Passed argument is not a list.")
 
     def __str__(self):
-        res = "(" + str(self.data[0])
+        sequence_as_string = "(" + str(self.data[0])
         for i in range(1, len(self.data)):
-            res = res + "," + str(self.data[i])
-        res = res + ")"
-        return res
+            sequence_as_string = sequence_as_string + "," + str(self.data[i])
+        sequence_as_string = sequence_as_string + ")"
+        return sequence_as_string
 
     def __len__(self):
         return len(self.data)
