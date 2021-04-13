@@ -27,11 +27,14 @@ class Graph:
             print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
     def make_random_graph_edge_number(self, n, m, show_info=True):
+        max_num_of_edges = n * (n-1) / 2
+        if m > max_num_of_edges:
+            print("Random graph cannot be created (too many edges required).")
+            return
         self.representation = 'AM'
         self.data = [[0] * n for _ in range(n)]
-        max_num_of_edges = n * (n-1) / 2
-        indexes_of_existing_edges = sample(range(1, int(max_num_of_edges)), m)
-        index = 1
+        indexes_of_existing_edges = sample(range(0, int(max_num_of_edges)), m)
+        index = 0
         for i in range(1, n):
             for j in range(0, i):
                 if index in indexes_of_existing_edges:
@@ -49,7 +52,7 @@ class Graph:
                 if random() <= p:
                     self.data[i][j] = self.data[j][i] = 1
         if show_info is True:
-            print("Random graph has been created (probability model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")
+            print("Random graph has been created (Gilbert model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")
             print("Graph represented by adjacency matrix.")
 
     def draw(self, img_width=600, img_height=600):
