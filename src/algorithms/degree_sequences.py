@@ -1,33 +1,35 @@
+import copy
+
 from src.objects.Sequence import Sequence
 import src.objects.Graph as Graph
 
 from src.algorithms.representation_conversions import convert_graph_representation
 
 
-def is_degree_sequence(seq, show_steps=False):
-    if isinstance(seq, Sequence):
-        if len(seq.data) > 0:
-            s = seq.data.copy()
+def is_degree_sequence(sequence, show_steps=False):
+    if isinstance(sequence, Sequence):
+        if len(sequence.data) > 0:
+            seq_copy = copy.deepcopy(sequence.data)
             count_odd = 0
-            for elem in s:
+            for elem in seq_copy:
                 if elem % 2 == 1:
                     count_odd += 1
             if count_odd % 2 == 1:
                 return False
             while True:
-                s.sort(reverse=True)
+                seq_copy.sort(reverse=True)
                 if show_steps:
-                    print(s)
-                for elem in s:
+                    print(seq_copy)
+                for elem in seq_copy:
                     if elem != 0:
                         break
                 else:
                     return True
-                if s[-1] == -1 or s[0] >= len(s):
+                if seq_copy[-1] == -1 or seq_copy[0] >= len(seq_copy):
                     return False
-                for i in range(1, s[0] + 1):
-                    s[i] += - 1
-                del s[0]
+                for i in range(1, seq_copy[0] + 1):
+                    seq_copy[i] += - 1
+                del seq_copy[0]
         else:
             print("Passed argument is an empty sequence.")
     else:
@@ -35,45 +37,44 @@ def is_degree_sequence(seq, show_steps=False):
     return False
 
 
-def get_degree_sequence_from_graph(g):
-    if isinstance(g, Graph.Graph):
-        s = Sequence()
-        if g.data is None:
+def get_degree_sequence_from_graph(graph):
+    if isinstance(graph, Graph.Graph):
+        seq = Sequence()
+        if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
-            starting_representation = g.mode
-            if starting_representation != "AM":
-                convert_graph_representation(g, "AM")
+            if graph.representation != "AM":
+                convert_graph_representation(graph, "AM")
 
-            degree_seq_of_graph = [sum(elem) for elem in g.data]
-            s.read_sequence_from_list(degree_seq_of_graph)
-        return s
+            degree_seq_of_graph = [sum(elem) for elem in graph.data]
+            seq.read_sequence_from_list(degree_seq_of_graph)
+        return seq
     else:
         print("Passed argument is not a graph.")
 
 
-def construct_graph_from_degree_sequence(seq):
-    g = Graph.Graph()
-    if isinstance(seq, Sequence):
-        if is_degree_sequence(seq):
-            n = len(seq)
+def construct_graph_from_degree_sequence(sequence):
+    graph = Graph.Graph()
+    if isinstance(sequence, Sequence):
+        if is_degree_sequence(sequence):
+            n = len(sequence)
 
-            g.mode = "AM"
-            g.data = [[0] * n for _ in range(n)]
-            my = [[i, seq[i]] for i in range(n)]
+            graph.representation = "AM"
+            graph.data = [[0] * n for _ in range(n)]
+            v_and_d = [[i, sequence[i]] for i in range(n)]
 
             second_list_argument = lambda li: li[1]
 
             while True:
-                my.sort(key=second_list_argument, reverse=True)
-                if my[0][1] == 0:
+                v_and_d.sort(key=second_list_argument, reverse=True)
+                if v_and_d[0][1] == 0:
                     break
-                for j in range(1, my[0][1]+1):
-                    my[j][1] -= 1
-                    g.data[my[0][0]][my[j][0]] = g.data[my[j][0]][my[0][0]] = 1
-                del my[0]
+                for j in range(1, v_and_d[0][1]+1):
+                    v_and_d[j][1] -= 1
+                    graph.data[v_and_d[0][0]][v_and_d[j][0]] = graph.data[v_and_d[j][0]][v_and_d[0][0]] = 1
+                del v_and_d[0]
         else:
             print("Passed sequence is not a degree sequence of a graph.")
     else:
         print("Passed argument is not a sequence.")
-    return g
+    return graph

@@ -13,3 +13,14 @@ src/algorithms/__pycache__/representation_conversions.cpython-38.pyc
 src/objects/__pycache__/__init__.cpython-38.pyc
 src/objects/__pycache__/Graph.cpython-38.pyc
 src/objects/__pycache__/Sequence.cpython-38.pyc
+src/algorithms/__pycache__/connectivity.cpython-38.pyc
+src/algorithms/__pycache__/connectivity.cpython-38.pyc
+*.pyc
+src/algorithms/__pycache__/representation_check.cpython-38.pyc
+*.pyc
+src/objects/__pycache__/Stack.cpython-38.pyc
+src/algorithms/__pycache__/regularity.cpython-38.pyc
+src/algorithms/__pycache__/hamiltonicity.cpython-38.pyc
+src/algorithms/__pycache__/eulerianity.cpython-38.pyc
+src/algorithms/__pycache__/dfs.cpython-38.pyc
+src/algorithms/__pycache__/connectivity.cpython-38.pyc

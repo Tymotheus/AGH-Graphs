@@ -48,17 +48,19 @@ g.draw(600, 600)
 print("\n\n---------------------------------------- AD. 1.3 ----------------------------------------")
 
 # random graph - Erdos-Renyi model based on number of edges
-g.make_random_graph_edge_number(7, 10)
+g.make_random_graph_edge_number(2, 1)
 print(g)
+g.draw()
 # random graph - probability model
-g.make_random_graph_probability(10, 0.3)
+g.make_random_graph_probability(100, 0.03)
 print(g)
+g.draw()
 
-print("\n\n---------------------------------------- BONUS ----------------------------------------")
-
-number_of_graphs_to_generate = input("How many random graphs do you want to generate and draw? ")
-# draw some random graphs
-for _ in range(int(number_of_graphs_to_generate)):
-    g.make_random_graph_probability(randrange(5, 50), random())
-    print(g)
-    g.draw(600, 600)
+# print("\n\n---------------------------------------- BONUS ----------------------------------------")
+#
+# number_of_graphs_to_generate = input("How many random graphs do you want to generate and draw? ")
+# # draw some random graphs
+# for _ in range(int(number_of_graphs_to_generate)):
+#     g.make_random_graph_probability(randrange(5, 50), random())
+#     print(g)
+#     g.draw(600, 600)
