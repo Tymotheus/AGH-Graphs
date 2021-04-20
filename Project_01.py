@@ -48,7 +48,7 @@ g.draw(600, 600)
 print("\n\n---------------------------------------- AD. 1.3 ----------------------------------------")
 
 # random graph - Erdos-Renyi model based on number of edges
-g.make_random_graph_edge_number(2, 1)
+g.make_random_graph_edge_number(17, 21)
 print(g)
 g.draw()
 # random graph - probability model

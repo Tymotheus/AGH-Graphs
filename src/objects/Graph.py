@@ -7,11 +7,25 @@ from src.algorithms.representation_checks import *
 
 
 class Graph:
+    '''Representation of an undirected graph, without labels.
+
+    Stores information about its vertices and edges in .data field.
+    It can be then interpreted using the .representation with certain values:
+    AM - Adjacency Matrix
+    IM - Incidence Matrix
+    AL - Adjacency List
+    It also consists of a few useful functions. '''
+
     def __init__(self):
         self.data = None
         self.representation = None
 
     def read_graph_from_file(self, file_path, representation='AM', show_info=True):
+        ''' Allows to open a file and save values from it to the current graph.
+
+        Uses the given representation, if show_info argument is true, it prints
+        the graph after its data is saved to the object. '''
+
         with open(file_path, 'r') as f:
             data = [[int(num) for num in line.split(' ')] if line != '\n' else [] for line in f]
         if conversion_check_map[representation](data) is True:
@@ -27,6 +41,11 @@ class Graph:
             print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
     def make_random_graph_edge_number(self, n, m, show_info=True):
+        '''Creates a graph with random number of edges and vertices.
+
+        n is a number of vertices, m is a number of edges.
+        If show_info argument is true, prints the graph after its creation. '''
+
         max_num_of_edges = n * (n-1) / 2
         if m > max_num_of_edges:
             print("Random graph cannot be created (too many edges required).")
@@ -45,6 +64,11 @@ class Graph:
             print("Graph represented by adjacency matrix.")
 
     def make_random_graph_probability(self, n, p, show_info=True):
+        '''Creates a random graph, for the given probability of edge existence.
+
+        n is a number of vertices. p is a probability for a single edge, from
+        the set of all possible, to be added to the graph. '''
+
         self.representation = 'AM'
         self.data = [[0] * n for _ in range(n)]
         for i in range(1, n):
@@ -56,6 +80,10 @@ class Graph:
             print("Graph represented by adjacency matrix.")
 
     def draw(self, img_width=600, img_height=600):
+        ''' Pops up a new window with the given graph drawn in it.
+
+        img_width and img_height are numbers of pixels of the window.'''
+
         if self.data is None:
             print("Graph is empty (no data) - cannot draw the graph.")
             return
@@ -96,6 +124,8 @@ class Graph:
         root.mainloop()
 
     def randomize(self, show_shuffling_statistics=False):
+        '''Shuffles edges between vertices in the given graph. '''
+
         if self.data is None:
             print("Graph is empty (no data) - cannot shuffle edges.")
             return
@@ -145,6 +175,8 @@ class Graph:
             print("n: " + str(n) + ", m: " + str(m) + ", average: " + str(sum(number_of_iterations_arr)/len(number_of_iterations_arr)) + ", exceeded: " + str(exceeded))
 
     def __str__(self):
+        '''String representation of a graph, depending on the .representation field. '''
+        
         if self.data is None:
             graph_as_string = "Graph is empty (no data)."
         elif self.representation == 'AM':
