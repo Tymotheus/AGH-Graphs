@@ -44,7 +44,7 @@ class Graph:
         '''Creates a graph with random number of edges and vertices.
 
         n is a number of vertices, m is a number of edges.
-        If show_info argument is true, prints the graph after its creation. '''
+        If show_info argument is true, prints information about the graph after its creation.'''
 
         max_num_of_edges = n * (n-1) / 2
         if m > max_num_of_edges:
@@ -64,10 +64,10 @@ class Graph:
             print("Graph represented by adjacency matrix.")
 
     def make_random_graph_probability(self, n, p, show_info=True):
-        '''Creates a random graph, for the given probability of edge existence.
+        '''Creates a random graph for given probability of edge existence.
 
-        n is a number of vertices. p is a probability for a single edge, from
-        the set of all possible, to be added to the graph. '''
+        n is a number of vertices, p is a probability with which each edge occurs independently.
+        If show_info argument is true, prints information about the graph after its creation.'''
 
         self.representation = 'AM'
         self.data = [[0] * n for _ in range(n)]
