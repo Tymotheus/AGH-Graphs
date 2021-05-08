@@ -10,9 +10,10 @@ def is_adjacency_matrix(matrix):
         return False
     for i in range(1, n):
         for j in range(0, i):
-            if matrix[i][j] != 0:
-                if matrix[i][j] != 1:
-                    return False
+            # usunąć albo sprawdzać dodać do funkcji argument Graf Ważony czy coś 
+            # if matrix[i][j] != 0:
+            #     if matrix[i][j] != 1:
+            #         return False
             if matrix[i][j] != matrix[j][i]:
                 return False
         if matrix[i][i] != 0:
@@ -74,4 +75,4 @@ def is_adjacency_list(adjacency_list):
 '''Dictionary object, to map the represantations to their proper validation functions'''
 conversion_check_map = {"AM": is_adjacency_matrix,
                        "IM": is_incidence_matrix,
-                       "AL": is_adjacency_list}
+                       "AL": is_adjacency_list }

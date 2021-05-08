@@ -67,8 +67,8 @@ g3.make_random_graph_probability(20, 0.07)
 # GET MAXIMUM COMPONENT OF A GRAPH
 max_component_of_g3 = get_maximum_component_of_graph(g3, show_maximum_component_result=True, show_components=True,
                                                      show_vertices_flow=False)
-# print(max_component_of_g3)
-# g3.draw()
+print(max_component_of_g3)
+g3.draw(max_component_of_g3)
 
 print("\n\n---------------------------------------- AD. 2.4 ----------------------------------------")
 

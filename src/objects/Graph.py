@@ -79,7 +79,7 @@ class Graph:
             print("Random graph has been created (Gilbert model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")
             print("Graph represented by adjacency matrix.")
 
-    def draw(self, img_width=600, img_height=600):
+    def draw(self, component=[], img_width=600, img_height=600):
         ''' Pops up a new window with the given graph drawn in it.
 
         img_width and img_height are numbers of pixels of the window.'''
@@ -108,16 +108,19 @@ class Graph:
             positions[i][0] = g_center_height + (g_r * math.sin(v_angle) if n > 1 else 0)
             positions[i][1] = g_center_width - (g_r * math.cos(v_angle) if n > 1 else 0)
 
+            fillColor = "red" if len(component) and i in component else "black"
+
             canvas.create_oval(positions[i][0]-v_r, positions[i][1]-v_r,
                                positions[i][0]+v_r, positions[i][1]+v_r,
-                               fill="black")
+                               fill=fillColor)
             canvas.create_text(positions[i][0] + (1 + n/7) * v_r * math.sin(v_angle),
                                positions[i][1] - (1 + n/7) * v_r * math.cos(v_angle),
-                               text=i+1, font=("Verdana", max(int(20 - 2*n/10), 10)))
+                               text=i+1, font=("Verdana", max(int(20 - 2*n/10), 10))) # text = i+1
         for i in range(1, n):
+            fillColor = "red" if len(component) and i in component else "black"
             for j in range(0, i):
-                if self.data[i][j] == 1:
-                    canvas.create_line(positions[i][0], positions[i][1], positions[j][0], positions[j][1])
+                if self.data[i][j]: # == 1
+                    canvas.create_line(positions[i][0], positions[i][1], positions[j][0], positions[j][1], fill=fillColor)
 
         print("Graph is being drawn.")
         canvas.pack()

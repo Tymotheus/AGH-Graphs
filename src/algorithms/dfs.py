@@ -29,7 +29,7 @@ def dfs_recursive(graph, n, v_component, v=0, component_number=1, show_vertices_
     if graph.representation != "AM":
         convert_graph_representation(graph, "AM")
     for u in range(n):
-        if graph.data[v][u] == 1:
+        if graph.data[v][u] :#== 1:
             if v_component[u] == -1:
                 if show_vertices_flow is True:
                     print(str(v+1) + " -> " + str(u+1))

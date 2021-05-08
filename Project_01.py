@@ -13,17 +13,17 @@ print("\n\n---------------------------------------- AD. 1.1 --------------------
 # reading from file
 g.read_graph_from_file("example_data/proj1_am.txt")
 print(g)
-g.draw(600, 600)
+g.draw()
 
 g.read_graph_from_file("example_data/proj1_im.txt", 'IM')
 print(g)
 convert_graph_representation(g, "AM")
-g.draw(600, 600)
+g.draw()
 
 g.read_graph_from_file("example_data/proj1_al.txt", 'AL')
 print(g)
 convert_graph_representation(g, "AM")
-g.draw(600, 600)
+g.draw()
 
 # conversions
 convert_graph_representation(g, "IM")   # AL -> IM
@@ -43,7 +43,7 @@ print("\n\n---------------------------------------- AD. 1.2 --------------------
 
 # drawing a graph
 convert_graph_representation(g, "AM")
-g.draw(600, 600)
+g.draw()
 
 print("\n\n---------------------------------------- AD. 1.3 ----------------------------------------")
 
@@ -63,4 +63,4 @@ g.draw()
 # for _ in range(int(number_of_graphs_to_generate)):
 #     g.make_random_graph_probability(randrange(5, 50), random())
 #     print(g)
-#     g.draw(600, 600)
+#     g.draw()
