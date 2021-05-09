@@ -78,6 +78,10 @@ class WeightedGraphManager:
         vertex are counting from 1. 
         If input origin is greater than number of vertex then it is reduced to maximum vertex"""
 
+        if origin < 1:
+            origin = 1
+            print("Origin has been upgraded to 1")
+
         if origin > len(graph.data):
             origin = len(graph.data)
             print("Origin has been reduced to " + str(origin))
