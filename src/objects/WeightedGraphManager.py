@@ -71,30 +71,34 @@ class WeightedGraphManager:
         # TO DO: reprezentacje? Czy tylko AM?
 
     @staticmethod
-    def dijkstra(graph, origin):
-        """"Method returns and prints matrix in which:
+    def dijkstra(graph, origin, show = False):
+        """"Method returns matrix in which:
         matrix[0] is a list of distance from origin vertex to every other vertex
         matrix[1-...] are the dhotest paths from origin to every vertex
         vertex are counting from 1. 
-        If input origin is greater than number of vertex then it is reduced to maximum vertex"""
+        If input origin is greater than number of vertex then it is reduced to maximum vertex.
+        If input show is treu then distance and paths are printed."""
 
+        n = len(graph.data)
         if origin < 1:
             origin = 1
             print("Origin has been upgraded to 1")
 
-        if origin > len(graph.data):
-            origin = len(graph.data)
+        if origin > n:
+            origin = n
             print("Origin has been reduced to " + str(origin))
 
         origin -= 1
-        distance = {i: float('inf') for i in range(len(graph.data))}
-        copyDistance = {i: float('inf') for i in range(len(graph.data))}
+        distance = {i: float('inf') for i in range(n)}
+        copyDistance = {i: float('inf') for i in range(n)}
 
         distance[origin] = 0
-        predecessor = [None for _ in range(len(graph.data))]
+        copyDistance[origin] = 0
+        
+        predecessor = [None for _ in range(n)]
 
         S = []
-        while len(S) < len(graph.data):
+        while len(S) < n:
             (u, d) = min(copyDistance.items(), key=lambda x: x[1]) 
             S.append(u)
             copyDistance.pop(u)
@@ -103,7 +107,7 @@ class WeightedGraphManager:
                 if graph.data[v][u] and distance[v] > (distance[u] + graph.data[v][u]):
                     distance[v] = distance[u] + graph.data[v][u]
                     copyDistance[v] = distance[u] + graph.data[v][u]
-                    predecessor[v] = u+1        
+                    predecessor[v] = u+1  
 
         matrix = [[] for _ in range(len(distance)+1)]
         matrix[0] = [i for i in distance.values()]
@@ -118,8 +122,23 @@ class WeightedGraphManager:
             matrix[v+1] = path
         matrix[origin+1] = [origin+1]
 
-        print("Strat s = " + str(origin+1))
-        for v in range(len(graph.data)):
-            print("d("+ str(v+1) +") = " + str(matrix[0][v]) + " ==> " + str(matrix[v+1]))
+        if show:
+            print("Strat s = " + str(origin+1))
+            for v in range(n):
+                print("d("+ str(v+1) +") = " + str(matrix[0][v]) + " ==> " + str(matrix[v+1]))
 
         return matrix
+
+    @staticmethod
+    def create_vertex_distance_matrix(graph, show = False):
+        """Method creating vertex distance matrix, if input show is True then the matrix is printed."""
+        n = len(graph.data)
+        distanceMatrix = [[0 for _ in range(n)] for _ in range(n)]
+        
+        for i in range(n):
+            matrix = WeightedGraphManager.dijkstra(graph, i+1)
+            distanceMatrix[i] = matrix[0]
+
+        if show:
+            for i in range(n):
+                print(distanceMatrix[i])
