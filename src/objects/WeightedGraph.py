@@ -71,14 +71,6 @@ class WeightedGraph:
             positions[i][0] = g_center_height + (g_r * math.sin(v_angle) if n > 1 else 0)
             positions[i][1] = g_center_width - (g_r * math.cos(v_angle) if n > 1 else 0)
 
-            fill_color = "red" if len(vertices) and i in vertices else "gray"
-
-            canvas.create_oval(positions[i][0] - v_r, positions[i][1] - v_r,
-                               positions[i][0] + v_r, positions[i][1] + v_r,
-                               fill=fill_color)
-            canvas.create_text(positions[i][0],
-                               positions[i][1],
-                               text=i + 1, font=("Verdana", max(int(20 - 2 * n / 10), 10)))
         for i in range(1, n):
             for j in range(0, i):
                 if self.data[i][j]:
@@ -91,7 +83,16 @@ class WeightedGraph:
                                        text=str(self.data[i][j]),
                                        font=("Verdana", max(int(20 - 2*n/10), 10)),
                                        fill=fill_color)
+        for i in range(n):
+            fill_color = "red" if len(vertices) and i in vertices else "gray"
 
+            canvas.create_oval(positions[i][0] - v_r, positions[i][1] - v_r,
+                               positions[i][0] + v_r, positions[i][1] + v_r,
+                               fill=fill_color)
+            canvas.create_text(positions[i][0],
+                               positions[i][1],
+                               text=i + 1, font=("Verdana", max(int(20 - 2 * n / 10), 10)))
+            
         print("Weighted graph is being drawn.")
         canvas.pack()
         root.mainloop()
