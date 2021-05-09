@@ -91,7 +91,7 @@ class WeightedGraph:
                                fill=fill_color)
             canvas.create_text(positions[i][0],
                                positions[i][1],
-                               text=i + 1, font=("Verdana", max(int(20 - 2 * n / 10), 10)))
+                               text=i+1, font=("Verdana", max(int(20 - 2 * n / 10), 10)))
             
         print("Weighted graph is being drawn.")
         canvas.pack()
