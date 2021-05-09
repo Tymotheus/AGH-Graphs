@@ -16,6 +16,7 @@ The solutions use:
 1. To create weighted graph you can use one of two methods from WeightedGraphManager:
     >construct_weighted_graph_edge_number(n, m, w_min=1, w_max=10)
     >construct_weighted_graph_probability(n, p, w_min=1, w_max=10)
+    
     Both methods return WeightedGraph which can be drawn by mehod draw()
     You can also read WeightedGraph from file:
     >read_from_file(path)
