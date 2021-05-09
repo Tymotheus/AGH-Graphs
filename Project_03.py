@@ -1,20 +1,30 @@
-import os
-import time
-from random import randint, uniform
-os.system('cls')
+from src.objects.Graph import Graph
+from src.objects.WeightedGraphManager import WeightedGraphManager
 
-from src.objects.WeightGraph import WeightGraph
+from src.algorithms.connectivity import construct_connected_graph_edge_number, construct_connected_graph_probability
 
 
 print("\n\n---------------------------------------- AD. 3.1 ----------------------------------------")
-# creating random WeightGraph - default max amount of vertex = 7, p = 0.5
-wg = WeightGraph()
-# wg.draw()
 
-# wg = WeightGraph(15, 0.1)
-# wg.draw()
+# CONNECTED WEIGHTED GRAPH USING PRUFER CODE AND ERDOS-RENYI MODEL
+g1 = construct_connected_graph_edge_number(5, 6)
+g1.draw()
+wg1 = WeightedGraphManager.make_weighted_graph_from_simple_graph(g1)
+wg1.draw()
 
-# reading WeightGraph from file - is possible only as Adjacency Matrix ("AM")
-wg.read_graph_from_file("example_data/proj3_am.txt", "AM")
-print(wg)
-wg.draw()
+# CONNECTED WEIGHTED GRAPH USING PRUFER CODE AND GILBERT MODEL
+g2 = construct_connected_graph_probability(5, 0.5)
+g2.draw()
+wg2 = WeightedGraphManager.make_weighted_graph_from_simple_graph(g2)
+wg2.draw()
+
+print("\n\n---------------------------------------- AD. 3.2 ----------------------------------------")
+
+
+print("\n\n---------------------------------------- AD. 3.3 ----------------------------------------")
+
+
+print("\n\n---------------------------------------- AD. 3.4 ----------------------------------------")
+
+
+print("\n\n---------------------------------------- AD. 3.5 ----------------------------------------")

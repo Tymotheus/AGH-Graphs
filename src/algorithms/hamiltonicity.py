@@ -6,6 +6,10 @@ from src.algorithms.connectivity import is_graph_connected
 
 
 def get_hamiltonian_cycle_of_graph(graph, show_cycle=True):
+    """Returns list of vertices which form a hamiltonian cycle of a graph.
+        graph - Graph object
+        show_cycle - boolean whether to show found cycle"""
+
     hamiltonian_cycle = []
     if isinstance(graph, Graph.Graph):
         if graph.data is None:
@@ -47,6 +51,14 @@ def get_hamiltonian_cycle_of_graph(graph, show_cycle=True):
 
 
 def hamiltonian_dfs_recursive(graph, hc_stack, v0, n, v_visited, v=0):
+    """Recursive function of obtaining a hamiltonian cycle.
+        graph - Graph object
+        hc_stack - hamiltonian cycle stack
+        v0 - considered vertex
+        n - number of vertices
+        v_visited - list of information whether a vertex was visited or not
+        v - vertex to consider"""
+
     if graph.representation != "AM":
         convert_graph_representation(graph, "AM")
     for u in range(n):
@@ -62,6 +74,10 @@ def hamiltonian_dfs_recursive(graph, hc_stack, v0, n, v_visited, v=0):
 
 
 def get_hamiltonian_cycle_of_graph_optimized(graph, show_cycle=True):
+    """Returns list of vertices which form a hamiltonian cycle of a graph. Optimized function using S. Martello approach.
+        graph - Graph object
+        show_cycle - boolean whether to show found cycle"""
+
     hamiltonian_cycle = []
     if isinstance(graph, Graph.Graph):
         if graph.data is None:
@@ -105,6 +121,14 @@ def get_hamiltonian_cycle_of_graph_optimized(graph, show_cycle=True):
 
 
 def hamiltonian_dfs_recursive_optimized(graph, hc_stack, v0, n, v_and_d_and_visited, v=0):
+    """Recursive function of obtaining a hamiltonian cycle for optimized function using S. Martello approach.
+        graph - Graph object
+        hc_stack - hamiltonian cycle stack
+        v0 - considered vertex
+        n - number of vertices
+        v_and_d_and_visited - list of information whether a vertex was visited or not and it's degree
+        v - vertex to consider"""
+
     if graph.representation != "AM":
         convert_graph_representation(graph, "AM")
     for u in range(n-1, -1, -1):

@@ -6,6 +6,9 @@ from src.algorithms.representation_conversions import convert_graph_representati
 
 
 def is_graph_regular(graph):
+    """Returns True whether passed graph is regular and False otherwise.
+        graph - Graph object"""
+
     if isinstance(graph, Graph.Graph):
         if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
@@ -19,10 +22,14 @@ def is_graph_regular(graph):
             return True
     else:
         print("Passed argument is not a graph.")
-        return False
+    return False
 
 
 def construct_k_regular_graph(n, k):
+    """Returns a k-regular graph.
+        n - number of vertices
+        k - degree of every vertex"""
+
     g = Graph.Graph()
     if k < n:
         k_regular_degree_list = [k for _ in range(n)]
