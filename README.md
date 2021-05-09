@@ -22,9 +22,9 @@ Task 3.1:
         read_from_file(path)
 
 Task 3.2:
-    >To print the shortes paths from one vertex to every other you can use WeightedGraph method: 
-    >>dijkstra(graph, origin)
-    >where graph is a WeightedGraph and origin is a start vertex. Input origin should be an integer in range from 1 to max graph's vertex, if it is greater then method reduce it to maximum value.
+    > > To print the shortes paths from one vertex to every other you can use WeightedGraph method: 
+    > > dijkstra(graph, origin)
+    > > where graph is a WeightedGraph and origin is a start vertex. Input origin should be an integer in range from 1 to max graph's vertex, if it is greater then method reduce it to maximum value.
 
 
 # PROJECT 4
