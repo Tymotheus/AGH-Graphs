@@ -69,3 +69,53 @@ class WeightedGraphManager:
         """Creating weighted graph by reading adjacency matrix from file."""
         return WeightedGraph(path)
         # TO DO: reprezentacje? Czy tylko AM?
+
+    @staticmethod
+    def dijkstra(graph, origin):
+        """"Method returns and prints matrix in which:
+        matrix[0] is a list of distance from origin vertex to every other vertex
+        matrix[1-...] are the dhotest paths from origin to every vertex
+        vertex are counting from 1. 
+        If input origin is greater than number of vertex then it is reduced to maximum vertex"""
+
+        if origin > len(graph.data):
+            origin = len(graph.data)
+            print("Origin has been reduced to " + str(origin))
+
+        origin -= 1
+        distance = {i: float('inf') for i in range(len(graph.data))}
+        copyDistance = {i: float('inf') for i in range(len(graph.data))}
+
+        distance[origin] = 0
+        predecessor = [None for _ in range(len(graph.data))]
+
+        S = []
+        while len(S) < len(graph.data):
+            (u, d) = min(copyDistance.items(), key=lambda x: x[1]) 
+            S.append(u)
+            copyDistance.pop(u)
+            
+            for v in range(len(distance)):
+                if graph.data[v][u] and distance[v] > (distance[u] + graph.data[v][u]):
+                    distance[v] = distance[u] + graph.data[v][u]
+                    copyDistance[v] = distance[u] + graph.data[v][u]
+                    predecessor[v] = u+1        
+
+        matrix = [[] for _ in range(len(distance)+1)]
+        matrix[0] = [i for i in distance.values()]
+        for v in range(len(distance)):
+            path = []
+            element = predecessor[v]
+            path.append(v+1)
+            while element:
+                path.append(element)
+                element = predecessor[element-1]
+            path.reverse()
+            matrix[v+1] = path
+        matrix[origin+1] = [origin+1]
+
+        print("Strat s = " + str(origin+1))
+        for v in range(len(graph.data)):
+            print("d("+ str(v+1) +") = " + str(matrix[0][v]) + " ==> " + str(matrix[v+1]))
+
+        return matrix

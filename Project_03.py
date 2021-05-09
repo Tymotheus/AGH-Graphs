@@ -17,8 +17,8 @@ g = WeightedGraphManager.read_from_file("example_data/proj3_am.txt")
 print("\n\n---------------------------------------- AD. 3.2 ----------------------------------------")
 
 # DIJKSTRA
-# WeightedGraphManager.dijkstra(g, 0)
-# g.draw()
+distance = WeightedGraphManager.dijkstra(g, 11)
+g.draw()
 
 print("\n\n---------------------------------------- AD. 3.3 ----------------------------------------")
 
