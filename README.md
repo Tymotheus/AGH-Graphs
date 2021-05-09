@@ -13,16 +13,14 @@ The solutions use:
 
 
 # PROJECT 3
-Task 3.1:
-    To create weighted graph you can use one of two methods from WeightedGraphManager:
-        construct_weighted_graph_edge_number(n, m, w_min=1, w_max=10)
-        construct_weighted_graph_probability(n, p, w_min=1, w_max=10)
+1. To create weighted graph you can use one of two methods from WeightedGraphManager:
+    > >construct_weighted_graph_edge_number(n, m, w_min=1, w_max=10)
+    <pre>construct_weighted_graph_probability(n, p, w_min=1, w_max=10)</pre>
     Both methods return WeightedGraph which can be drawn by mehod draw()
     You can also read WeightedGraph from file:
-        read_from_file(path)
+    <pre>read_from_file(path)</pre>
 
-Task 3.2:
-    <pre>To print the shortes paths from one vertex to every other you can use WeightedGraph method: </pre>
+2. To print the shortes paths from one vertex to every other you can use WeightedGraph method:
     > > dijkstra(graph, origin)
     > > where graph is a WeightedGraph and origin is a start vertex. Input origin should be an integer in range from 1 to max graph's vertex, if it is greater then method reduce it to maximum value.
 
