@@ -74,7 +74,7 @@ class WeightedGraph:
         for i in range(1, n):
             for j in range(0, i):
                 if self.data[i][j]:
-                    fill_color = "red" if len(vertices) and i in vertices else "gray"
+                    fill_color = "red" if len(vertices) and i in vertices and j in vertices else "gray"
                     canvas.create_line(positions[i][0], positions[i][1],
                                        positions[j][0], positions[j][1],
                                        fill=fill_color)
