@@ -15,6 +15,7 @@ The solutions use:
 # PROJECT 3
 1. To create weighted graph g you can use one of two methods from WeightedGraphManager:
     >g = WeightedGraphManager.construct_weighted_graph_edge_number(n, m, w_min=1, w_max=10)
+    
     >g = WeightedGraphManager.construct_weighted_graph_probability(n, p, w_min=1, w_max=10)
     
     Both methods return WeightedGraph which can be drawn by mehod draw().
@@ -38,6 +39,7 @@ The solutions use:
 
 4. To get center and minimax center of WeightedGraph you can use function from dijkstra module:
     > center = center_of_weighted_graph(weightedGraph, vertexDistanceMatrix=[])
+    
     > minimaxCenter = minimax_center_of_weighted_graph(weightedG, vertexDistanceMatrix=[])
 
     Both functions get WeightedGraph and additionally vertex distance matrix of the graph - second parameter can reduce time of program execution.
