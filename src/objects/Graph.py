@@ -5,19 +5,15 @@ from src.algorithms.representation_checks import *
 
 
 class Graph:
-    """Representation of an undirected graph, without labels.
-
-    Stores information about its vertices and edges in .data field.
-    It can be then interpreted using the .representation with certain values:
-    AM - Adjacency Matrix
-    IM - Incidence Matrix
-    AL - Adjacency List
-    It also consists of a few useful functions.
-
-    By default the graph is just an isolated vertex represented by adjacency matrix."""
+    """Representation of an simple graph. It is composed of both basic information and functionalities connected with simple graphs.
+    .data - stores information about its vertices and edges
+    .representation - kind of graph interpretation. The following are available:
+        AM - Adjacency Matrix
+        IM - Incidence Matrix
+        AL - Adjacency List"""
 
     def __init__(self, file_path=None, representation='AM', show_info=True):
-        """ Graph constructor.
+        """ Graph constructor. When file_path argument is passed it reads a graph data from file. Otherwise it creates a graph composed of isolated vertex represented by adjacency matrix.
             file_path - path to file with graph data. If not passed graph will be an isolated vertex represented by adjacency matrix
             representation - representation of a graph
             show_info - boolean whether to print information about the graph after its creation."""
@@ -41,7 +37,7 @@ class Graph:
                 print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
     def draw(self, vertices=None, img_width=600, img_height=600):
-        """ Pops up a new window with the given graph drawn in it.
+        """ Draws the graph in new window which pops up. The graph should be represented by adjacency matrix.
             vertices - set of vertices to distinguish which is helpful during components consideration
             img_width - width of the popped window (in pixels)
             img_height - height of the popped window (in pixels)"""
