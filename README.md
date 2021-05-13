@@ -15,10 +15,11 @@ The solutions use:
 # PROJECT 3
 1. To create weighted graph g you can use one of two methods from WeightedGraphManager:
     >g = WeightedGraphManager.construct_weighted_graph_edge_number(n, m, w_min=1, w_max=10)
+    
     >g = WeightedGraphManager.construct_weighted_graph_probability(n, p, w_min=1, w_max=10)
     
     Both methods return WeightedGraph which can be drawn by mehod draw().
-    You can also read WeightedGraph from file:
+    You can also read WeightedGraph from file (you can only read connected weight graph):
     >g = WeightedGraphManager.read_from_file(path)
 
 2. To print the shortes paths from one vertex to every other you can use function from dijkstra module with parameter show = True:
@@ -38,10 +39,11 @@ The solutions use:
 
 4. To get center and minimax center of WeightedGraph you can use function from dijkstra module:
     > center = center_of_weighted_graph(weightedGraph, vertexDistanceMatrix=[])
+    
     > minimaxCenter = minimax_center_of_weighted_graph(weightedG, vertexDistanceMatrix=[])
 
     Both functions get WeightedGraph and additionally vertex distance matrix of the graph - second parameter can reduce time of program execution.
-    Functions return dictionary with number of vetrex, its sum of distance to every pther vertex and the second function also returns distance to the farthest vertex.
+    Functions return dictionary with number of vetrex, its sum of distance to every other vertex and the second function also returns distance to the farthest vertex.
 
 # PROJECT 4
 

@@ -67,13 +67,14 @@ def create_vertex_distance_matrix(weightedGraph, show = False):
     return distanceMatrix
 
 def center_of_weighted_graph(weightedGraph, distanceMatrix=[]):
-    """Function returns number of vertex which is the center of a WeightedGraph and sum of its distances to every other vertex."""
+    """Function returns sum of distances to every other vertex and numbers of vertex which is the center of a WeightedGraph."""
     n = len(weightedGraph.data)
     if not len(distanceMatrix):
         distanceMatrix = create_vertex_distance_matrix(weightedGraph)
     sums = {i:sum(distanceMatrix[i]) for i in range(n)}
-    (index, s) = min(sums.items(), key=lambda x: x[1]) 
-    return {"center":index+1, "sum_of_distance":s}
+    minSum = min(sums.values())
+    indexes = [k+1 for k, v in sums.items() if v==minSum]
+    return [minSum, *indexes]
 
 def minimax_center_of_weighted_graph(weightedGraph, distanceMatrix=[]):
     """Function returns minimax center which has the less distance to the farthest vertex, 

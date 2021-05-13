@@ -3,6 +3,7 @@ import copy
 from random import randint, sample, random
 
 import src.objects.Graph as Graph
+import src.objects.WeightedGraph as WeightedGraph
 
 from src.algorithms.representation_conversions import convert_graph_representation
 from src.algorithms.dfs import dfs, dfs_recursive
@@ -13,7 +14,7 @@ def is_graph_connected(graph, show_vertices_flow=False):
         graph - Graph object
         show_vertices_flow - boolean whether to show the vertex flow during the DFS algorithm."""
 
-    if not isinstance(graph, Graph.Graph):
+    if not isinstance(graph, Graph.Graph) and not isinstance(graph, WeightedGraph.WeightedGraph):
         print("Passed argument is not a graph.")
         return False
     if graph.data is None:
