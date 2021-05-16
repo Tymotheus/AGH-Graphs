@@ -4,20 +4,18 @@ import math
 from src.algorithms.representation_checks import *
 
 
-class Graph:
-    """Representation of an undirected graph, without labels.
+class WeightedGraph:
+    """Representation of an undirected weighted graph, without labels.
 
     Stores information about its vertices and edges in .data field.
     It can be then interpreted using the .representation with certain values:
     AM - Adjacency Matrix
-    IM - Incidence Matrix
-    AL - Adjacency List
     It also consists of a few useful functions.
 
-    By default the graph is just an isolated vertex represented by adjacency matrix."""
+    By default the weighted graph is just an isolated vertex represented by adjacency matrix."""
 
     def __init__(self, file_path=None, representation='AM', show_info=True):
-        """ Graph constructor.
+        """Weighted graph constructor.
             file_path - path to file with graph data. If not passed graph will be an isolated vertex represented by adjacency matrix
             representation - representation of a graph
             show_info - boolean whether to print information about the graph after its creation."""
@@ -60,40 +58,48 @@ class Graph:
         g_center_width = img_width / 2
         g_center_height = img_height / 2
         g_r = g_center_width * 2 / 3
-        v_r = g_r / n * (1 if n > 2 else 0.5)
+        v_r = g_r / n * (1.5 if n > 2 else 1)
 
         root = tk.Tk()
-        root.geometry(str(img_height)+"x"+str(img_width))
+        root.geometry(str(img_height) + "x" + str(img_width))
         canvas = tk.Canvas(root, height=img_height, width=img_width, bg="white")
 
-        positions = [[0.0]*2 for _ in range(n)]
+        positions = [[0.0] * 2 for _ in range(n)]
 
         for i in range(n):
             v_angle = i * angle
             positions[i][0] = g_center_height + (g_r * math.sin(v_angle) if n > 1 else 0)
             positions[i][1] = g_center_width - (g_r * math.cos(v_angle) if n > 1 else 0)
 
-            fill_color = "red" if len(vertices) and i in vertices else "black"
-
-            canvas.create_oval(positions[i][0]-v_r, positions[i][1]-v_r,
-                               positions[i][0]+v_r, positions[i][1]+v_r,
-                               fill=fill_color)
-            canvas.create_text(positions[i][0] + (1 + n/7) * v_r * math.sin(v_angle),
-                               positions[i][1] - (1 + n/7) * v_r * math.cos(v_angle),
-                               text=i+1, font=("Verdana", max(int(20 - 2*n/10), 10)))
         for i in range(1, n):
-            fill_color = "red" if len(vertices) and i in vertices else "black"
             for j in range(0, i):
                 if self.data[i][j]:
-                    canvas.create_line(positions[i][0], positions[i][1], positions[j][0], positions[j][1], fill=fill_color)
+                    fill_color = "red" if len(vertices) and i in vertices and j in vertices else "gray"
+                    canvas.create_line(positions[i][0], positions[i][1],
+                                       positions[j][0], positions[j][1],
+                                       fill=fill_color)
+                    canvas.create_text((2*positions[i][0] + positions[j][0])/3,
+                                       (2*positions[i][1] + positions[j][1])/3,
+                                       text=str(self.data[i][j]),
+                                       font=("Verdana", max(int(20 - 2*n/10), 10)),
+                                       fill=fill_color)
+        for i in range(n):
+            fill_color = "red" if len(vertices) and i in vertices else "gray"
 
-        print("Graph is being drawn.")
+            canvas.create_oval(positions[i][0] - v_r, positions[i][1] - v_r,
+                               positions[i][0] + v_r, positions[i][1] + v_r,
+                               fill=fill_color)
+            canvas.create_text(positions[i][0],
+                               positions[i][1],
+                               text=i+1, font=("Verdana", max(int(20 - 2 * n / 10), 10)))
+            
+        print("Weighted graph is being drawn.")
         canvas.pack()
         root.mainloop()
 
     def __str__(self):
         """String representation of a graph depending on the .representation field."""
-        
+
         if self.data is None:
             graph_as_string = "Graph is empty (no data)."
         elif self.representation == 'AM':
@@ -108,15 +114,6 @@ class Graph:
                 for element in row:
                     graph_as_string = graph_as_string + str(element) + " "
                 graph_as_string = graph_as_string + "\n"
-        elif self.representation == "AL":
-            graph_as_string = "Adjacency list of graph G:\n"
-            i = 0
-            for row in self.data:
-                graph_as_string = graph_as_string + str(i + 1) + " -> "
-                for element in row:
-                    graph_as_string = graph_as_string + "[" + str(element) + "] "
-                graph_as_string = graph_as_string + "\n"
-                i = i + 1
         else:
             graph_as_string = "Cannot describe graph - unknown representation."
         return graph_as_string

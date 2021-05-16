@@ -7,6 +7,10 @@ from src.algorithms.representation_conversions import convert_graph_representati
 
 
 def is_degree_sequence(sequence, show_steps=False):
+    """Returns True whether passed sequences a degree sequence and False otherwise.
+        sequence - Sequence object
+        show_steps - boolean whether to show the steps of checking process"""
+
     if isinstance(sequence, Sequence):
         if len(sequence.data) > 0:
             seq_copy = copy.deepcopy(sequence.data)
@@ -38,6 +42,9 @@ def is_degree_sequence(sequence, show_steps=False):
 
 
 def get_degree_sequence_from_graph(graph):
+    """Returns the degree sequence from a passed graph.
+        graph - Graph object"""
+
     if isinstance(graph, Graph.Graph):
         seq = Sequence()
         if graph.data is None:
@@ -51,9 +58,13 @@ def get_degree_sequence_from_graph(graph):
         return seq
     else:
         print("Passed argument is not a graph.")
+    return
 
 
 def construct_graph_from_degree_sequence(sequence):
+    """Returns a graph from passed sequence if it's a degree sequence.
+            sequence - Sequence object, should be degree sequence"""
+
     graph = Graph.Graph()
     if isinstance(sequence, Sequence):
         if is_degree_sequence(sequence):

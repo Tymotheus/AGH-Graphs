@@ -4,10 +4,13 @@ from src.algorithms.representation_conversions import convert_graph_representati
 
 
 def dfs(graph, show_vertices_flow=False):
+    """Depth-First Search algorithm implementation. Returns the list of components to which vertices belong.
+        graph - Graph object
+        show_vertices_flow - boolean whether to show the vertex flow during the DFS algorithm."""
+
     if isinstance(graph, Graph.Graph):
         if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
-            return None
         else:
             if graph.representation != "AM":
                 convert_graph_representation(graph, "AM")
@@ -22,14 +25,24 @@ def dfs(graph, show_vertices_flow=False):
             return v_component
     else:
         print("Passed argument is not a graph.")
-        return None
+    return None
 
 
 def dfs_recursive(graph, n, v_component, v=0, component_number=1, show_vertices_flow=False):
+    """Depth-First Search recursive function.
+        graph - Graph object
+        n - number of vertices
+        v_component - list of visited vertices:
+            negative number means that vertex was now visited
+            non-negative number represent the number of component to which the vertex belongs
+        v - considered vertex (as a node of DFS)
+        component_number - number of considered component
+        show_vertices_flow - boolean whether to show the vertex flow during the DFS algorithm"""
+
     if graph.representation != "AM":
         convert_graph_representation(graph, "AM")
     for u in range(n):
-        if graph.data[v][u] == 1:
+        if graph.data[v][u]:
             if v_component[u] == -1:
                 if show_vertices_flow is True:
                     print(str(v+1) + " -> " + str(u+1))

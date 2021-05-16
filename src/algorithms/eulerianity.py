@@ -1,17 +1,22 @@
 import copy
 
+from random import randrange
+
 from src.objects.Sequence import Sequence
-import src.objects.Graph as Graph
 from src.objects.Stack import Stack
+from src.objects.Graph import Graph
+from src.objects.GraphManager import GraphManager
 
 from src.algorithms.degree_sequences import construct_graph_from_degree_sequence, is_degree_sequence
 from src.algorithms.connectivity import get_components_of_graph
 from src.algorithms.representation_conversions import convert_graph_representation
-from random import randrange
 
 
 def is_graph_eulerian(graph):
-    if isinstance(graph, Graph.Graph):
+    """Returns True whether passed graph is eulerian and False otherwise.
+        graph - Graph object"""
+
+    if isinstance(graph, Graph):
         if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
@@ -38,6 +43,9 @@ def is_graph_eulerian(graph):
 
 
 def construct_eulerian_graph(n):
+    """Returns an eulerian graph.
+        n - number of vertices"""
+
     while True:
         even_degree_list = [randrange(0, n, 2) for _ in range(n)]
         # print(even_degree_list)
@@ -46,13 +54,17 @@ def construct_eulerian_graph(n):
             break
     graph = construct_graph_from_degree_sequence(seq)
     while is_graph_eulerian(graph) is False:
-        graph.randomize()
+        GraphManager.randomize(graph)
     return graph
 
 
 def get_eulerian_cycle_of_graph(graph, show_cycle=True):
+    """Returns list of vertices which form an eulerian cycle of a graph.
+        graph - Graph object, should be eulerian
+        show_cycle - boolean whether to show found cycle"""
+
     eulerian_cycle = []
-    if isinstance(graph, Graph.Graph):
+    if isinstance(graph, Graph):
         if graph.data is None:
             print("Graph is empty (no data) - cannot obtain it's degree sequence.")
         else:
