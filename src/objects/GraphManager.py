@@ -17,7 +17,7 @@ class GraphManager:
     def make_random_graph_edge_number(n, m, show_info=True):
         """Creates and return a graph with random number of edges and vertices (Erdos-Renyi model).
         n - number of vertices
-        m - number of edges
+        m - number of edges, cannot be greater than n * (n-1) / 2
         show_info - boolean whether to print information about the graph after its creation."""
 
         max_num_of_edges = n * (n-1) / 2
@@ -43,7 +43,7 @@ class GraphManager:
     def make_random_graph_probability(n, p, show_info=True):
         """Creates a random graph for given probability of edge existence (Gilbert model).
         n - number of vertices
-        p - probability with which each edge occurs independently
+        p - probability with which each edge occurs independently, must be between 0 and 1
         show_info - boolean whether to print information about the graph after its creation."""
 
         if p < 0 or p > 1:
@@ -65,7 +65,8 @@ class GraphManager:
     @staticmethod
     def randomize(graph, show_shuffling_statistics=False):
         """Shuffles edges between vertices in the given graph.
-        g - Graph object"""
+        g - Graph object
+        show_shuffling_statistics - boolean whether to print information about the randomization process."""
 
         if not isinstance(graph, Graph):
             print("Passed argument is not a graph.")

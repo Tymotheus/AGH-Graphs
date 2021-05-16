@@ -1,5 +1,6 @@
 def is_adjacency_matrix(matrix):
-    """Checks if the passed matrix is a valid Adjacency Matrix."""
+    """Checks if the passed matrix is a valid Adjacency Matrix.
+        matrix - matrix which will be examined for being an adjacency matrix"""
 
     n = len(matrix)
     for i in range(n):
@@ -18,7 +19,8 @@ def is_adjacency_matrix(matrix):
 
 
 def is_incidence_matrix(matrix):
-    """Checks if the passed matrix is a valid Incidence Matrix."""
+    """Checks if the passed matrix is a valid Incidence Matrix.
+        matrix - matrix which will be examined for being an incidence matrix"""
 
     n = len(matrix)
     m = len(matrix[0])
@@ -31,10 +33,7 @@ def is_incidence_matrix(matrix):
         vertices_in_edge = 0
         first_index = second_index = None
         for i in range(n):
-            if matrix[i][j] != 0:
-                if matrix[i][j] != 1:
-                    return False
-            if matrix[i][j] == 1:
+            if matrix[i][j]:
                 vertices_in_edge += 1
                 if first_index is None:
                     first_index = i
@@ -50,7 +49,8 @@ def is_incidence_matrix(matrix):
 
 
 def is_adjacency_list(adjacency_list):
-    """Checks if the passed list/matrix is a valid Adjacency List."""
+    """Checks if the passed list/matrix is a valid Adjacency List.
+        adjacency_list - list which will be examined for being an adjacency list"""
 
     n = len(adjacency_list)
     print(adjacency_list)
@@ -69,7 +69,7 @@ def is_adjacency_list(adjacency_list):
     return True
 
 
-"""Dictionary object, to map the representation to it's proper validation functions."""
+"""Dictionary object which maps the representations to their proper validation functions."""
 conversion_check_map = {"AM": is_adjacency_matrix,
                         "IM": is_incidence_matrix,
                         "AL": is_adjacency_list}
