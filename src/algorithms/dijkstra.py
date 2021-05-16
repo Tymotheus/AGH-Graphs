@@ -3,16 +3,13 @@ def dijkstra(weightedGraph, origin, show = False):
     """"Function returns matrix in which:
     matrix[0] is a list of distance from origin vertex to every other vertex
     matrix[1-...] are the paths from origin to every vertex.
-    Vertex are counting from 1. 
-    If input origin is greater than number of vertex then it is reduced to maximum vertex.
+    Vertex are counting from 1.
     If input show is True then distance and paths are printed."""
     n = len(weightedGraph.data)
-    if origin < 1:
-        origin = 1
-        print("Origin has been upgraded to 1")
-    if origin > n:
-        origin = n
-        print("Origin has been reduced to " + str(origin))
+    if origin<1 or origin>n:
+        print("Wrong vertex! Origin should be an integer between 1 and "+str(n))
+        return 
+
     origin -= 1
     distance = {i: float('inf') for i in range(n)}
     copyDistance = {i: float('inf') for i in range(n)}
@@ -25,12 +22,12 @@ def dijkstra(weightedGraph, origin, show = False):
         (u, d) = min(copyDistance.items(), key=lambda x: x[1]) 
         S.append(u)
         copyDistance.pop(u)
-        
         for v in range(len(distance)):
             if weightedGraph.data[v][u] and distance[v] > (distance[u] + weightedGraph.data[v][u]):
                 distance[v] = distance[u] + weightedGraph.data[v][u]
                 copyDistance[v] = distance[u] + weightedGraph.data[v][u]
                 predecessor[v] = u+1  
+
     matrix = [[] for _ in range(len(distance)+1)]
     matrix[0] = [i for i in distance.values()]
     for v in range(len(distance)):

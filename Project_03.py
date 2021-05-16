@@ -12,7 +12,7 @@ g = WeightedGraphManager.construct_weighted_graph_probability(15, 0.5)
 g.draw()
 
 # CONNECTED WEIGHTED GRAPH READ FROM FILE
-g = WeightedGraphManager.read_from_file("example_data/proj3b_am.txt")
+g = WeightedGraphManager.read_from_file("example_data/proj3a_am.txt")
 g.draw()
 
 print("\n\n---------------------------------------- AD. 3.2 ----------------------------------------")
@@ -26,7 +26,7 @@ print("\n\n---------------------------------------- AD. 3.3 --------------------
 vertexDistanceMatrix = create_vertex_distance_matrix(g, True)
 
 # ADDITIONAL - DRAWING PATH - DOESN'T WORK PROPERLY - drawing edge beetwen origin and the end vertex sometimes
-# g.draw(distanceAndPaths[5])
+g.draw(distanceAndPaths[4])
 
 print("\n\n---------------------------------------- AD. 3.4 ----------------------------------------")
 
