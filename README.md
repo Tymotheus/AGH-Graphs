@@ -6,6 +6,7 @@ The project was developed and tested in Python 3.8 in Windows system.
 Each project is shortly described in the list below. 
 Details about each class, method and functionality such as arguments or certain requirements are described in the appropriate file as docstrings.
 
+
 # PROJECT 1
 To run solutions of tasks from project it's enough to run the Project_01.py file.
 The solutions use: 
@@ -19,41 +20,53 @@ The solutions use:
 4. representation_conversions.py - convert graph representation from one to the other.
     * checking graph representation and converting it to the other.
 
+
 # PROJECT 2
+To run solutions of tasks from project it's enough to run the Project_02.py file.
+The solutions use: 
+1. Some functionalities from previous project described above.
+2. Sequence.py and Stack.py - custom implementation of sequences and stacks.
+    * reading data from files and lists;
+    * performing characteristic operations such as adding or removing elements.
+3. degree_sequences.py - allow to perform operations connected with degree sequence of a graph.
+    * checking whether sequence is a degree sequence;
+    * constructing a degree sequence from graph and vice versa.
+4. regularity.py - allow to perform operations connected with regular graphs.
+    * checking whether a graph is regular;
+    * constructing a regular graph using degree sequence.
+5. connectivity.py - allow to perform operations connected with connected graphs.
+    * checking whether a graph is connected;
+    * extracting components of a graph (maximum component in particular).
+6. eulerianity.py - allow to perform operation connected with eulerian graphs.
+    * checking whether a graph is eulerian;
+    * constructing an eulerian graph;
+    * extracting eulerian cycle from graph.
+7. hamiltonicity.py - allow to perform operation connected with hamiltonian graphs.
+    * checking whether a graph is hamiltonian;
+    * extracting hamiltonian cycle from graph;
+    * optimized extracting of hamiltonian cycle from graph using S. Martello approach.
 
 
 # PROJECT 3
-1. To create weighted graph g you can use one of two methods from WeightedGraphManager:
-    >g = WeightedGraphManager.construct_weighted_graph_edge_number(n, m, w_min=1, w_max=10)
-    
-    >g = WeightedGraphManager.construct_weighted_graph_probability(n, p, w_min=1, w_max=10)
-    
-    Both methods return WeightedGraph which can be drawn by mehod draw().
-    You can also read WeightedGraph from file (you can only read connected weight graph):
-    >g = WeightedGraphManager.read_from_file(path)
+To run solutions of tasks from project it's enough to run the Project_03.py file.
+The solutions use: 
+1. Some functionalities from previous projects described above.
+2. WeightedGraph.py - represent weighted graphs.
+    * reading weighted graph data from file and printing it;
+    * drawing a weighted graph.
+3. WeightedGraphManager.py - allow to perform some operations connected with weighted graphs.
+    * constructing weighted graph from simple graph;
+    * constructing random connected weighted graphs using Prufer code, Erdos-Renyi model and Gilbert model.
+4. connectivity.py - allow to perform operations connected with connected graphs.
+    * constructing random connected trees using Prufer code
+    * constructing random connected graphs using Prufer code followed with Erdos-Renyi model and Gilbert model.
+5. shortest_weighted_paths.py - allow to find objects connected with shortest distance in weighted graphs.
+    * implementation of Dijkstra algorithm;
+    * finding distance matrix between any two vertices;
+    * finding center and minimax-center.
+6. minimum_spanning_trees.py - allow to find minimum spanning tree of weighted graph.
+    * implementation of Kruskal algorithm.
 
-2. To print the shortes paths from one vertex to every other you can use function from dijkstra module with parameter show = True:
-    >distanceAndPathMatrix = dijkstra(weightedGraph, origin, show = False)
-    
-    Input graph is a WeightedGraph and origin is a start vertex. Input origin should be an integer in range from 1 to max graph's vertex, if it is greater then method reduce it to maximum value. This method returns a matrix with distances and paths from origin to every other vertex.
-
-    The path from origin to vertex i can by drawn by using distanceAndPathMatrix:
-    >g.draw(distanceAndPaths[i])
-
-    But it has a bug and sometimes draws connection with origin and destination.
-
-3. To get vertex distance matrix of weighted graph you can use method from dijkstra module:
-    >matrix = create_vertex_distance_matrix(weigtedGraph, show = False)
-
-    If you put show = True into method then the matrix will be printed.
-
-4. To get center and minimax center of WeightedGraph you can use function from dijkstra module:
-    > center = center_of_weighted_graph(weightedGraph, vertexDistanceMatrix=[])
-    
-    > minimaxCenter = minimax_center_of_weighted_graph(weightedG, vertexDistanceMatrix=[])
-
-    Both functions get WeightedGraph and additionally vertex distance matrix of the graph - second parameter can reduce time of program execution.
-    Functions return dictionary with number of vetrex, its sum of distance to every other vertex and the second function also returns distance to the farthest vertex.
 
 # PROJECT 4
 

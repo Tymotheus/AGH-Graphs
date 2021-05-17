@@ -11,7 +11,7 @@ from src.algorithms.dfs import dfs, dfs_recursive
 
 def is_graph_connected(graph, show_vertices_flow=False):
     """Returns True whether passed graph is connected and False otherwise.
-        graph - Graph object
+        graph - Graph or WeightedGraph object
         show_vertices_flow - boolean whether to show the vertex flow during the DFS algorithm."""
 
     if not isinstance(graph, Graph.Graph) and not isinstance(graph, WeightedGraph.WeightedGraph):

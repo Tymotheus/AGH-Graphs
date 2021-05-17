@@ -4,7 +4,7 @@ from random import randint
 
 from src.objects.Graph import Graph
 from src.objects.WeightedGraph import WeightedGraph
-from src.algorithms.connectivity import is_graph_connected, get_largest_component_of_graph
+from src.algorithms.connectivity import is_graph_connected
 from src.algorithms.connectivity import construct_connected_graph_edge_number, construct_connected_graph_probability
 
 
