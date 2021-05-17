@@ -91,8 +91,8 @@ def create_vertex_distance_matrix(wg, show=False):
         matrix = dijkstra(wg, i+1)
         distance_matrix[i] = matrix[0]
     if show:
-        for i in range(n):
-            print(distance_matrix[i])
+        print("Vertex distance matrix:")
+        print('\n'.join([''.join(['{:4}'.format(item) for item in row]) for row in distance_matrix]))
     
     return distance_matrix
 
@@ -123,7 +123,7 @@ def minimax_center_of_weighted_graph(wg, distance_matrix=[]):
             wg - WeightedGraph object
             distance_matrix - matrix with distances between any two vertices
         Returns a dictionary object with data connected with minimax center of a WeightedGraph
-            minimax_center - minimax center vertex number
+            minimax_center - list of index of minimax center vertex number
             sum_of_distance - sum of distances from minimax center to other vertices
             dist_to_farthest - distance from minimax center to it's farthest vertex"""
 
@@ -138,5 +138,6 @@ def minimax_center_of_weighted_graph(wg, distance_matrix=[]):
     if not len(distance_matrix):
         distance_matrix = create_vertex_distance_matrix(wg)
     maximums = {i: max(distance_matrix[i]) for i in range(n)}
-    (index, minimum) = min(maximums.items(), key=lambda x: x[1]) 
-    return {"minimax_center": index+1, "sum_of_distance": sum(distance_matrix[index]), "dist_to_farthest": minimum}
+    minimum = min(maximums.values())
+    indexes = [k+1 for k, v in maximums.items() if v == minimum]
+    return {"minimax_center": [i for i in indexes], "sum_of_distance": sum(distance_matrix[indexes[0]]), "dist_to_farthest": minimum}

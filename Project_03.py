@@ -7,12 +7,12 @@ from src.algorithms.minimum_spanning_trees import kruskal
 print("\n\n---------------------------------------- AD. 3.1 ----------------------------------------")
 
 # READ WEIGHTED GRAPH FROM FILE
-g = WeightedGraph("example_data/proj3a_am.txt")
+g = WeightedGraph("example_data/proj3b_am.txt")
 g.draw()
 
 # CONNECTED WEIGHTED GRAPH USING PRUFER CODE AND ERDOS-RENYI MODEL
-g2 = WeightedGraphManager.construct_weighted_graph_edge_number(15, 14)
-g2.draw()
+g1 = WeightedGraphManager.construct_weighted_graph_edge_number(15, 20)
+g1.draw()
 
 # CONNECTED WEIGHTED GRAPH USING PRUFER CODE AND GILBERT MODEL
 g3 = WeightedGraphManager.construct_weighted_graph_probability(15, 0.5)
@@ -21,7 +21,7 @@ g3.draw()
 print("\n\n---------------------------------------- AD. 3.2 ----------------------------------------")
 
 # DIJKSTRA ALGORITHM
-distanceAndPaths = dijkstra(g, 2, True)
+distanceAndPaths = dijkstra(g, 1, True)
 
 print("\n\n---------------------------------------- AD. 3.3 ----------------------------------------")
 
@@ -32,7 +32,9 @@ vertexDistanceMatrix = create_vertex_distance_matrix(g, True)
 print(distanceAndPaths)
 for i in range(len(distanceAndPaths)-1):
     target_vertex = i+1
-    g.draw(vertices=distanceAndPaths[target_vertex], edges=[[distanceAndPaths[target_vertex][i], distanceAndPaths[target_vertex][i+1]] for i in range(len(distanceAndPaths[target_vertex])-1)])
+    g.draw(vertices=distanceAndPaths[target_vertex], 
+        edges=[[distanceAndPaths[target_vertex][i], 
+        distanceAndPaths[target_vertex][i+1]] for i in range(len(distanceAndPaths[target_vertex])-1)])
 
 print("\n\n---------------------------------------- AD. 3.4 ----------------------------------------")
 
