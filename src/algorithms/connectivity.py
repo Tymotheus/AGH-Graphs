@@ -11,7 +11,7 @@ from src.algorithms.dfs import dfs, dfs_recursive
 
 def is_graph_connected(graph, show_vertices_flow=False):
     """Returns True whether passed graph is connected and False otherwise.
-        graph - Graph object
+        graph - Graph or WeightedGraph object
         show_vertices_flow - boolean whether to show the vertex flow during the DFS algorithm."""
 
     if not isinstance(graph, Graph.Graph) and not isinstance(graph, WeightedGraph.WeightedGraph):
@@ -57,9 +57,12 @@ def construct_connected_tree(n):
 
 def construct_connected_graph_edge_number(n, m):
     """Returns a connected graph of order n and size m. Such graph is constructed using construct_connected_tree() function, that is, using Prufer code.
-        n - number of vertices
-        m - number of edges"""
+        n - number of vertices (should be greater than 0)
+        m - number of edges (should be between n-1 and n*(n-1)/2)"""
 
+    if n < 1:
+        print("Graph cannot be created - number of vertices should be greater than 0.")
+        return
     m_max = n * (n-1) / 2
     m_min = n-1
     if m < m_min or m > m_max:
@@ -83,9 +86,12 @@ def construct_connected_graph_edge_number(n, m):
 
 def construct_connected_graph_probability(n, p):
     """Creates a connected graph of order n and probability of edge existence equal to p. Such graph is constructed using construct_connected_tree() function, that is, using Prufer code.
-        n - number of vertices
-        p - probability with which each edge occurs independently"""
+        n - number of vertices (should be greater than 0)
+        p - probability with which each edge occurs independently (should be between 0 and 1)"""
 
+    if n < 1:
+        print("Graph cannot be created - number of vertices should be greater than 0.")
+        return
     if p < 0 or p > 1:
         print("Graph cannot be created - probability should be between 0 and 1.")
         return

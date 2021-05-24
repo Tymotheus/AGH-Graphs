@@ -20,6 +20,9 @@ class GraphManager:
         m - number of edges, cannot be greater than n * (n-1) / 2
         show_info - boolean whether to print information about the graph after its creation."""
 
+        if n < 1:
+            print("Random graph cannot be created - number of vertices should be greater than 0.")
+            return
         max_num_of_edges = n * (n-1) / 2
         if m < 0 or m > max_num_of_edges:
             print("Random graph cannot be created - number of edges should be between 0 and n*(n-1)/2.")
@@ -46,6 +49,9 @@ class GraphManager:
         p - probability with which each edge occurs independently, must be between 0 and 1
         show_info - boolean whether to print information about the graph after its creation."""
 
+        if n < 1:
+            print("Random graph cannot be created - number of vertices should be greater than 0.")
+            return
         if p < 0 or p > 1:
             print("Random graph cannot be created - probability should be between 0 and 1.")
             return

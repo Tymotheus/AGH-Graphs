@@ -5,14 +5,10 @@ from src.algorithms.representation_checks import *
 
 
 class WeightedGraph:
-    """Representation of an undirected weighted graph, without labels.
-
-    Stores information about its vertices and edges in .data field.
-    It can be then interpreted using the .representation with certain values:
-    AM - Adjacency Matrix
-    It also consists of a few useful functions.
-
-    By default the weighted graph is just an isolated vertex represented by adjacency matrix."""
+    """Representation of an undirected weighted graph. It is composed of both basic information and functionalities connected with weighted graphs.
+    .data - stores information about its vertices and weighted edges
+    .representation - kind of graph interpretation. The following are available:
+        AM - Adjacency Matrix"""
 
     def __init__(self, file_path=None, representation='AM', show_info=True):
         """Weighted graph constructor.
@@ -38,9 +34,10 @@ class WeightedGraph:
             else:
                 print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
-    def draw(self, vertices=None, img_width=600, img_height=600):
+    def draw(self, vertices=None, edges=None, img_width=600, img_height=600):
         """ Pops up a new window with the given graph drawn in it.
             vertices - set of vertices to distinguish which is helpful during components consideration
+            edges - set of edges to distinguish; if None, all edges between vertices from vertices set will be distinguished
             img_width - width of the popped window (in pixels)
             img_height - height of the popped window (in pixels)"""
 
@@ -52,6 +49,8 @@ class WeightedGraph:
             return
         if vertices is None:
             vertices = []
+        if edges is None:
+            edges = []
         n = len(self.data)
         angle = 2 * math.pi / n
 
@@ -74,15 +73,14 @@ class WeightedGraph:
         for i in range(1, n):
             for j in range(0, i):
                 if self.data[i][j]:
-                    fill_color = "red" if len(vertices) and i in vertices and j in vertices else "gray"
                     canvas.create_line(positions[i][0], positions[i][1],
                                        positions[j][0], positions[j][1],
-                                       fill=fill_color)
+                                       fill="gray")
                     canvas.create_text((2*positions[i][0] + positions[j][0])/3,
                                        (2*positions[i][1] + positions[j][1])/3,
                                        text=str(self.data[i][j]),
                                        font=("Verdana", max(int(20 - 2*n/10), 10)),
-                                       fill=fill_color)
+                                       fill="gray")
         for i in range(n):
             fill_color = "red" if len(vertices) and i in vertices else "gray"
 
@@ -92,7 +90,27 @@ class WeightedGraph:
             canvas.create_text(positions[i][0],
                                positions[i][1],
                                text=i+1, font=("Verdana", max(int(20 - 2 * n / 10), 10)))
-            
+
+        if len(edges):
+            for edge in edges:
+                if self.data[edge[0]][edge[1]]:
+                    canvas.create_line(positions[edge[0]][0], positions[edge[0]][1], positions[edge[1]][0], positions[edge[1]][1], fill="red")
+                    canvas.create_text((2 * positions[edge[0]][0] + positions[edge[1]][0]) / 3,
+                                       (2 * positions[edge[0]][1] + positions[edge[1]][1]) / 3,
+                                       text=str(self.data[edge[0]][edge[1]]),
+                                       font=("Verdana", max(int(20 - 2 * n / 10), 10)),
+                                       fill="red")
+        elif len(vertices):
+            for i in range(len(vertices)-1):
+                for j in range(i+1, len(vertices)):
+                    if self.data[vertices[i]][vertices[j]]:
+                        canvas.create_line(positions[vertices[i]][0], positions[vertices[i]][1], positions[vertices[j]][0], positions[vertices[j]][1],
+                                           fill="red")
+                        canvas.create_text((2 * positions[vertices[i]][0] + positions[vertices[j]][0]) / 3,
+                                           (2 * positions[vertices[i]][1] + positions[vertices[j]][1]) / 3,
+                                           text=str(self.data[vertices[i]][vertices[j]]),
+                                           font=("Verdana", max(int(20 - 2 * n / 10), 10)),
+                                           fill="red")
         print("Weighted graph is being drawn.")
         canvas.pack()
         root.mainloop()
@@ -104,12 +122,6 @@ class WeightedGraph:
             graph_as_string = "Graph is empty (no data)."
         elif self.representation == 'AM':
             graph_as_string = "Adjacency matrix of graph G:\n"
-            for row in self.data:
-                for element in row:
-                    graph_as_string = graph_as_string + str(element) + " "
-                graph_as_string = graph_as_string + "\n"
-        elif self.representation == "IM":
-            graph_as_string = "Incidence matrix of graph G:\n"
             for row in self.data:
                 for element in row:
                     graph_as_string = graph_as_string + str(element) + " "

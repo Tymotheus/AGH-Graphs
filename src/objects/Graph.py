@@ -36,9 +36,10 @@ class Graph:
             else:
                 print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
-    def draw(self, vertices=None, img_width=600, img_height=600):
+    def draw(self, vertices=None, edges=None, img_width=600, img_height=600):
         """ Draws the graph in new window which pops up. The graph should be represented by adjacency matrix.
             vertices - set of vertices to distinguish which is helpful during components consideration
+            edges - set of edges to distinguish; if None, all edges between vertices from vertices set will be distinguished
             img_width - width of the popped window (in pixels)
             img_height - height of the popped window (in pixels)"""
 
@@ -50,6 +51,8 @@ class Graph:
             return
         if vertices is None:
             vertices = []
+        if edges is None:
+            edges = []
         n = len(self.data)
         angle = 2 * math.pi / n
 
@@ -78,10 +81,20 @@ class Graph:
                                positions[i][1] - (1 + n/7) * v_r * math.cos(v_angle),
                                text=i+1, font=("Verdana", max(int(20 - 2*n/10), 10)))
         for i in range(1, n):
-            fill_color = "red" if len(vertices) and i in vertices else "black"
             for j in range(0, i):
                 if self.data[i][j]:
-                    canvas.create_line(positions[i][0], positions[i][1], positions[j][0], positions[j][1], fill=fill_color)
+                    canvas.create_line(positions[i][0], positions[i][1], positions[j][0], positions[j][1], fill="black")
+
+        if len(edges):
+            for edge in edges:
+                if self.data[edge[0]][edge[1]]:
+                    canvas.create_line(positions[edge[0]][0], positions[edge[0]][1], positions[edge[1]][0], positions[edge[1]][1], fill="red")
+        elif len(vertices):
+            for i in range(len(vertices)-1):
+                for j in range(i+1, len(vertices)):
+                    if self.data[vertices[i]][vertices[j]]:
+                        canvas.create_line(positions[vertices[i]][0], positions[vertices[i]][1], positions[vertices[j]][0], positions[vertices[j]][1],
+                                           fill="red")
 
         print("Graph is being drawn.")
         canvas.pack()
