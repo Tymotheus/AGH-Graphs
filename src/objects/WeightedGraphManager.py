@@ -4,6 +4,7 @@ from random import randint
 
 from src.objects.Graph import Graph
 from src.objects.WeightedGraph import WeightedGraph
+from src.algorithms.representation_conversions import convert_graph_representation
 from src.algorithms.connectivity import is_graph_connected
 from src.algorithms.connectivity import construct_connected_graph_edge_number, construct_connected_graph_probability
 
@@ -19,13 +20,15 @@ class WeightedGraphManager:
     @staticmethod
     def make_weighted_graph_from_simple_graph(graph, w_min=1, w_max=10):
         """Creates and return a weighted graph from a simple graph. It's weights are defined by passed arguments.
-        graph - Graph object
-        w_min - minimum weight in weighted graph, by default equal to 1
-        w_min - maximum weight in weighted graph, by default equal to 10"""
+                graph - Graph object
+                w_min - minimum weight in weighted graph, by default equal to 1
+                w_min - maximum weight in weighted graph, by default equal to 10"""
 
         if not isinstance(graph, Graph):
             print("Passed argument is not a graph.")
             return
+        if graph.representation != "AM":
+            convert_graph_representation(graph, "AM")
         wg = WeightedGraph()
         wg.data = copy.deepcopy(graph.data)
         n = len(wg.data)
@@ -36,29 +39,38 @@ class WeightedGraphManager:
         return wg
 
     @staticmethod
-    def construct_weighted_graph_edge_number(n, m, w_min=1, w_max=10):
-        """Creates and return a weighted graph. It's weights are defined by passed arguments.
-        n - number of graphs vertex (should be greater than 1),
-        m - number of graphs edges (if m is smaller than n-1 is upgraded to n-1),
-        w_min - minimum weight in weighted graph, by default equal to 1
-        w_min - maximum weight in weighted graph, by default equal to 10"""
+    def construct_connected_weighted_graph_edge_number(n, m, w_min=1, w_max=10):
+        """Creates and returns a connected weighted graph.
+                n - number of vertices (should be greater than 0)
+                m - number of edges (should be between n-1 and n*(n-1)/2)
+                w_min - minimum weight in weighted graph, by default equal to 1
+                w_min - maximum weight in weighted graph, by default equal to 10"""
 
-        if n < 2:
-            n = 2
-        if m < n-1:
-            m = n - 1
+        if n < 1:
+            print("Random connected weighted graph cannot be created - number of vertices should be greater than 0.")
+            return
+        if m < n-1 or m > n*(n-1)/2:
+            print("Random connected weighted graph cannot be created - number of edges should be between n-1 and n*(n-1)/2.")
+            return
 
         g = construct_connected_graph_edge_number(n, m)
         return WeightedGraphManager.make_weighted_graph_from_simple_graph(g, w_min, w_max)
 
     @staticmethod
-    def construct_weighted_graph_probability(n, p, w_min=1, w_max=10):
-        """Creates a connected graph of order n and probability of edge existence equal to p. 
-        Such graph is constructed using construct_connected_tree() function, that is, using Prufer code.
-        n - number of vertices (should be greater than 1)
-        p - probability with which each edge occurs independently
-        w_min - minimum weight in weighted graph, by default equal to 1
-        w_min - maximum weight in weighted graph, by default equal to 10"""
+    def construct_connected_weighted_graph_probability(n, p, w_min=1, w_max=10):
+        """Creates and returns a connected weighted graph of order n and probability of edge existence equal to p.
+        It's weights are defined by passed arguments.
+            n - number of vertices (should be greater than 0)
+            p - probability with which each edge occurs independently (should be between 0 and 1)
+            w_min - minimum weight in weighted graph, by default equal to 1
+            w_min - maximum weight in weighted graph, by default equal to 10"""
+
+        if n < 1:
+            print("Random connected weighted graph cannot be created - number of vertices should be greater than 0.")
+            return
+        if p < 0.0 or p > 1.0:
+            print("Random graph cannot be created - probability should be between 0 and 1.")
+            return
 
         g = construct_connected_graph_probability(n, p)
         return WeightedGraphManager.make_weighted_graph_from_simple_graph(g, w_min, w_max)

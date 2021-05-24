@@ -1,6 +1,7 @@
 from src.objects.WeightedGraph import WeightedGraph
 from src.algorithms.connectivity import is_graph_connected
 
+
 def dijkstra(wg, origin, show=False):
     """"Performs Dijkstra algorithm on a WeightedGraph with non-negative values.
             wg - WeightedGraph object
@@ -113,9 +114,9 @@ def center_of_weighted_graph(wg, distance_matrix=[]):
     if not len(distance_matrix):
         distance_matrix = create_vertex_distance_matrix(wg)
     sums = {i: sum(distance_matrix[i]) for i in range(n)}
-    minSum = min(sums.values())
-    indexes = [k+1 for k, v in sums.items() if v == minSum]
-    return [minSum, *indexes]
+    min_sum = min(sums.values())
+    indexes = [k+1 for k, v in sums.items() if v == min_sum]
+    return [min_sum, *indexes]
 
 
 def minimax_center_of_weighted_graph(wg, distance_matrix=[]):

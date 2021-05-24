@@ -7,9 +7,10 @@ from src.algorithms.representation_conversions import convert_graph_representati
 
 
 def is_degree_sequence(sequence, show_steps=False):
-    """Returns True whether passed sequences a degree sequence and False otherwise.
-        sequence - Sequence object
-        show_steps - boolean whether to show the steps of checking process"""
+    """ Implementation of Havel-Hakimi algorithm.
+            sequence - Sequence object
+            show_steps - boolean whether to show the steps of checking process
+        Returns True whether passed sequences is a degree sequence and False otherwise."""
 
     if isinstance(sequence, Sequence):
         if len(sequence.data) > 0:

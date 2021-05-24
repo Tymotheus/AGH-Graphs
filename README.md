@@ -25,24 +25,27 @@ The solutions use:
 To run solutions of tasks from project it's enough to run the Project_02.py file.
 The solutions use: 
 1. Some functionalities from previous project described above.
-2. Sequence.py and Stack.py - custom implementation of sequences and stacks.
+2. GraphManager.py - allow to perform some operations connected with simple graphs.
+    * randomizing edges in graph.
+3. Sequence.py and Stack.py - custom implementation of sequences and stacks.
     * reading data from files and lists;
     * performing characteristic operations such as adding or removing elements.
-3. degree_sequences.py - allow to perform operations connected with degree sequence of a graph.
-    * checking whether sequence is a degree sequence;
+4. degree_sequences.py - allow to perform operations connected with degree sequence of a graph.
+    * checking whether sequence is a degree sequence using Havel-Hakimi algorithm;
     * constructing a degree sequence from graph and vice versa.
-4. regularity.py - allow to perform operations connected with regular graphs.
+5. dfs.py - allow to perform DFS
+    * recursive DFS algorithm implementation
+5. regularity.py - allow to perform operations connected with regular graphs.
     * checking whether a graph is regular;
     * constructing a regular graph using degree sequence.
-5. connectivity.py - allow to perform operations connected with connected graphs.
+6. connectivity.py - allow to perform operations connected with connected graphs.
     * checking whether a graph is connected;
     * extracting components of a graph (maximum component in particular).
-6. eulerianity.py - allow to perform operation connected with eulerian graphs.
+7. eulerianity.py - allow to perform operation connected with eulerian graphs.
     * checking whether a graph is eulerian;
     * constructing an eulerian graph;
     * extracting eulerian cycle from graph.
-7. hamiltonicity.py - allow to perform operation connected with hamiltonian graphs.
-    * checking whether a graph is hamiltonian;
+8. hamiltonicity.py - allow to perform operation connected with hamiltonian graphs.
     * extracting hamiltonian cycle from graph;
     * optimized extracting of hamiltonian cycle from graph using S. Martello approach.
 

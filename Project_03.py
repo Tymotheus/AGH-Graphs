@@ -33,8 +33,8 @@ print(distanceAndPaths)
 for i in range(len(distanceAndPaths)-1):
     target_vertex = i+1
     g.draw(vertices=distanceAndPaths[target_vertex], 
-        edges=[[distanceAndPaths[target_vertex][i], 
-        distanceAndPaths[target_vertex][i+1]] for i in range(len(distanceAndPaths[target_vertex])-1)])
+           edges=[[distanceAndPaths[target_vertex][i],
+           distanceAndPaths[target_vertex][i+1]] for i in range(len(distanceAndPaths[target_vertex])-1)])
 
 print("\n\n---------------------------------------- AD. 3.4 ----------------------------------------")
 

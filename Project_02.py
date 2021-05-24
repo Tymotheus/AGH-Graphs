@@ -7,7 +7,7 @@ from src.objects.GraphManager import GraphManager
 
 from src.algorithms.degree_sequences import is_degree_sequence, get_degree_sequence_from_graph, construct_graph_from_degree_sequence
 from src.algorithms.regularity import construct_k_regular_graph
-from src.algorithms.connectivity import get_largest_component_of_graph
+from src.algorithms.connectivity import get_largest_component_of_graph, construct_connected_graph_edge_number
 from src.algorithms.eulerianity import construct_eulerian_graph, get_eulerian_cycle_of_graph
 from src.algorithms.hamiltonicity import get_hamiltonian_cycle_of_graph, get_hamiltonian_cycle_of_graph_optimized
 
@@ -36,25 +36,25 @@ print(ans)
 # CONSTRUCTING A GRAPH FROM DEGREE SEQUENCE
 g1 = construct_graph_from_degree_sequence(seq)
 print(g1)
-# g1.draw(600, 600)
+g1.draw()
 
-print("\n\n---------------------------------------- AD. 2.2 ----------------------------------------")
+# print("\n\n---------------------------------------- AD. 2.2 ----------------------------------------")
 
 # CONSTRUCTING A GRAPH EITHER FROM DEGREE SEQUENCE OR PROBABILITY MODEL
 # seq.read_sequence_from_file("example_data/proj2_seq_k_regular.txt")
 # seq.read_sequence_from_file("example_data/proj2_seq_yes.txt")
 # seq.read_sequence_from_file("example_data/proj2_seq_complete.txt")
 # g2 = construct_graph_from_degree_sequence(seq)
-g2 = GraphManager.make_random_graph_probability(100, 0.9)
-# g2.draw()
+g2 = GraphManager.make_random_graph_probability(12, 0.7)
+g2.draw()
 
 # RANDOMIZING EDGES OF A GRAPH (DEGREES OF VERTICES DO NOT CHANGE)
-s = get_degree_sequence_from_graph(g2)
-print("Degree sequence of a graph before randomizing: " + str(s))
+# s = get_degree_sequence_from_graph(g2)
+# print("Degree sequence of a graph before randomizing: " + str(s))
 GraphManager.randomize(g2, show_shuffling_statistics=False)
-s = get_degree_sequence_from_graph(g2)
-print("Degree sequence of a graph after randomizing: " + str(s))
-# g2.draw()
+# s = get_degree_sequence_from_graph(g2)
+# print("Degree sequence of a graph after randomizing: " + str(s))
+g2.draw()
 
 print("\n\n---------------------------------------- AD. 2.3 ----------------------------------------")
 
@@ -76,36 +76,37 @@ print(g4)
 # GET EULERIAN CYCLE OF A GRAPH
 eulerian_cycle_of_g4 = get_eulerian_cycle_of_graph(g4, show_cycle=True)
 print(eulerian_cycle_of_g4)
-# g4.draw()
+g4.draw()
 
 
 print("\n\n---------------------------------------- AD. 2.5 ----------------------------------------")
 
 # CONSTRUCTING K-REGULAR GRAPH
 g5 = construct_k_regular_graph(6, 3)
-# print(g5)
-# g5.draw()
+print(g5)
+g5.draw()
 
 # RANDOMIZE EDGES OF GENERATED K-REGULAR GRAPH
 GraphManager.randomize(g5, show_shuffling_statistics=False)
-# print(g5)
-# g5.draw()
+print(g5)
+g5.draw()
 
 print("\n\n---------------------------------------- AD. 2.6 ----------------------------------------")
 
 # CONSTRUCTING A GRAPH EITHER FROM DEGREE SEQUENCE, FILE OR PROBABILITY MODEL
 # for _ in range(10):
-g6 = GraphManager.make_random_graph_probability(100, 0.5)
-# g6.read_graph_from_file("example_data/proj2_hamiltonian_no1.txt")
+# g6 = GraphManager.make_random_graph_probability(100, 0.5)
+# g6 = Graph("example_data/proj2_hamiltonian_no1.txt")
 # seq.read_sequence_from_file("example_data/proj2_seq_complete.txt")
 # g6 = construct_graph_from_degree_sequence(seq)
+g6 = construct_connected_graph_edge_number(100, 100)
 
 # GET HAMILTONIAN CYCLE OF A GRAPH
 hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=False)
-# print(hamiltonian_cycle_of_g6)
-# g6.draw()
+print(hamiltonian_cycle_of_g6)
+g6.draw()
 
-# # BONUS - COMPARING NORMAL METHOD AND OPTIMIZED ONE
+# BONUS - COMPARING NORMAL METHOD AND OPTIMIZED ONE
 # time_of_normal_version = time_of_optimized_version = 0.0
 # number_of_tests = 100
 # number_of_better_normal_version_tests = 0
