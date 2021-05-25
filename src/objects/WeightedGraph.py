@@ -18,7 +18,7 @@ class WeightedGraph:
 
         if file_path is None:
             self.data = [0]
-            self.representation = representation
+            self.representation = "AM"
         else:
             with open(file_path, 'r') as f:
                 data = [[int(num) for num in line.split(' ')] if line != '\n' else [] for line in f]
@@ -116,16 +116,13 @@ class WeightedGraph:
         root.mainloop()
 
     def __str__(self):
-        """String representation of a graph depending on the .representation field."""
+        """String representation of a weighted graph depending on the .representation field."""
 
         if self.data is None:
-            graph_as_string = "Graph is empty (no data)."
+            graph_as_string = "Weighted graph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of graph G:\n"
-            for row in self.data:
-                for element in row:
-                    graph_as_string = graph_as_string + str(element) + " "
-                graph_as_string = graph_as_string + "\n"
+            graph_as_string = "Adjacency matrix of weighted graph WG:\n"
+            print('\n'.join([''.join(['{:5}'.format(item) for item in row]) for row in self.data]))
         else:
-            graph_as_string = "Cannot describe graph - unknown representation."
+            graph_as_string = "Cannot describe weighted graph - unknown representation."
         return graph_as_string
