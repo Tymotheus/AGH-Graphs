@@ -79,19 +79,19 @@ class Digraph:
             for j in range(n):
                 if self.data[i][j]:
                     a = None
-                    if positions[j][0] > positions[i][0]:
+                    equal_x = math.fabs(positions[j][0] - positions[i][0]) <= 10**-3
+                    equal_y = math.fabs(positions[j][1] - positions[i][1]) <= 10**-3
+                    if not equal_x:
                         a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                    elif positions[j][0] < positions[i][0]:
-                        a = -(positions[i][1] - positions[j][1]) / (positions[i][0] - positions[j][0])
-                    x = 0 if positions[j][0] == positions[i][0] else v_r if positions[j][1] == positions[i][1] else math.sqrt(v_r**2/(a**2 + 1))
-                    y = 0 if positions[j][1] == positions[i][1] else v_r if positions[j][0] == positions[i][0] else math.fabs(a*x)
+                    x = 0 if equal_x else v_r if equal_y else math.sqrt(v_r**2/(a**2 + 1))
+                    y = 0 if equal_y else v_r if equal_x else math.fabs(a*x)
                     # print("%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s" %(i+1, positions[i][0], positions[i][1], j+1, positions[j][0], positions[j][1], a, x, y))
                     flagx = 1 if positions[i][0] < positions[j][0] else -1
                     flagy = 1 if positions[i][1] < positions[j][1] else -1
 
                     canvas.create_line(positions[i][0] + flagx * x, positions[i][1] + flagy * y,
                                        positions[j][0] - flagx * x, positions[j][1] - flagy * y,
-                                       fill="black", arrow=tk.LAST)
+                                       fill="red", arrow=tk.LAST)
 
         if len(arcs):
             for arc in arcs:
@@ -99,16 +99,12 @@ class Digraph:
                     i = arc[0]
                     j = arc[1]
                     a = None
-                    if positions[j][0] > positions[i][0]:
+                    equal_x = math.fabs(positions[j][0] - positions[i][0]) <= 10 ** -3
+                    equal_y = math.fabs(positions[j][1] - positions[i][1]) <= 10 ** -3
+                    if not equal_x:
                         a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                    elif positions[j][0] < positions[i][0]:
-                        a = -(positions[i][1] - positions[j][1]) / (positions[i][0] - positions[j][0])
-                    x = 0 if positions[j][0] == positions[i][0] else v_r if positions[j][1] == positions[i][
-                        1] else math.sqrt(v_r ** 2 / (a ** 2 + 1))
-                    y = 0 if positions[j][1] == positions[i][1] else v_r if positions[j][0] == positions[i][
-                        0] else math.fabs(a * x)
-                    print("%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s" % (
-                    i + 1, positions[i][0], positions[i][1], j + 1, positions[j][0], positions[j][1], a, x, y))
+                    x = 0 if equal_x else v_r if equal_y else math.sqrt(v_r ** 2 / (a ** 2 + 1))
+                    y = 0 if equal_y else v_r if equal_x else math.fabs(a * x)
                     flagx = 1 if positions[i][0] < positions[j][0] else -1
                     flagy = 1 if positions[i][1] < positions[j][1] else -1
 
@@ -122,16 +118,12 @@ class Digraph:
                         i = vertices[v1]
                         j = vertices[v2]
                         a = None
-                        if positions[j][0] > positions[i][0]:
+                        equal_x = math.fabs(positions[j][0] - positions[i][0]) <= 10 ** -3
+                        equal_y = math.fabs(positions[j][1] - positions[i][1]) <= 10 ** -3
+                        if not equal_x:
                             a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                        elif positions[j][0] < positions[i][0]:
-                            a = -(positions[i][1] - positions[j][1]) / (positions[i][0] - positions[j][0])
-                        x = 0 if positions[j][0] == positions[i][0] else v_r if positions[j][1] == positions[i][
-                            1] else math.sqrt(v_r ** 2 / (a ** 2 + 1))
-                        y = 0 if positions[j][1] == positions[i][1] else v_r if positions[j][0] == positions[i][
-                            0] else math.fabs(a * x)
-                        print("%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s" % (
-                        i + 1, positions[i][0], positions[i][1], j + 1, positions[j][0], positions[j][1], a, x, y))
+                        x = 0 if equal_x else v_r if equal_y else math.sqrt(v_r ** 2 / (a ** 2 + 1))
+                        y = 0 if equal_y else v_r if equal_x else math.fabs(a * x)
                         flagx = 1 if positions[i][0] < positions[j][0] else -1
                         flagy = 1 if positions[i][1] < positions[j][1] else -1
 
@@ -149,8 +141,7 @@ class Digraph:
         if self.data is None:
             graph_as_string = "Digraph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of digraph D:\n"
-            print('\n'.join([''.join(['{:2}'.format(item) for item in row]) for row in self.data]))
+            graph_as_string = "Adjacency matrix of digraph D:\n" + '\n'.join([''.join(['{:2}'.format(item) for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe digraph - unknown representation."
         return graph_as_string

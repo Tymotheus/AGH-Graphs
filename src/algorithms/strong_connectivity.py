@@ -1,10 +1,7 @@
 from random import randint, random
 
-from src.objects.Graph import Graph
 from src.objects.Digraph import Digraph
 from src.objects.DigraphManager import DigraphManager
-
-from src.algorithms.connectivity import construct_connected_tree
 
 
 def kosaraju(dg):
@@ -96,6 +93,14 @@ def dfs_tarjan(graph, n, i, start_time, t, low):
 
 
 def construct_strongly_connected_digraph(n, p, show_info=True):
+    """
+
+    :param n:
+    :param p:
+    :param show_info:
+    :return:
+    """
+
     if n < 1:
         print("Random digraph cannot be created - number of vertices should be greater than 0.")
         return
@@ -119,21 +124,23 @@ def construct_strongly_connected_digraph(n, p, show_info=True):
         tree.append(v)
         vertices_to_tree.remove(v)
 
-    # res_before = kosaraju(dg)
+    res_before = kosaraju(dg)
 
     tarjan(dg, r)
 
-    # res_after = kosaraju(dg)
+    res_after = kosaraju(dg)
 
-    # print(res_before)
-    # print(res_after)
+    print(res_before)
+    print(res_after)
+    # print(dg)
 
     for i in range(n):
         for j in range(n):
             if not dg.data[i][j]:
-                if i != j:
-                    if random() <= p:
-                        dg.data[i][j] = 1
+                if random() <= p:
+                    dg.data[i][j] = 1
+    for i in range(n):
+        dg.data[i][i] = 0
 
     if show_info is True:
         print("Random digraph has been created (Gilbert model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")
