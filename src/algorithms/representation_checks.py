@@ -1,6 +1,7 @@
-def is_adjacency_matrix(matrix):
+def is_adjacency_matrix(matrix, digraph=False):
     """Checks if the passed matrix is a valid Adjacency Matrix.
-        matrix - matrix which will be examined for being an adjacency matrix"""
+        matrix - matrix which will be examined for being an adjacency matrix
+        digraph - boolean whether to check the matrix in case of digraph object or not"""
 
     n = len(matrix)
     for i in range(n):
@@ -11,8 +12,9 @@ def is_adjacency_matrix(matrix):
         return False
     for i in range(1, n):
         for j in range(0, i):
-            if matrix[i][j] != matrix[j][i]:
-                return False
+            if not digraph:
+                if matrix[i][j] != matrix[j][i]:
+                    return False
         if matrix[i][i] != 0:
             return False
     return True

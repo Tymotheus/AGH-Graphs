@@ -19,8 +19,8 @@ class Graph:
             show_info - boolean whether to print information about the graph after its creation."""
 
         if file_path is None:
-            self.data = [0]
-            self.representation = representation
+            self.data = [[0]]
+            self.representation = "AM"
         else:
             with open(file_path, 'r') as f:
                 data = [[int(num) for num in line.split(' ')] if line != '\n' else [] for line in f]
@@ -106,17 +106,9 @@ class Graph:
         if self.data is None:
             graph_as_string = "Graph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of graph G:\n"
-            for row in self.data:
-                for element in row:
-                    graph_as_string = graph_as_string + str(element) + " "
-                graph_as_string = graph_as_string + "\n"
+            graph_as_string = "Adjacency matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item) for item in row]) for row in self.data])
         elif self.representation == "IM":
-            graph_as_string = "Incidence matrix of graph G:\n"
-            for row in self.data:
-                for element in row:
-                    graph_as_string = graph_as_string + str(element) + " "
-                graph_as_string = graph_as_string + "\n"
+            graph_as_string = "Incidence matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item) for item in row]) for row in self.data])
         elif self.representation == "AL":
             graph_as_string = "Adjacency list of graph G:\n"
             i = 0

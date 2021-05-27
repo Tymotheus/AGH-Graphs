@@ -4,5 +4,9 @@ __all__ = [
     'Sequence',
     'Stack',
     'WeightedGraph',
-    'WeightedGraphManager'
+    'WeightedGraphManager',
+    'Digraph',
+    'DigraphManager',
+    'WeightedDigraph',
+    'WeightedDigraphManager'
 ]

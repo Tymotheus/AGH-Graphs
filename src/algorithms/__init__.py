@@ -4,9 +4,10 @@ __all__ = [
     'dfs',
     'eulerianity',
     'hamiltonicity',
-    'minimum_spanning_tree',
+    'minimum_spanning_trees',
     'regularity',
     'representation_checks',
     'representation_conversions',
-    'shortest_weighted_paths'
+    'shortest_weighted_paths',
+    'strong_connectivity'
 ]
