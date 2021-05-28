@@ -21,7 +21,7 @@ class WeightedDigraphManager:
         """Creates and returns a weighted digraph from a digraph. It's weights are defined by passed arguments.
                 digraph - Digraph object
                 w_min - minimum weight in weighted graph, by default equal to 1
-                w_min - maximum weight in weighted graph, by default equal to 10"""
+                w_max - maximum weight in weighted graph, by default equal to 10"""
 
         if not isinstance(digraph, Digraph):
             print("Passed argument is not a digraph.")
@@ -45,7 +45,7 @@ class WeightedDigraphManager:
             n - number of vertices (should be greater than 0)
             p - probability with which each arc occurs independently (should be between 0 and 1)
             w_min - minimum weight in weighted graph, by default equal to 1
-            w_min - maximum weight in weighted graph, by default equal to 10"""
+            w_max - maximum weight in weighted graph, by default equal to 10"""
 
         if n < 1:
             print("Strongly connected weighted digraph cannot be created - number of vertices should be greater than 0.")
