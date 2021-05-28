@@ -1,22 +1,33 @@
-def is_adjacency_matrix(matrix, digraph=False):
+def is_adjacency_matrix(matrix, digraph=False, flow_network=False):
     """Checks if the passed matrix is a valid Adjacency Matrix.
         matrix - matrix which will be examined for being an adjacency matrix
-        digraph - boolean whether to check the matrix in case of digraph object or not"""
+        digraph - boolean whether to check the matrix in case of Digraph object or not
+        flow_network - boolean whether to check the matrix in case of FlowNetwork object or not"""
 
     n = len(matrix)
     for i in range(n):
         if len(matrix[i]) != n:
+            print(0)
             return False
 
-    if matrix[0][0] != 0:
-        return False
-    for i in range(1, n):
-        for j in range(0, i):
-            if not digraph:
-                if matrix[i][j] != matrix[j][i]:
-                    return False
-        if matrix[i][i] != 0:
+    if not flow_network:
+        if matrix[0][0]:
             return False
+        for i in range(1, n):
+            for j in range(0, i):
+                if not (digraph or flow_network):
+                    if matrix[i][j] != matrix[j][i]:
+                        print(1)
+                        return False
+            if matrix[i][i]:
+                return False
+    else:
+        for i in range(n):
+            if matrix[i][0][1] or matrix[n-1][i][1] or matrix[i][i][1]:
+                return False
+            for j in range(n):
+                if matrix[i][j][1] and matrix[j][i][1]:
+                    return False
     return True
 
 

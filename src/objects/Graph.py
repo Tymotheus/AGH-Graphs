@@ -34,6 +34,8 @@ class Graph:
                            else ("incidence matrix." if self.representation == "IM"
                                  else "adjacency list.")))
             else:
+                self.data = None
+                self.representation = None
                 print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
     def draw(self, vertices=None, edges=None, img_width=600, img_height=600):

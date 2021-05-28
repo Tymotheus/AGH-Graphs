@@ -29,6 +29,8 @@ class Digraph:
                     print("Digraph has been read from file.")
                     print("Digraph represented by adjacency matrix.")
             else:
+                self.data = None
+                self.representation = None
                 print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
     def draw(self, vertices=None, arcs=None, img_width=600, img_height=600, flagy=None):
@@ -78,58 +80,27 @@ class Digraph:
         for i in range(n):
             for j in range(n):
                 if self.data[i][j]:
-                    a = None
-                    equal_x = math.fabs(positions[j][0] - positions[i][0]) <= 10**-3
-                    equal_y = math.fabs(positions[j][1] - positions[i][1]) <= 10**-3
-                    if not equal_x:
-                        a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                    x = 0 if equal_x else v_r if equal_y else math.sqrt(v_r**2/(a**2 + 1))
-                    y = 0 if equal_y else v_r if equal_x else math.fabs(a*x)
-                    # print("%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s" %(i+1, positions[i][0], positions[i][1], j+1, positions[j][0], positions[j][1], a, x, y))
-                    flagx = 1 if positions[i][0] < positions[j][0] else -1
-                    flagy = 1 if positions[i][1] < positions[j][1] else -1
-
-                    canvas.create_line(positions[i][0] + flagx * x, positions[i][1] + flagy * y,
-                                       positions[j][0] - flagx * x, positions[j][1] - flagy * y,
-                                       fill="red", arrow=tk.LAST)
+                    draw_digraph_arc(canvas, v_r,
+                                     positions[i][0], positions[i][1], positions[j][0], positions[j][1],
+                                     "black")
 
         if len(arcs):
             for arc in arcs:
                 if self.data[arc[0]][arc[1]]:
                     i = arc[0]
                     j = arc[1]
-                    a = None
-                    equal_x = math.fabs(positions[j][0] - positions[i][0]) <= 10 ** -3
-                    equal_y = math.fabs(positions[j][1] - positions[i][1]) <= 10 ** -3
-                    if not equal_x:
-                        a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                    x = 0 if equal_x else v_r if equal_y else math.sqrt(v_r ** 2 / (a ** 2 + 1))
-                    y = 0 if equal_y else v_r if equal_x else math.fabs(a * x)
-                    flagx = 1 if positions[i][0] < positions[j][0] else -1
-                    flagy = 1 if positions[i][1] < positions[j][1] else -1
-
-                    canvas.create_line(positions[i][0] + flagx * x, positions[i][1] + flagy * y,
-                                       positions[j][0] - flagx * x, positions[j][1] - flagy * y,
-                                       fill="red", arrow=tk.LAST)
+                    draw_digraph_arc(canvas, v_r,
+                                     positions[i][0], positions[i][1], positions[j][0], positions[j][1],
+                                     "red")
         elif len(vertices):
             for v1 in range(len(vertices)-1):
                 for v2 in range(v1+1, len(vertices)):
                     if self.data[vertices[v1]][vertices[v2]]:
                         i = vertices[v1]
                         j = vertices[v2]
-                        a = None
-                        equal_x = math.fabs(positions[j][0] - positions[i][0]) <= 10 ** -3
-                        equal_y = math.fabs(positions[j][1] - positions[i][1]) <= 10 ** -3
-                        if not equal_x:
-                            a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                        x = 0 if equal_x else v_r if equal_y else math.sqrt(v_r ** 2 / (a ** 2 + 1))
-                        y = 0 if equal_y else v_r if equal_x else math.fabs(a * x)
-                        flagx = 1 if positions[i][0] < positions[j][0] else -1
-                        flagy = 1 if positions[i][1] < positions[j][1] else -1
-
-                        canvas.create_line(positions[i][0] + flagx * x, positions[i][1] + flagy * y,
-                                           positions[j][0] - flagx * x, positions[j][1] - flagy * y,
-                                           fill="red", arrow=tk.LAST)
+                        draw_digraph_arc(canvas, v_r,
+                                         positions[i][0], positions[i][1], positions[j][0], positions[j][1],
+                                         "red")
 
         print("Digraph is being drawn.")
         canvas.pack()
@@ -145,3 +116,19 @@ class Digraph:
         else:
             graph_as_string = "Cannot describe digraph - unknown representation."
         return graph_as_string
+
+
+def draw_digraph_arc(canvas, v_r, v1_x, v1_y, v2_x, v2_y, arc_color):
+    a = None
+    equal_x = math.fabs(v2_x - v1_x) <= 10 ** -3
+    equal_y = math.fabs(v2_y - v1_y) <= 10 ** -3
+    if not equal_x:
+        a = -(v2_y - v1_y) / (v2_x - v1_x)
+    x = 0 if equal_x else v_r if equal_y else math.sqrt(v_r ** 2 / (a ** 2 + 1))
+    y = 0 if equal_y else v_r if equal_x else math.fabs(a * x)
+    x_sign = 1 if v1_x < v2_x else -1
+    y_sign = 1 if v1_y < v2_y else -1
+
+    canvas.create_line(v1_x + x_sign * x, v1_y + y_sign * y,
+                       v2_x - x_sign * x, v2_y - y_sign * y,
+                       fill=arc_color, arrow=tk.LAST)

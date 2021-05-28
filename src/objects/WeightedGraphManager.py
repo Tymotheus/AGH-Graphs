@@ -22,7 +22,7 @@ class WeightedGraphManager:
         """Creates and return a weighted graph from a simple graph. It's weights are defined by passed arguments.
                 graph - Graph object
                 w_min - minimum weight in weighted graph, by default equal to 1
-                w_min - maximum weight in weighted graph, by default equal to 10"""
+                w_max - maximum weight in weighted graph, by default equal to 10"""
 
         if not isinstance(graph, Graph):
             print("Passed argument is not a graph.")

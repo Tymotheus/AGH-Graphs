@@ -139,7 +139,6 @@ def construct_strongly_connected_digraph(n, p, show_info=True):
             if not dg.data[i][j]:
                 if random() <= p:
                     dg.data[i][j] = 1
-    for i in range(n):
         dg.data[i][i] = 0
 
     if show_info is True:

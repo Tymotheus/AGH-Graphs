@@ -29,9 +29,11 @@ class WeightedDigraph:
                     print("Weighted digraph has been read from file.")
                     print("Weighted digraph represented by adjacency matrix.")
             else:
+                self.data = None
+                self.representation = None
                 print("Cannot read weighted digraph from file - passed data is not of the form of passed representation.")
 
-    def draw(self, vertices=None, arcs=None, img_width=600, img_height=600, flagy=None):
+    def draw(self, vertices=None, arcs=None, img_width=600, img_height=600):
         """ Draws the weighted digraph in new window which pops up. The weighted digraph should be represented by adjacency matrix.
             Weights of arcs are placed closer to first vertex of each arc.
                 vertices - set of vertices to distinguish which is helpful during components consideration
@@ -79,83 +81,27 @@ class WeightedDigraph:
         for i in range(n):
             for j in range(n):
                 if self.data[i][j]:
-                    a = None
-                    if positions[j][0] > positions[i][0]:
-                        a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                    elif positions[j][0] < positions[i][0]:
-                        a = -(positions[i][1] - positions[j][1]) / (positions[i][0] - positions[j][0])
-                    x = 0 if positions[j][0] == positions[i][0] else v_r if positions[j][1] == positions[i][
-                        1] else math.sqrt(v_r ** 2 / (a ** 2 + 1))
-                    y = 0 if positions[j][1] == positions[i][1] else v_r if positions[j][0] == positions[i][
-                        0] else math.fabs(a * x)
-                    # print("%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s" %(i+1, positions[i][0], positions[i][1], j+1, positions[j][0], positions[j][1], a, x, y))
-                    flagx = 1 if positions[i][0] < positions[j][0] else -1
-                    flagy = 1 if positions[i][1] < positions[j][1] else -1
-
-                    canvas.create_line(positions[i][0] + flagx * x, positions[i][1] + flagy * y,
-                                       positions[j][0] - flagx * x, positions[j][1] - flagy * y,
-                                       fill="black", arrow=tk.LAST)
-                    canvas.create_text((2 * positions[i][0] + positions[j][0]) / 3,
-                                       (2 * positions[i][1] + positions[j][1]) / 3,
-                                       text=str(self.data[i][j]),
-                                       font=("Verdana", max(int(20 - 2 * n / 10), 10)),
-                                       fill="gray")
+                    draw_weighted_digraph_arc(canvas, n, v_r,
+                                              positions[i][0], positions[i][1], positions[j][0], positions[j][1],
+                                              str(self.data[i][j]), "black", "gray")
 
         if len(arcs):
             for arc in arcs:
                 if self.data[arc[0]][arc[1]]:
                     i = arc[0]
                     j = arc[1]
-                    a = None
-                    if positions[j][0] > positions[i][0]:
-                        a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                    elif positions[j][0] < positions[i][0]:
-                        a = -(positions[i][1] - positions[j][1]) / (positions[i][0] - positions[j][0])
-                    x = 0 if positions[j][0] == positions[i][0] else v_r if positions[j][1] == positions[i][
-                        1] else math.sqrt(v_r ** 2 / (a ** 2 + 1))
-                    y = 0 if positions[j][1] == positions[i][1] else v_r if positions[j][0] == positions[i][
-                        0] else math.fabs(a * x)
-                    # print("%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s" % (
-                    #     i + 1, positions[i][0], positions[i][1], j + 1, positions[j][0], positions[j][1], a, x, y))
-                    flagx = 1 if positions[i][0] < positions[j][0] else -1
-                    flagy = 1 if positions[i][1] < positions[j][1] else -1
-
-                    canvas.create_line(positions[i][0] + flagx * x, positions[i][1] + flagy * y,
-                                       positions[j][0] - flagx * x, positions[j][1] - flagy * y,
-                                       fill="red", arrow=tk.LAST)
-                    canvas.create_text((2 * positions[i][0] + positions[j][0]) / 3,
-                                       (2 * positions[i][1] + positions[j][1]) / 3,
-                                       text=str(self.data[i][j]),
-                                       font=("Verdana", max(int(20 - 2 * n / 10), 10)),
-                                       fill="red")
+                    draw_weighted_digraph_arc(canvas, n, v_r,
+                                              positions[i][0], positions[i][1], positions[j][0], positions[j][1],
+                                              str(self.data[i][j]), "red", "red")
         elif len(vertices):
             for v1 in range(len(vertices)):
                 for v2 in range(len(vertices)):
                     if self.data[vertices[v1]][vertices[v2]] and v1 != v2:
                         i = vertices[v1]
                         j = vertices[v2]
-                        a = None
-                        if positions[j][0] > positions[i][0]:
-                            a = -(positions[j][1] - positions[i][1]) / (positions[j][0] - positions[i][0])
-                        elif positions[j][0] < positions[i][0]:
-                            a = -(positions[i][1] - positions[j][1]) / (positions[i][0] - positions[j][0])
-                        x = 0 if positions[j][0] == positions[i][0] else v_r if positions[j][1] == positions[i][
-                            1] else math.sqrt(v_r ** 2 / (a ** 2 + 1))
-                        y = 0 if positions[j][1] == positions[i][1] else v_r if positions[j][0] == positions[i][
-                            0] else math.fabs(a * x)
-                        # print("%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s\t\t%.5s\t%.5s\t%.5s" % (
-                        #     i + 1, positions[i][0], positions[i][1], j + 1, positions[j][0], positions[j][1], a, x, y))
-                        flagx = 1 if positions[i][0] < positions[j][0] else -1
-                        flagy = 1 if positions[i][1] < positions[j][1] else -1
-
-                        canvas.create_line(positions[i][0] + flagx * x, positions[i][1] + flagy * y,
-                                           positions[j][0] - flagx * x, positions[j][1] - flagy * y,
-                                           fill="red", arrow=tk.LAST)
-                        canvas.create_text((2 * positions[i][0] + positions[j][0]) / 3,
-                                           (2 * positions[i][1] + positions[j][1]) / 3,
-                                           text=str(self.data[i][j]),
-                                           font=("Verdana", max(int(20 - 2 * n / 10), 10)),
-                                           fill="red")
+                        draw_weighted_digraph_arc(canvas, n, v_r,
+                                                  positions[i][0], positions[i][1], positions[j][0], positions[j][1],
+                                                  str(self.data[i][j]), "red", "red")
 
         print("Weighted digraph is being drawn.")
         canvas.pack()
@@ -171,3 +117,24 @@ class WeightedDigraph:
         else:
             graph_as_string = "Cannot describe weighted digraph - unknown representation."
         return graph_as_string
+
+
+def draw_weighted_digraph_arc(canvas, n, v_r, v1_x, v1_y, v2_x, v2_y, arc_value_text, arc_color, arc_value_color):
+    a = None
+    equal_x = math.fabs(v2_x - v1_x) <= 10 ** -3
+    equal_y = math.fabs(v2_y - v1_y) <= 10 ** -3
+    if not equal_x:
+        a = -(v2_y - v1_y) / (v2_x - v1_x)
+    x = 0 if equal_x else v_r if equal_y else math.sqrt(v_r ** 2 / (a ** 2 + 1))
+    y = 0 if equal_y else v_r if equal_x else math.fabs(a * x)
+    x_sign = 1 if v1_x < v2_x else -1
+    y_sign = 1 if v1_y < v2_y else -1
+
+    canvas.create_line(v1_x + x_sign * x, v1_y + y_sign * y,
+                       v2_x - x_sign * x, v2_y - y_sign * y,
+                       fill=arc_color, arrow=tk.LAST)
+    canvas.create_text((2 * v1_x + v2_x) / 3,
+                       (2 * v1_y + v2_y) / 3,
+                       text=arc_value_text,
+                       font=("Verdana", max(int(20 - 2 * n / 10), 10)),
+                       fill=arc_value_color)
