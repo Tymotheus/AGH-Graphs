@@ -15,7 +15,8 @@ g1 = WeightedGraphManager.construct_connected_weighted_graph_edge_number(15, 20)
 g1.draw()
 
 # CONNECTED WEIGHTED GRAPH USING PRUFER CODE AND GILBERT MODEL
-g3 = WeightedGraphManager.construct_connected_weighted_graph_edge_number(15, 0.5)
+
+g3 = WeightedGraphManager.construct_connected_weighted_graph_probability(15, 0.5)
 g3.draw()
 
 print("\n\n---------------------------------------- AD. 3.2 ----------------------------------------")

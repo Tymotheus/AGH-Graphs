@@ -33,7 +33,7 @@ class WeightedDigraph:
                 self.representation = None
                 print("Cannot read weighted digraph from file - passed data is not of the form of passed representation.")
 
-    def draw(self, vertices=None, arcs=None, img_width=600, img_height=600):
+    def draw(self, weights = [], vertices=None, arcs=None, img_width=600, img_height=600):
         """ Draws the weighted digraph in new window which pops up. The weighted digraph should be represented by adjacency matrix.
             Weights of arcs are placed closer to first vertex of each arc.
                 vertices - set of vertices to distinguish which is helpful during components consideration
@@ -65,6 +65,10 @@ class WeightedDigraph:
 
         positions = [[0.0] * 2 for _ in range(n)]
 
+        w = weights if len(weights) else self.data
+        if len(weights):
+            print("tak")
+
         for i in range(n):
             v_angle = i * angle
             positions[i][0] = g_center_height + (g_r * math.sin(v_angle) if n > 1 else 0)
@@ -83,7 +87,7 @@ class WeightedDigraph:
                 if self.data[i][j]:
                     draw_weighted_digraph_arc(canvas, n, v_r,
                                               positions[i][0], positions[i][1], positions[j][0], positions[j][1],
-                                              str(self.data[i][j]), "black", "gray")
+                                              str(w[i][j]), "black", "gray")
 
         if len(arcs):
             for arc in arcs:

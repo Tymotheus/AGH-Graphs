@@ -2,7 +2,7 @@ from src.objects.WeightedGraph import WeightedGraph
 from src.algorithms.connectivity import is_graph_connected
 
 
-def dijkstra(wg, origin, show=False):
+def dijkstra(wg, origin, show=False, weights=[]):
     """"Performs Dijkstra algorithm on a WeightedGraph with non-negative values.
             wg - WeightedGraph object
             origin - source vertex from which shortest paths to other vertices will be find
@@ -11,6 +11,8 @@ def dijkstra(wg, origin, show=False):
             matrix[0] - list of distances from source vertex (origin) to other vertices
             matrix[1]~matrix[n-1] - paths from source vertex (origin) to other vertices"""
 
+    w = weights if len(weights) else wg.data
+    
     if not isinstance(wg, WeightedGraph):
         print("Passed argument is not a weighted graph.")
         return
@@ -20,7 +22,7 @@ def dijkstra(wg, origin, show=False):
     n = len(wg.data)
     for i in range(n):
         for j in range(n):
-            if wg.data[i][j] < 0:
+            if w[i][j] < 0:
                 print("Cannot perform Dijkstra algorithm - passed weighted graph contains an edge with negative weight.")
                 return
 
@@ -41,9 +43,9 @@ def dijkstra(wg, origin, show=False):
         S.append(u)
         copy_distance.pop(u)
         for v in range(len(distance)):
-            if wg.data[v][u] and distance[v] > (distance[u] + wg.data[v][u]):
-                distance[v] = distance[u] + wg.data[v][u]
-                copy_distance[v] = distance[u] + wg.data[v][u]
+            if wg.data[v][u] and distance[v] > (distance[u] + w[v][u]):
+                distance[v] = distance[u] + w[v][u]
+                copy_distance[v] = distance[u] + w[v][u]
                 predecessor[v] = u+1  
 
     matrix = [[] for _ in range(len(distance)+1)]

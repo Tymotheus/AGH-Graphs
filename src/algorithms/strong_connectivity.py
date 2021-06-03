@@ -80,10 +80,8 @@ def dfs_tarjan(graph, n, i, start_time, t, low):
                 low[i] = min(low[i], low[j], start_time[j])
 
     if low[i] == start_time[i]:
-        # print("st=%s\tgt=%s" %(start_time[i], t[0]))
         x = randint(start_time[i], t[0]-1)
         y = randint(0, max(0, start_time[i]-1))
-        # print("x=%s, y=%s" % (x, y))
         v = None
         w = None
         for j in range(n):
@@ -91,7 +89,6 @@ def dfs_tarjan(graph, n, i, start_time, t, low):
                 v = j
             if start_time[j] == y:
                 w = j
-        # print("v=%s, w=%s" % (v, w))
         graph.data[v][w] = 1
         low[i] = y
 
@@ -136,7 +133,6 @@ def construct_strongly_connected_digraph(n, p, show_info=True):
 
     print(res_before)
     print(res_after)
-    # print(dg)
 
     for i in range(n):
         for j in range(n):
