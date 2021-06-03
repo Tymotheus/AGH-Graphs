@@ -66,6 +66,8 @@ class FlowNetwork:
     def draw(self, img_width=600, img_height=600):
         """ Draws the flow network in new window which pops up. The flow network should be represented by adjacency matrix.
             On each arc there is placed it's current flow F and maximum capacity C in the "F/C" format.
+            Drawing a flow network is not always ideal because it draws arcs as straight-line arrows.
+                Therefore, sometimes arcs overlap each other and it's difficult to match arc and it's flow.
                 img_width - width of the popped window (in pixels)
                 img_height - height of the popped window (in pixels)"""
 
@@ -86,11 +88,15 @@ class FlowNetwork:
 
         positions = [[0.0] * 2 for _ in range(n)]
 
-        draw_layers = []
-        draw_layers.append([0])
+        draw_layers = [[0]]
         if self.layers is not None:
-            for elem in self.layers:
-                draw_layers.append(elem)
+            v = 1
+            for layer in self.layers:
+                layer_to_add = []
+                for i in range(layer):
+                    layer_to_add.append(v)
+                    v += 1
+                draw_layers.append(layer_to_add)
         else:
             num_inner_verts = n-2
             num_inner_layers = math.ceil(math.sqrt(num_inner_verts))
@@ -120,26 +126,29 @@ class FlowNetwork:
                                positions[i][0] + v_r, positions[i][1] + v_r,
                                fill="black")
             canvas.create_text(positions[i][0], positions[i][1],
-                               fill="white", text=texts[i], font=("Verdana", max(int(20 - 2 * n / 10), 10)))
+                               fill="white", text=texts[i], font=("Verdana", 12))
 
         for i in range(n):
             for j in range(n):
                 if self.data[i][j][1] > 0:
+                    arc_color = "black" if self.data[i][j][0] > 0 else "light gray"
+                    arc_value_color = "dim gray" if self.data[i][j][0] > 0 else "light gray"
                     draw_flow_network_arc(canvas, v_r,
                                           positions[i][0], positions[i][1], positions[j][0], positions[j][1],
-                                          f'{self.data[i][j][0]}/{self.data[i][j][1]}', "black", "gray")
+                                          f'{self.data[i][j][0]}/{self.data[i][j][1]}', arc_color, arc_value_color)
 
         print("Flow network is being drawn.")
         canvas.pack()
         root.mainloop()
 
     def __str__(self):
-        """String representation of a flow network depending on the .representation field."""
+        """String representation of a flow network depending on the .representation field.
+            Arc's capacity equal to 0 is equivalent to the lack of direct connection between two vertices. This is represented by a dot."""
 
         if self.data is None:
             graph_as_string = "Flow network is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of flow network FN:\n" + '\n'.join([''.join(['{:10}'.format(f'{item[0]} / {item[1]}') for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of flow network FN:\n" + '\n'.join([''.join(['{:10}'.format(f'{item[0]} / {item[1]}' if item[1] > 0 else ".") for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe flow network - unknown representation."
         return graph_as_string

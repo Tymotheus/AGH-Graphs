@@ -29,7 +29,11 @@ def kosaraju(dg):
             comp[v[0]] = nr
             components_r(dg_T, n, v[0], nr, comp)
 
-    return comp
+    vertices_in_comps = [[] for _ in range(max(comp))]
+    for i in range(n):
+        vertices_in_comps[comp[i]-1].append(i)
+
+    return vertices_in_comps
 
 
 def dfs_time(graph, n, v, d, f, t):
