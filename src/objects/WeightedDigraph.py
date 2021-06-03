@@ -117,7 +117,7 @@ class WeightedDigraph:
         if self.data is None:
             graph_as_string = "Weighted digraph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of weighted digraph WD:\n" + '\n'.join([''.join(['{:5}'.format(item) for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of weighted digraph WD:\n" + '\n'.join([''.join(['{:5}'.format(item if item is not None else ".") for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe weighted digraph - unknown representation."
         return graph_as_string

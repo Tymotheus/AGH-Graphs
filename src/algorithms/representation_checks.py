@@ -7,7 +7,6 @@ def is_adjacency_matrix(matrix, digraph=False, flow_network=False):
     n = len(matrix)
     for i in range(n):
         if len(matrix[i]) != n:
-            print(0)
             return False
 
     if not flow_network:
@@ -17,7 +16,6 @@ def is_adjacency_matrix(matrix, digraph=False, flow_network=False):
             for j in range(0, i):
                 if not (digraph or flow_network):
                     if matrix[i][j] != matrix[j][i]:
-                        print(1)
                         return False
             if matrix[i][i]:
                 return False
