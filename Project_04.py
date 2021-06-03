@@ -8,7 +8,7 @@ print("\n\n---------------------------------------- AD. 4.1 --------------------
 
 # DIGRAPH FROM FILE
 # dg1 = Digraph(file_path="example_data/proj4_digraph1.txt")
-# dg1 = Digraph(file_path="example_data/proj4_digraph2.txt")
+dg1 = Digraph(file_path="example_data/proj4_digraph2.txt")
 # dg1.draw()
 
 # RANDOM DIGRAPH FROM G(n,p) MODEL
@@ -24,14 +24,14 @@ print("\n\n---------------------------------------- AD. 4.2 --------------------
 # dg1_t.draw()
 
 # DIGRAPH DFS
-# res = kosaraju(dg1)
-# print(res)
-# dg1.draw()
+res = kosaraju(dg1)
+print(res)
+dg1.draw()
 
 print("\n\n---------------------------------------- AD. 4.3 ----------------------------------------")
-dg3 = construct_strongly_connected_digraph(10, p=0.0)
-print(dg3)
-dg3.draw()
+# dg3 = construct_strongly_connected_digraph(10, p=0.0)
+# print(dg3)
+# dg3.draw()
 
 # wdg1 = WeightedDigraphManager.make_weighted_digraph_from_digraph(dg3)
 # wdg1.draw()
