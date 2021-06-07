@@ -33,7 +33,8 @@ N = 3
 # fn_ff = FlowNetwork('example_data/proj5_flow_network_ford_fulkerson.txt')
 fn_ff = FlowNetworkManager.construct_flow_network_edge_number(N, 2*N)
 fn_ff.draw()
-ford_fulkerson(fn_ff)
+max_flow = ford_fulkerson(fn_ff)
 print(fn_ff)
+print("maximum flow of FL: ", max_flow)
 fn_ff.draw()
 

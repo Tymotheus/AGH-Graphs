@@ -9,7 +9,7 @@ def ford_fulkerson(fn):
     Implementation of Ford-Fulkerson algorithm on a FlowNetwork object.
         After call, current flow in passed FlowNetwork object is set to the maximum flow found during algorithm execution.
     :param fn: FlowNetwork object
-    :return: None
+    :return: value of maximum flow in flow network
     """
 
     if not isinstance(fn, FlowNetwork):
@@ -33,6 +33,14 @@ def ford_fulkerson(fn):
                 else:
                     fn.data[edge[0]][edge[1]][0] -= c_f_min
         p = []
+
+    s_out = 0
+    t_in = 0
+    for i in range(n):
+        s_out += fn.data[0][i][0]
+        t_in += fn.data[i][n-1][0]
+    if s_out == t_in:
+        return t_in
 
 
 def bfs_maximum_flow_augmenting_path(wd, n, p):

@@ -143,4 +143,4 @@ def minimax_center_of_weighted_graph(wg, distance_matrix=None):
     maximums = {i: max(distance_matrix[i]) for i in range(n)}
     minimum = min(maximums.values())
     indexes = [k+1 for k, v in maximums.items() if v == minimum]
-    return {"minimax_center": [i for i in indexes], "sum_of_distance": sum(distance_matrix[indexes[0]]), "dist_to_farthest": minimum}
+    return {"minimax_center": [i for i in indexes], "sum_of_distance": sum(distance_matrix[indexes[0]-1]), "dist_to_farthest": minimum}
