@@ -98,15 +98,15 @@ class FlowNetwork:
                     v += 1
                 draw_layers.append(layer_to_add)
         else:
-            num_inner_verts = n-2
-            num_inner_layers = math.ceil(math.sqrt(num_inner_verts))
-            verts_to_add = [i for i in range(1, n-1)]
+            num_inner_vertices = n - 2
+            num_inner_layers = math.ceil(math.sqrt(num_inner_vertices))
+            vertices_to_add = [i for i in range(1, n - 1)]
             for i in range(num_inner_layers, 0, -1):
                 layer_to_add = []
-                num_of_verts_to_add = math.ceil(len(verts_to_add) / float(i))
-                for j in range(num_of_verts_to_add):
-                    layer_to_add.append(verts_to_add[0])
-                    verts_to_add.remove(verts_to_add[0])
+                num_of_vertices_to_add = math.ceil(len(vertices_to_add) / float(i))
+                for j in range(num_of_vertices_to_add):
+                    layer_to_add.append(vertices_to_add[0])
+                    vertices_to_add.remove(vertices_to_add[0])
                 draw_layers.append(layer_to_add)
         draw_layers.append([n-1])
         num_layers = len(draw_layers)
@@ -155,6 +155,19 @@ class FlowNetwork:
 
 
 def draw_flow_network_arc(canvas, v_r, v1_x, v1_y, v2_x, v2_y, arc_value_text, arc_color, arc_value_color):
+    """
+    Auxiliary function to draw an arc during FlowNetwork drawing.
+    :param canvas: tkinter canvas on which the FlowNetwork will be drawn
+    :param v_r: radius of vertex
+    :param v1_x: X position of vertex number 1
+    :param v1_y: Y position of vertex number 1
+    :param v2_x: X position of vertex number 2
+    :param v2_y: Y position of vertex number 2
+    :param arc_value_text: arc's flow and capacity that will be drawn on the arc
+    :param arc_color: color of the arc
+    :param arc_value_color: color of the arc's flow and capacity
+    :return: None
+    """
     a = None
     equal_x = math.fabs(v2_x - v1_x) <= 10 ** -3
     equal_y = math.fabs(v2_y - v1_y) <= 10 ** -3

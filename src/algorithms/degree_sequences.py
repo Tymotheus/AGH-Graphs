@@ -75,10 +75,8 @@ def construct_graph_from_degree_sequence(sequence):
             graph.data = [[0] * n for _ in range(n)]
             v_and_d = [[i, sequence[i]] for i in range(n)]
 
-            second_list_argument = lambda li: li[1]
-
             while True:
-                v_and_d.sort(key=second_list_argument, reverse=True)
+                v_and_d.sort(key=lambda li: li[1], reverse=True)
                 if v_and_d[0][1] == 0:
                     break
                 for j in range(1, v_and_d[0][1]+1):

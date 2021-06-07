@@ -117,13 +117,27 @@ class WeightedDigraph:
         if self.data is None:
             graph_as_string = "Weighted digraph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of weighted digraph WD:\n" + '\n'.join([''.join(['{:5}'.format(item if item is not None else ".") for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of weighted digraph WD:\n" + '\n'.join([''.join(['{:5}'.format(item if item is not None else '.') for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe weighted digraph - unknown representation."
         return graph_as_string
 
 
 def draw_weighted_digraph_arc(canvas, n, v_r, v1_x, v1_y, v2_x, v2_y, arc_value_text, arc_color, arc_value_color):
+    """
+    Auxiliary function to draw an arc during WeightedDigraph drawing.
+    :param canvas: tkinter canvas on which the WeightedDigraph will be drawn
+    :param n: order of WeightedDigraph
+    :param v_r: radius of vertex
+    :param v1_x: X position of vertex number 1
+    :param v1_y: Y position of vertex number 1
+    :param v2_x: X position of vertex number 2
+    :param v2_y: Y position of vertex number 2
+    :param arc_value_text: arc's flow and capacity that will be drawn on the arc
+    :param arc_color: color of the arc
+    :param arc_value_color: color of the arc's flow and capacity
+    :return: None
+    """
     a = None
     equal_x = math.fabs(v2_x - v1_x) <= 10 ** -3
     equal_y = math.fabs(v2_y - v1_y) <= 10 ** -3

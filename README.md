@@ -72,10 +72,44 @@ The solutions use:
 
 
 # PROJECT 4
-
+To run solutions of tasks from project it's enough to run the Project_04.py file.
+The solutions use: 
+1. Some functionalities from previous projects described above.
+2. Digraph.py - represent digraphs.
+    * reading digraphs data from file and printing it;
+    * drawing a digraphs.
+3. DigraphManager.py - allow to perform some operations connected with digraphs.
+    * constructing random digraph using Gilbert model;
+    * constructing transpose digraph of passed digraph.
+4. WeightedDigraph.py - represent weighted digraphs.
+    * reading weighted digraphs data from file and printing it;
+    * drawing a digraphs.
+5. WeightedDigraphManager.py - allow to perform some operations connected with weighted digraphs.
+    * constructing weighted digraph from passed digraph;
+    * constructing random weighted digraph using Gilbert model.
+6. strong_connectivity.py - allow to perform some operations connected with strongly connected digraphs.
+    * implementation of Kosaraju algorithm;
+    * constructing strongly connected digraph using modified implementation of Tarjan algorithm.
+7. shortest_weighted_digraph_paths.py - allow to find objects connected with shortest distance in weighted digraphs.
+    * implementation of Bellman-Ford algorithm;
+    * finding distance matrix between any two vertices using Bellman-Ford algorithm;
+    * implementation of Johnson algorithm.
 
 # PROJECT 5
-
+To run solutions of tasks from project it's enough to run the Project_05.py file.
+The solutions use: 
+1. Some functionalities from previous projects described above.
+2. FlowNetwork.py - represent flow networks.
+    * reading weighted graph data from file and printing it;
+    * drawing a weighted graph.
+3. FlowNetworkManager.py - allow to perform some operations connected with flow networks.
+    * constructing random flow network using layers approach and Erdos-Renyi model;
+    * constructing residual network of passed flow network.
+4. maximum_flow.py - allow to find maximum flow of flow network
+    * implementation of Ford-Fulkerson algorithm;
+    * finding augmenting path (as a part of Ford-Fulkerson algorithm) in flow flow network using BFS.
+5. representation_checks.py - check correctness of flow network representation.
+    * checking whether passed flow network data is correct (improved is_adjacency_matrix function)
 
 # PROJECT 6
 

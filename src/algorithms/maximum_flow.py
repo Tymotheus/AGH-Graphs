@@ -5,8 +5,12 @@ from src.objects.FlowNetworkManager import FlowNetworkManager
 
 
 def ford_fulkerson(fn):
-    """"Performs Ford-Fulkerson algorithm on a FlowNetwork object. In result current flow in passed flow network is modified to the maximum flow.
-            fn - FlowNetwork object"""
+    """
+    Implementation of Ford-Fulkerson algorithm on a FlowNetwork object.
+        After call, current flow in passed FlowNetwork object is set to the maximum flow found during algorithm execution.
+    :param fn: FlowNetwork object
+    :return: None
+    """
 
     if not isinstance(fn, FlowNetwork):
         print("Passed argument is not a flow network.")
@@ -32,6 +36,17 @@ def ford_fulkerson(fn):
 
 
 def bfs_maximum_flow_augmenting_path(wd, n, p):
+    """
+    Function looking for a path between first and last vertices. It is based in BFS algorithm.
+    It is used to find an augmenting path in residual network.
+    :param wd: WeightedDigraph object
+    :param n: number of vertices
+    :param p: path between first and last vertices. Each element is of form [v,u,w(v,u)] where:
+        u, v - vertices which creates an arc in an augmenting path (in residual network)
+        w(v,u) - capacity of u-v arc in residual network
+    :return: length of an augmenting path.
+        If the length is equal to 0, an augmenting path does not exist.
+    """
 
     d_s = [math.inf for _ in range(n)]
     p_s = [None for _ in range(n)]

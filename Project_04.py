@@ -4,7 +4,7 @@ from src.objects.DigraphManager import DigraphManager
 from src.objects.WeightedDigraphManager import WeightedDigraphManager
 
 from src.algorithms.strong_connectivity import kosaraju, construct_strongly_connected_digraph
-from src.algorithms.shortest_weighted_digraph_paths import distance_matrix_from_bellman_ford, johnson
+from src.algorithms.shortest_weighted_digraph_paths import bellman_ford, distance_matrix_from_bellman_ford, johnson
 
 print("\n\n---------------------------------------- AD. 4.1 ----------------------------------------")
 # DIGRAPH FROM FILE
@@ -27,12 +27,16 @@ print(res)
 dg1.draw()
 
 print("\n\n---------------------------------------- AD. 4.3 ----------------------------------------")
-# dg3 = construct_strongly_connected_digraph(10, p=0.0)
-# print(dg3)
-# dg3.draw()
+dg3 = construct_strongly_connected_digraph(10, p=0.0)
+print(dg3)
+dg3.draw()
 
 wdg1 = WeightedDigraphManager.make_weighted_digraph_from_digraph(dg3)
 wdg1.draw()
+
+BF_result = bellman_ford(wdg1)
+print("Bellman-Ford algorithm result:\n", BF_result)
+
 distance_matrix_from_bellman_ford(wdg1)
 
 # DISTANCE MATRIX OF DIGRAPH BY BELLMAN_FORD ALGORITHM FOR RANDOM DIGRAPH
@@ -46,8 +50,7 @@ wdg3 = WeightedDigraph(file_path="example_data/proj4_wdigraph1.txt")
 distance_matrix_from_bellman_ford(wdg3)
 
 print("\n\n---------------------------------------- AD. 4.4 ----------------------------------------")
-# DISTANCE MATRIX OF DIGRAPH BY JONHSON ALGORITHM FOR EXAMPLE DIGRAPH
+# DISTANCE MATRIX OF DIGRAPH BY JOHNSON ALGORITHM FOR EXAMPLE DIGRAPH
 wdg4 = WeightedDigraph(file_path="example_data/proj4_wdigraph1.txt")
 johnson(wdg4)
 wdg4.draw()
-

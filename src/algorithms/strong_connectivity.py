@@ -5,6 +5,11 @@ from src.objects.DigraphManager import DigraphManager
 
 
 def kosaraju(dg):
+    """
+    Implementation of Kosaraju algorithm on a Digraph object.
+    :param dg: Digraph object
+    :return: list of lists of vertices in the same strong component
+    """
     if not isinstance(dg, Digraph):
         print("Passed argument is not a digraph.")
         return
@@ -36,26 +41,51 @@ def kosaraju(dg):
     return vertices_in_comps
 
 
-def dfs_time(graph, n, v, d, f, t):
+def dfs_time(digraph, n, v, d, f, t):
+    """
+    Auxiliary function used during Kosaraju algorithm to set the time of vertex consideration using DFS.
+    :param digraph: Digraph object
+    :param n: order of digraph
+    :param v: considered vertex
+    :param d: list of starting time consideration of vertices
+    :param f: list of finish time consideration of vertices
+    :param t: time of consideration
+    :return: None
+    """
     t[0] += 1
     d[v][1] = t[0]
     for u in range(n):
-        if graph.data[v][u]:
+        if digraph.data[v][u]:
             if d[u][1] == -1:
-                dfs_time(graph, n, u, d, f, t)
+                dfs_time(digraph, n, u, d, f, t)
     t[0] += 1
     f[v][1] = t[0]
 
 
-def components_r(graph, n, v, nr, comp):
+def components_r(digraph_T, n, v, nr, comp):
+    """
+    Auxiliary function used during Kosaraju algorithm to set the strong components.
+    :param digraph_T: Digraph object
+    :param n: order of digraph_T
+    :param v: considered vertex
+    :param nr: number of component
+    :param comp: list of components assignment to vertices
+    :return: None
+    """
     for u in range(n):
-        if graph.data[v][u]:
+        if digraph_T.data[v][u]:
             if comp[u] == -1:
                 comp[u] = nr
-                components_r(graph, n, u, nr, comp)
+                components_r(digraph_T, n, u, nr, comp)
 
 
 def tarjan(dg, root=0):
+    """
+    Modified implementation of tarjan algorithm which allows to create strongly connected digraphs.
+    :param dg:Digraph object
+    :param root: starting vertex
+    :return: None
+    """
     if not isinstance(dg, Digraph):
         print("Passed argument is not a digraph.")
         return
@@ -70,6 +100,16 @@ def tarjan(dg, root=0):
 
 
 def dfs_tarjan(graph, n, i, start_time, t, low):
+    """
+    Auxiliary function used during modified Tarjan algorithm.
+    :param graph: Digraph object
+    :param n: order of graph
+    :param i: considered vertex
+    :param start_time: list of starting times of vertices consideration
+    :param t: time of vertex consideration
+    :param low: list of lowest times of vertices consideration
+    :return: None
+    """
     start_time[i] = t[0]
     low[i] = start_time[i]
     t[0] += 1
@@ -95,11 +135,11 @@ def dfs_tarjan(graph, n, i, start_time, t, low):
 
 def construct_strongly_connected_digraph(n, p, show_info=True):
     """
-
-    :param n:
-    :param p:
-    :param show_info:
-    :return:
+    Function creating strongly connected digraph.
+    :param n: order of digraph
+    :param p: probability of edge existence
+    :param show_info: boolean whether to show creating information or not
+    :return: strongly connected Digraph object
     """
 
     if n < 1:
@@ -125,14 +165,14 @@ def construct_strongly_connected_digraph(n, p, show_info=True):
         tree.append(v)
         vertices_to_tree.remove(v)
 
-    res_before = kosaraju(dg)
+    # res_before = kosaraju(dg)
 
     tarjan(dg, r)
 
-    res_after = kosaraju(dg)
+    # res_after = kosaraju(dg)
 
-    print(res_before)
-    print(res_after)
+    # print(res_before)
+    # print(res_after)
 
     for i in range(n):
         for j in range(n):

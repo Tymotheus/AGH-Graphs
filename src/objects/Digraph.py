@@ -33,7 +33,7 @@ class Digraph:
                 self.representation = None
                 print("Cannot read graph from file - passed data is not of the form of passed graph representation.")
 
-    def draw(self, vertices=None, arcs=None, img_width=600, img_height=600, flagy=None):
+    def draw(self, vertices=None, arcs=None, img_width=600, img_height=600):
         """ Draws the digraph in new window which pops up. The digraph should be represented by adjacency matrix.
             vertices - set of vertices to distinguish which is helpful during components consideration
             arcs - set of arcs to distinguish; if None, all arcs between vertices from vertices set will be distinguished
@@ -112,13 +112,24 @@ class Digraph:
         if self.data is None:
             graph_as_string = "Digraph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of digraph D:\n" + '\n'.join([''.join(['{:2}'.format(item) for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of digraph D:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else '.') for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe digraph - unknown representation."
         return graph_as_string
 
 
 def draw_digraph_arc(canvas, v_r, v1_x, v1_y, v2_x, v2_y, arc_color):
+    """
+    Auxiliary function to draw an arc during digraph drawing.
+    :param canvas: tkinter canvas on which the Digraph will be drawn
+    :param v_r: radius of vertex
+    :param v1_x: X position of vertex number 1
+    :param v1_y: Y position of vertex number 1
+    :param v2_x: X position of vertex number 2
+    :param v2_y: Y position of vertex number 2
+    :param arc_color: color of the arc
+    :return: None
+    """
     a = None
     equal_x = math.fabs(v2_x - v1_x) <= 10 ** -3
     equal_y = math.fabs(v2_y - v1_y) <= 10 ** -3

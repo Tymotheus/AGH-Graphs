@@ -2,7 +2,7 @@ from src.objects.WeightedGraph import WeightedGraph
 from src.algorithms.connectivity import is_graph_connected
 
 
-def dijkstra(wg, origin, show=False, weights=[]):
+def dijkstra(wg, origin, show=False, weights=None):
     """"Performs Dijkstra algorithm on a WeightedGraph with non-negative values.
             wg - WeightedGraph object
             origin - source vertex from which shortest paths to other vertices will be find
@@ -11,7 +11,7 @@ def dijkstra(wg, origin, show=False, weights=[]):
             matrix[0] - list of distances from source vertex (origin) to other vertices
             matrix[1]~matrix[n-1] - paths from source vertex (origin) to other vertices"""
 
-    w = weights if len(weights) else wg.data
+    w = weights if weights is not None else wg.data
     
     if not isinstance(wg, WeightedGraph):
         print("Passed argument is not a weighted graph.")
@@ -100,7 +100,7 @@ def create_vertex_distance_matrix(wg, show=False):
     return distance_matrix
 
 
-def center_of_weighted_graph(wg, distance_matrix=[]):
+def center_of_weighted_graph(wg, distance_matrix=None):
     """Returns the center of a WeightedGraph, that is, a set of vertices whose sum of distances to other vertices is minimal.
             wg - WeightedGraph object
             distance_matrix - matrix with distances between any two vertices"""
@@ -113,7 +113,7 @@ def center_of_weighted_graph(wg, distance_matrix=[]):
         return
 
     n = len(wg.data)
-    if not len(distance_matrix):
+    if distance_matrix is None:
         distance_matrix = create_vertex_distance_matrix(wg)
     sums = {i: sum(distance_matrix[i]) for i in range(n)}
     min_sum = min(sums.values())
@@ -121,7 +121,7 @@ def center_of_weighted_graph(wg, distance_matrix=[]):
     return [min_sum, *indexes]
 
 
-def minimax_center_of_weighted_graph(wg, distance_matrix=[]):
+def minimax_center_of_weighted_graph(wg, distance_matrix=None):
     """ Finds the minimax center of a WeightedGraph, that is, a vertex whose distance to the farthest vertex is minimal.
             wg - WeightedGraph object
             distance_matrix - matrix with distances between any two vertices
@@ -138,7 +138,7 @@ def minimax_center_of_weighted_graph(wg, distance_matrix=[]):
         return
 
     n = len(wg.data)
-    if not len(distance_matrix):
+    if distance_matrix is None:
         distance_matrix = create_vertex_distance_matrix(wg)
     maximums = {i: max(distance_matrix[i]) for i in range(n)}
     minimum = min(maximums.values())

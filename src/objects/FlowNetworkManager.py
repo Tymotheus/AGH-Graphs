@@ -14,7 +14,6 @@ class FlowNetworkManager:
 
         print("FlowNetworkManager has been created")
 
-
     @staticmethod
     def construct_flow_network_edge_number(number_of_inner_layers=0, bonus_arcs=0, c_min=1, c_max=10):
         """Creates and returns flow network with given number of inner layers and probability of arc existence equal to p.
@@ -107,6 +106,11 @@ class FlowNetworkManager:
 
     @staticmethod
     def get_residual_network_of_flow_network(fn):
+        """
+        Function creating a residual network of flow network.
+        :param fn: FlowNetwork object
+        :return: residual network (as WeightedDigraph object) of passed FlowNetwork object
+        """
         if not isinstance(fn, FlowNetwork):
             print("Passed argument is not a flow network.")
             return

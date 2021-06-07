@@ -30,8 +30,7 @@ def kruskal(wg):
         for j in range(i+1, n):
             if wg.data[i][j]:
                 edges.append([i, j, wg.data[i][j]])
-    third_list_argument = lambda li: li[2]
-    edges.sort(key=third_list_argument)
+    edges.sort(key=lambda li: li[2])
 
     while len(edges) and num_of_components != 1:
         edge = edges.pop(0)

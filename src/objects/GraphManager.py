@@ -69,9 +69,15 @@ class GraphManager:
         return g
 
     @staticmethod
-    def randomize(graph, show_shuffling_statistics=False):
+    def randomize(graph, number_of_shuffle_tries=None, max_iterations=None, show_shuffling_statistics=False):
         """Shuffles edges between vertices in the given graph.
-        g - Graph object
+        graph - Graph object
+        number_of_shuffle_tries - number of edge shuffles that will be performed.
+            During one shuffle the method looks for swap between two edges. The number of tries to look for such swap is defined by max_iterations parameter.
+            There is a possibility that such swap won't be found during given number of iterations. Then the method pass to the next shuffle.
+            By default equal to 0.5*m where m is the number of edges.
+        max_iterations - maximum number of iterations that will we performed during one shuffle.
+            By default equal to uniform(2, 4)*m where m is the number of edges.
         show_shuffling_statistics - boolean whether to print information about the randomization process."""
 
         if not isinstance(graph, Graph):
@@ -91,11 +97,13 @@ class GraphManager:
         m = len(list_of_edges)
         number_of_iterations_arr = []
         exceeded = 0
-        number_of_shuffles = int(0.5 * m)
-        for i in range(number_of_shuffles):
+        if number_of_shuffle_tries is None:
+            number_of_shuffle_tries = int(0.5 * m)
+        for i in range(number_of_shuffle_tries):
             flag_shuffled = False
             number_of_iterations = 0
-            max_iterations = int(uniform(2, 4) * m)
+            if max_iterations is None:
+                max_iterations = int(uniform(2, 4) * m)
             while flag_shuffled is False and number_of_iterations < max_iterations:
                 first_edge_index, second_edge_index = sample(range(0, m), 2)
                 first_edge = list_of_edges[first_edge_index]
@@ -122,5 +130,5 @@ class GraphManager:
                     exceeded += 1
             number_of_iterations_arr.append(number_of_iterations)
         if show_shuffling_statistics:
-            print("Shuffled edges of a graph " + str(number_of_shuffles) + " times.")
+            print("Tried to shuffle edges of a graph " + str(number_of_shuffle_tries) + " times.")
             print("n: " + str(n) + ", m: " + str(m) + ", average: " + str(sum(number_of_iterations_arr)/len(number_of_iterations_arr)) + ", exceeded: " + str(exceeded))

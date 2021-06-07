@@ -75,12 +75,11 @@ class WeightedGraphManager:
         g = construct_connected_graph_probability(n, p)
         return WeightedGraphManager.make_weighted_graph_from_simple_graph(g, w_min, w_max)
 
-
     @staticmethod
     def read_from_file(path):
         """Creating weighted graph by reading adjacency matrix from file."""
-        wGraph = WeightedGraph(path)
-        if is_graph_connected(wGraph):
-            return wGraph
+        wg = WeightedGraph(path)
+        if is_graph_connected(wg):
+            return wg
         else:
             print("Graph read from file is not connected ")

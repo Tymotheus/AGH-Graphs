@@ -1,10 +1,13 @@
 from src.objects.WeightedGraphManager import WeightedGraphManager
-from src.objects.WeightedGraph import WeightedGraph
 
 from src.algorithms.shortest_weighted_paths import *
 from src.algorithms.minimum_spanning_trees import kruskal
 
 print("\n\n---------------------------------------- AD. 3.1 ----------------------------------------")
+
+# BASIC WEIGHTED GRAPH
+# g = WeightedGraph()
+# g.draw()
 
 # READ WEIGHTED GRAPH FROM FILE
 g = WeightedGraph("example_data/proj3b_am.txt")
@@ -23,6 +26,8 @@ print("\n\n---------------------------------------- AD. 3.2 --------------------
 
 # DIJKSTRA ALGORITHM
 distanceAndPaths = dijkstra(g, 1, True)
+print(distanceAndPaths)
+g.draw()
 
 print("\n\n---------------------------------------- AD. 3.3 ----------------------------------------")
 
@@ -30,12 +35,11 @@ print("\n\n---------------------------------------- AD. 3.3 --------------------
 vertexDistanceMatrix = create_vertex_distance_matrix(g, True)
 
 # ADDITIONAL - DRAWING PATH
-print(distanceAndPaths)
-for i in range(len(distanceAndPaths)-1):
-    target_vertex = i+1
-    g.draw(vertices=distanceAndPaths[target_vertex], 
+for i in range(len(distanceAndPaths) - 1):
+    target_vertex = i + 1
+    g.draw(vertices=distanceAndPaths[target_vertex],
            edges=[[distanceAndPaths[target_vertex][i],
-           distanceAndPaths[target_vertex][i+1]] for i in range(len(distanceAndPaths[target_vertex])-1)])
+                   distanceAndPaths[target_vertex][i + 1]] for i in range(len(distanceAndPaths[target_vertex]) - 1)])
 
 print("\n\n---------------------------------------- AD. 3.4 ----------------------------------------")
 
@@ -45,7 +49,8 @@ print("Center = " + str(center[1:]) + " (sum of distances: " + str(center[0]) + 
 
 # MINIMAX CENTER OF GRAPH
 minimaxCenter = minimax_center_of_weighted_graph(g, vertexDistanceMatrix)
-print("Minimax center = " + str(minimaxCenter["minimax_center"]) + " (distance to farthest: " + str(minimaxCenter["dist_to_farthest"]) + ")")
+print("Minimax center = " + str(minimaxCenter["minimax_center"]) + " (distance to farthest: " + str(
+    minimaxCenter["dist_to_farthest"]) + ")")
 
 print("\n\n---------------------------------------- AD. 3.5 ----------------------------------------")
 

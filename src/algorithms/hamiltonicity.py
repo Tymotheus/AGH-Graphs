@@ -89,8 +89,7 @@ def get_hamiltonian_cycle_of_graph_optimized(graph, show_cycle=True):
                 n = len(graph.data)
                 v_and_d_and_visited = [[i, sum(graph.data[i]), False] for i in range(n)]   # index, degree, visited
                 hc_stack = Stack()  # HAMILTONIAN CYCLE STACK
-                second_list_argument = lambda li: li[1]
-                v_and_d_and_visited.sort(key=second_list_argument, reverse=True)
+                v_and_d_and_visited.sort(key=lambda li: li[1], reverse=True)
 
                 # ADD FIRST VERTEX OF HAMILTONIAN CYCLE
                 if n >= 3:
