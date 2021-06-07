@@ -4,12 +4,11 @@ from src.algorithms.shortest_weighted_paths import dijkstra
 import copy
 
 
-def bellman_ford(wdg, origin=0, weight=None):
+def bellman_ford(wdg, origin=0):
     """
     Implementation of Bellman-Form algorithm to find the shortest distances between source vertex and other vertices in passed weighted digraph.
     :param wdg: WeightedDigraph object
     :param origin: source vertex
-    :param weight: list of weights
     :return: list of distances between origin and vertices from wdg object
     """
     n = len(wdg.data)
@@ -20,12 +19,12 @@ def bellman_ford(wdg, origin=0, weight=None):
         for u in range(0, n):
             for v in range(0, n):
                 if wdg.data[u][v] is not None:
-                    w = weight[u][v] if weight is not None else wdg.data[u][v]
+                    w = wdg.data[u][v]
                     if d[v] > d[u] + w:
                         d[v] = d[u] + w
     for u in range(0, n):
         for v in range(0, n):
-            w = weight[u][v] if weight is not None else wdg.data[u][v]
+            w = wdg.data[u][v]
             if wdg.data[u][v] is not None and d[v] > d[u] + w:
                 return None
     return d
@@ -49,7 +48,7 @@ def distance_matrix_from_bellman_ford(wdg, show=True):
         d = bellman_ford(wdg, origin)
         if not d:
             print("There is a cycle with a negative sum of weights in the graph")
-            return False
+            return None
         matrix[origin] = d
 
     if show:
@@ -73,21 +72,19 @@ def johnson(wdg, show=True):
 
     g = copy.deepcopy(wdg) 
     for i in range(n):
-        g.data[i].append(0)
+        g.data[i].append(None)
     g.data.append([1 for _ in range(n+1)])
-    g.data[n][n] = 0
-    weights = copy.deepcopy(g.data)
-    weights[n] = [0 for _ in range(n+1)]
+    g.data[n][n] = None
 
-    h = bellman_ford(g, n, weights)
-    if not h:
+    h = bellman_ford(g, n)
+    if h is None:
         print("There is a cycle with a negative sum of weights in the graph")
         return None
 
     for u in range(n+1):
         for v in range(n+1):
-            if g.data[u][v]:
-                weights[u][v] = weights[u][v] + h[u] - h[v]
+            if g.data[u][v] is not None:
+                g.data[u][v] = g.data[u][v] + h[u] - h[v]
 
     for u in range(n):
         for v in range(n):
@@ -97,7 +94,7 @@ def johnson(wdg, show=True):
     wg.data = wdg.data
     
     D = [[0 for _ in range(n)] for _ in range(n)]
-    distance = [dijkstra(wg, u+1, weights=weights)[0] for u in range(n)]
+    distance = [dijkstra(wg, u+1)[0] for u in range(n)]
     distanceT = [[distance[j][i] for j in range(n)] for i in range(n)]
 
     for u in range(n):
