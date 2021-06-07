@@ -19,14 +19,14 @@ def bellman_ford(wdg, origin=0, weight=None):
     for _ in range(n-1):
         for u in range(0, n):
             for v in range(0, n):
-                if wdg.data[u][v]:
+                if wdg.data[u][v] is not None:
                     w = weight[u][v] if weight is not None else wdg.data[u][v]
                     if d[v] > d[u] + w:
                         d[v] = d[u] + w
     for u in range(0, n):
         for v in range(0, n):
             w = weight[u][v] if weight is not None else wdg.data[u][v]
-            if wdg.data[u][v] and d[v] > d[u] + w:
+            if wdg.data[u][v] is not None and d[v] > d[u] + w:
                 return None
     return d
 

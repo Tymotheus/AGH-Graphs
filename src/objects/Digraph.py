@@ -17,11 +17,11 @@ class Digraph:
             show_info - boolean whether to print information about the graph after its creation."""
 
         if file_path is None:
-            self.data = [[0]]
+            self.data = [[None]]
             self.representation = "AM"
         else:
             with open(file_path, 'r') as f:
-                data = [[int(num) for num in line.split(' ')] if line != '\n' else [] for line in f]
+                data = [[int(val) if '.' not in val else None for val in line.split(' ')] if line != '\n' else [] for line in f]
             if conversion_check_map[representation](data, digraph=True) is True:
                 self.data = data
                 self.representation = representation
@@ -79,14 +79,14 @@ class Digraph:
                                text=i+1, font=("Verdana", max(int(20 - 2*n/10), 10)))
         for i in range(n):
             for j in range(n):
-                if self.data[i][j]:
+                if self.data[i][j] is not None:
                     draw_digraph_arc(canvas, v_r,
                                      positions[i][0], positions[i][1], positions[j][0], positions[j][1],
                                      "black")
 
         if len(arcs):
             for arc in arcs:
-                if self.data[arc[0]][arc[1]]:
+                if self.data[arc[0]][arc[1]] is not None:
                     i = arc[0]
                     j = arc[1]
                     draw_digraph_arc(canvas, v_r,
@@ -95,7 +95,7 @@ class Digraph:
         elif len(vertices):
             for v1 in range(len(vertices)-1):
                 for v2 in range(v1+1, len(vertices)):
-                    if self.data[vertices[v1]][vertices[v2]]:
+                    if self.data[vertices[v1]][vertices[v2]] is not None:
                         i = vertices[v1]
                         j = vertices[v2]
                         draw_digraph_arc(canvas, v_r,
@@ -112,7 +112,7 @@ class Digraph:
         if self.data is None:
             graph_as_string = "Digraph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of digraph D:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else '.') for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of digraph D:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else ' .') for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe digraph - unknown representation."
         return graph_as_string

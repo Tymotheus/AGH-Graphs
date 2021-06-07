@@ -11,11 +11,11 @@ def convert_from_AM_to_IM(graph):
     for i in range(1, n):  # i stands for a row
         for j in range(0, i):  # j stands for a column
             m = m + graph.data[i][j]
-    new_data = [[0] * m for _ in range(n)]
+    new_data = [[None] * m for _ in range(n)]
     m_index = 0
     for i in range(1, n):
         for j in range(0, i):
-            if graph.data[i][j] == 1:
+            if graph.data[i][j] is not None:
                 new_data[i][m_index] = new_data[j][m_index] = 1
                 m_index = m_index + 1
     graph.data = new_data
@@ -28,11 +28,11 @@ def convert_from_IM_to_AM(graph):
 
     n = len(graph.data)
     m = len(graph.data[0])
-    new_data = [[0] * n for _ in range(n)]
+    new_data = [[None] * n for _ in range(n)]
     for j in range(0, m):
         first_index = None
         for i in range(0, n):
-            if graph.data[i][j] == 1:
+            if graph.data[i][j] is not None:
                 if first_index is None:
                     first_index = i
                 else:
@@ -50,7 +50,7 @@ def convert_from_AM_to_AL(graph):
     new_data = [[] * n for _ in range(n)]
     for i in range(1, n):
         for j in range(0, i):
-            if graph.data[i][j] == 1:
+            if graph.data[i][j] is not None:
                 new_data[i].append(j+1)
                 new_data[j].append(i+1)
     graph.data = new_data
@@ -62,7 +62,7 @@ def convert_from_AL_to_AM(graph):
         graph - Graph object"""
 
     n = len(graph.data)
-    new_data = [[0] * n for _ in range(n)]
+    new_data = [[None] * n for _ in range(n)]
     for i in range(0, n):
         for neighbour in graph.data[i]:
             new_data[i][neighbour-1] = new_data[neighbour-1][i] = 1
@@ -81,7 +81,7 @@ def convert_from_IM_to_AL(graph):
     for j in range(0, m):
         first_index = None
         for i in range(0, n):
-            if graph.data[i][j] == 1:
+            if graph.data[i][j] is not None:
                 if first_index is None:
                     first_index = i
                 else:
@@ -100,7 +100,7 @@ def convert_from_AL_to_IM(graph):
     for v_list in graph.data:
         m = m + len(v_list)
     m = int(m / 2)
-    new_data = [[0] * m for _ in range(n)]
+    new_data = [[None] * m for _ in range(n)]
     m_index = 0
     for i in range(0, n):
         for neighbour in graph.data[i]:

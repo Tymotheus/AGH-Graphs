@@ -55,7 +55,7 @@ def dfs_time(digraph, n, v, d, f, t):
     t[0] += 1
     d[v][1] = t[0]
     for u in range(n):
-        if digraph.data[v][u]:
+        if digraph.data[v][u] is not None:
             if d[u][1] == -1:
                 dfs_time(digraph, n, u, d, f, t)
     t[0] += 1
@@ -73,7 +73,7 @@ def components_r(digraph_T, n, v, nr, comp):
     :return: None
     """
     for u in range(n):
-        if digraph_T.data[v][u]:
+        if digraph_T.data[v][u] is not None:
             if comp[u] == -1:
                 comp[u] = nr
                 components_r(digraph_T, n, u, nr, comp)
@@ -114,7 +114,7 @@ def dfs_tarjan(graph, n, i, start_time, t, low):
     low[i] = start_time[i]
     t[0] += 1
     for j in range(n):
-        if graph.data[i][j]:
+        if graph.data[i][j] is not None:
             if start_time[j] == -1:
                 dfs_tarjan(graph, n, j, start_time, t, low)
                 low[i] = min(low[i], low[j], start_time[j])
@@ -150,7 +150,7 @@ def construct_strongly_connected_digraph(n, p, show_info=True):
         return
 
     dg = Digraph()
-    dg.data = [[0] * n for _ in range(n)]
+    dg.data = [[None] * n for _ in range(n)]
 
     tree = []
     vertices_to_tree = [i for i in range(n)]
@@ -179,7 +179,7 @@ def construct_strongly_connected_digraph(n, p, show_info=True):
             if not dg.data[i][j]:
                 if random() <= p:
                     dg.data[i][j] = 1
-        dg.data[i][i] = 0
+        dg.data[i][i] = None
 
     if show_info is True:
         print("Random digraph has been created (Gilbert model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")

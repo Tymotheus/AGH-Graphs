@@ -34,7 +34,7 @@ class WeightedGraphManager:
         n = len(wg.data)
         for i in range(1, n):
             for j in range(0, i):
-                if wg.data[i][j]:
+                if wg.data[i][j] is not None:
                     wg.data[i][j] = wg.data[j][i] = randint(w_min, w_max)
         return wg
 

@@ -43,7 +43,7 @@ def dijkstra(wg, origin, show=False, weights=None):
         S.append(u)
         copy_distance.pop(u)
         for v in range(len(distance)):
-            if wg.data[v][u] and distance[v] > (distance[u] + w[v][u]):
+            if wg.data[v][u] is not None and distance[v] > (distance[u] + w[v][u]):
                 distance[v] = distance[u] + w[v][u]
                 copy_distance[v] = distance[u] + w[v][u]
                 predecessor[v] = u+1  
@@ -84,7 +84,7 @@ def create_vertex_distance_matrix(wg, show=False):
     n = len(wg.data)
     for i in range(n):
         for j in range(n):
-            if wg.data[i][j] < 0:
+            if wg.data[i][j] is not None and wg.data[i][j] < 0:
                 print("Cannot perform Dijkstra algorithm - passed weighted graph contains an edge with negative weight.")
                 return
 
