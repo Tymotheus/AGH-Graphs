@@ -33,7 +33,7 @@ class WeightedDigraphManager:
         n = len(wdg.data)
         for i in range(n):
             for j in range(n):
-                if i != j and wdg.data[i][j]:
+                if i != j and wdg.data[i][j] is not None:
                     wdg.data[i][j] = randint(w_min, w_max)
         return wdg
 

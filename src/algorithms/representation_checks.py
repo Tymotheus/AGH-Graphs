@@ -10,14 +10,14 @@ def is_adjacency_matrix(matrix, digraph=False, flow_network=False):
             return False
 
     if not flow_network:
-        if matrix[0][0]:
+        if matrix[0][0] is not None:
             return False
         for i in range(1, n):
             for j in range(0, i):
                 if not (digraph or flow_network):
                     if matrix[i][j] != matrix[j][i]:
                         return False
-            if matrix[i][i]:
+            if matrix[i][i] is not None:
                 return False
     else:
         for i in range(n):
@@ -44,7 +44,7 @@ def is_incidence_matrix(matrix):
         vertices_in_edge = 0
         first_index = second_index = None
         for i in range(n):
-            if matrix[i][j]:
+            if matrix[i][j] is not None:
                 vertices_in_edge += 1
                 if first_index is None:
                     first_index = i

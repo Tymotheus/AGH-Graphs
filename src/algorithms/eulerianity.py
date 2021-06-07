@@ -34,7 +34,11 @@ def is_graph_eulerian(graph):
                 return False
             # EVEN DEGREES OF VERTICES
             for i in range(len(graph.data)):
-                if sum(graph.data[i]) % 2 != 0:
+                v_degree = 0
+                for item in graph.data[i]:
+                    if item is not None:
+                        v_degree += 1
+                if v_degree % 2 != 0:
                     return False
             return True
     else:
@@ -79,7 +83,7 @@ def get_eulerian_cycle_of_graph(graph, show_cycle=True):
                 # ADD FIRST VERTEX OF EULERIAN CYCLE
                 for i in range(1, n):
                     for j in range(0, i):
-                        if g_copy.data[i][j] == 1:
+                        if g_copy.data[i][j] is not None:
                             tmp_stack.push(j)
                             break
                     else:
@@ -90,9 +94,9 @@ def get_eulerian_cycle_of_graph(graph, show_cycle=True):
                     v = tmp_stack.peek()
                     u = 0
                     while u < n:
-                        if g_copy.data[v][u] == 1:
+                        if g_copy.data[v][u] is not None:
                             tmp_stack.push(u)
-                            g_copy.data[v][u] = g_copy.data[u][v] = 0
+                            g_copy.data[v][u] = g_copy.data[u][v] = None
                             break
                         u += 1
                     if u == n:

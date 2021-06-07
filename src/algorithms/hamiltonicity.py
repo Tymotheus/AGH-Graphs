@@ -29,7 +29,7 @@ def get_hamiltonian_cycle_of_graph(graph, show_cycle=True):
                             v_visited[v] = True
                             hc_stack.push(v)
                             hamiltonian_dfs_recursive(graph, hc_stack, v, n, v_visited, v)
-                            if len(hc_stack) == n and graph.data[v][hc_stack.peek()] == 1:
+                            if len(hc_stack) == n and graph.data[v][hc_stack.peek()] is not None:
                                 hc_stack.push(v)
                                 break
                             v_visited[v] = False
@@ -62,12 +62,12 @@ def hamiltonian_dfs_recursive(graph, hc_stack, v0, n, v_visited, v=0):
     if graph.representation != "AM":
         convert_graph_representation(graph, "AM")
     for u in range(n):
-        if graph.data[v][u] == 1:
+        if graph.data[v][u] is not None:
             if v_visited[u] is False:
                 v_visited[u] = True
                 hc_stack.push(u)
                 hamiltonian_dfs_recursive(graph, hc_stack, v0, n, v_visited, u)
-                if len(hc_stack) == n and graph.data[v0][hc_stack.peek()] == 1:
+                if len(hc_stack) == n and graph.data[v0][hc_stack.peek()] is not None:
                     break
                 v_visited[u] = False
                 hc_stack.pop()
@@ -87,7 +87,13 @@ def get_hamiltonian_cycle_of_graph_optimized(graph, show_cycle=True):
                 convert_graph_representation(graph, "AM")
             if is_graph_connected(graph) is True:
                 n = len(graph.data)
-                v_and_d_and_visited = [[i, sum(graph.data[i]), False] for i in range(n)]   # index, degree, visited
+                v_and_d_and_visited = []
+                for i in range(n):
+                    v_degree = 0
+                    for item in graph.data[i]:
+                        if item is not None:
+                            v_degree += 1
+                    v_and_d_and_visited.append([i, v_degree, False]) # index, degree, visited
                 hc_stack = Stack()  # HAMILTONIAN CYCLE STACK
                 v_and_d_and_visited.sort(key=lambda li: li[1], reverse=True)
 

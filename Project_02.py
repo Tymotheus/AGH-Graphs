@@ -99,7 +99,7 @@ print("\n\n---------------------------------------- AD. 2.6 --------------------
 # g6 = Graph("example_data/proj2_hamiltonian_no1.txt")
 # seq.read_sequence_from_file("example_data/proj2_seq_complete.txt")
 # g6 = construct_graph_from_degree_sequence(seq)
-g6 = construct_connected_graph_edge_number(100, 100)
+g6 = construct_connected_graph_edge_number(100, 4000)
 
 # GET HAMILTONIAN CYCLE OF A GRAPH
 hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=False)

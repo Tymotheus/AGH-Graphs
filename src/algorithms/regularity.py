@@ -15,9 +15,16 @@ def is_graph_regular(graph):
         else:
             if graph.representation != "AM":
                 convert_graph_representation(graph, "AM")
-            k = sum(graph.data[0])
+            k = 0
+            for item in graph.data[0]:
+                if item is not None:
+                    k += 1
             for i in range(1, len(graph.data)):
-                if sum(graph.data[i]) != k:
+                v_degree = 0
+                for item in graph.data[i]:
+                    if item is not None:
+                        v_degree += 1
+                if v_degree != k:
                     return False
             return True
     else:

@@ -29,7 +29,7 @@ class GraphManager:
             return
         g = Graph()
         g.representation = 'AM'
-        g.data = [[0] * n for _ in range(n)]
+        g.data = [[None] * n for _ in range(n)]
         indexes_of_existing_edges = sample(range(0, int(max_num_of_edges)), m)
         index = 0
         for i in range(1, n):
@@ -58,7 +58,7 @@ class GraphManager:
 
         g = Graph()
         g.representation = 'AM'
-        g.data = [[0] * n for _ in range(n)]
+        g.data = [[None] * n for _ in range(n)]
         for i in range(1, n):
             for j in range(0, i):
                 if random() <= p:
@@ -92,7 +92,7 @@ class GraphManager:
         list_of_edges = []
         for i in range(1, n):
             for j in range(0, i):
-                if graph.data[i][j] == 1:
+                if graph.data[i][j] is not None:
                     list_of_edges.append([i, j])
         m = len(list_of_edges)
         number_of_iterations_arr = []
@@ -111,7 +111,7 @@ class GraphManager:
                 if first_edge[0] != second_edge[0] and first_edge[0] != second_edge[1] and first_edge[1] != second_edge[0] and first_edge[1] != second_edge[1]:
                     if graph.data[first_edge[0]][second_edge[1]] == 0 and first_edge[0] != second_edge[1] and graph.data[second_edge[0]][first_edge[1]] == 0 and second_edge[0] != first_edge[1]:
                         graph.data[first_edge[0]][second_edge[1]] = graph.data[second_edge[0]][first_edge[1]] = graph.data[second_edge[1]][first_edge[0]] = graph.data[first_edge[1]][second_edge[0]] = 1
-                        graph.data[first_edge[0]][first_edge[1]] = graph.data[second_edge[0]][second_edge[1]] = graph.data[first_edge[1]][first_edge[0]] = graph.data[second_edge[1]][second_edge[0]] = 0
+                        graph.data[first_edge[0]][first_edge[1]] = graph.data[second_edge[0]][second_edge[1]] = graph.data[first_edge[1]][first_edge[0]] = graph.data[second_edge[1]][second_edge[0]] = None
                         list_of_edges.append([first_edge[0], second_edge[1]] if first_edge[0] > second_edge[1] else [second_edge[1], first_edge[0]])
                         list_of_edges.append([second_edge[0], first_edge[1]] if second_edge[0] > first_edge[1] else [first_edge[1], second_edge[0]])
                         list_of_edges.pop(first_edge_index if first_edge_index > second_edge_index else second_edge_index)
@@ -119,7 +119,7 @@ class GraphManager:
                         flag_shuffled = True
                     elif graph.data[first_edge[0]][second_edge[0]] == 0 and first_edge[0] != second_edge[0] and graph.data[second_edge[1]][first_edge[1]] == 0 and second_edge[1] != first_edge[1]:
                         graph.data[first_edge[0]][second_edge[0]] = graph.data[second_edge[1]][first_edge[1]] = graph.data[second_edge[0]][first_edge[0]] = graph.data[first_edge[1]][second_edge[1]] = 1
-                        graph.data[first_edge[0]][first_edge[1]] = graph.data[second_edge[0]][second_edge[1]] = graph.data[first_edge[1]][first_edge[0]] = graph.data[second_edge[1]][second_edge[0]] = 0
+                        graph.data[first_edge[0]][first_edge[1]] = graph.data[second_edge[0]][second_edge[1]] = graph.data[first_edge[1]][first_edge[0]] = graph.data[second_edge[1]][second_edge[0]] = None
                         list_of_edges.append([first_edge[0], second_edge[0]] if first_edge[0] > second_edge[0] else [second_edge[0], first_edge[0]])
                         list_of_edges.append([second_edge[1], first_edge[1]] if second_edge[1] > first_edge[1] else [first_edge[1], second_edge[1]])
                         list_of_edges.pop(first_edge_index if first_edge_index > second_edge_index else second_edge_index)

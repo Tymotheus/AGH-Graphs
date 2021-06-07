@@ -22,7 +22,7 @@ def dijkstra(wg, origin, show=False, weights=None):
     n = len(wg.data)
     for i in range(n):
         for j in range(n):
-            if w[i][j] < 0:
+            if w[i][j] is not None and w[i][j] < 0:
                 print("Cannot perform Dijkstra algorithm - passed weighted graph contains an edge with negative weight.")
                 return
 
@@ -43,7 +43,7 @@ def dijkstra(wg, origin, show=False, weights=None):
         S.append(u)
         copy_distance.pop(u)
         for v in range(len(distance)):
-            if wg.data[v][u] and distance[v] > (distance[u] + w[v][u]):
+            if wg.data[v][u] is not None and distance[v] > (distance[u] + w[v][u]):
                 distance[v] = distance[u] + w[v][u]
                 copy_distance[v] = distance[u] + w[v][u]
                 predecessor[v] = u+1  
@@ -84,7 +84,7 @@ def create_vertex_distance_matrix(wg, show=False):
     n = len(wg.data)
     for i in range(n):
         for j in range(n):
-            if wg.data[i][j] < 0:
+            if wg.data[i][j] is not None and wg.data[i][j] < 0:
                 print("Cannot perform Dijkstra algorithm - passed weighted graph contains an edge with negative weight.")
                 return
 
@@ -143,4 +143,4 @@ def minimax_center_of_weighted_graph(wg, distance_matrix=None):
     maximums = {i: max(distance_matrix[i]) for i in range(n)}
     minimum = min(maximums.values())
     indexes = [k+1 for k, v in maximums.items() if v == minimum]
-    return {"minimax_center": [i for i in indexes], "sum_of_distance": sum(distance_matrix[indexes[0]]), "dist_to_farthest": minimum}
+    return {"minimax_center": [i for i in indexes], "sum_of_distance": sum(distance_matrix[indexes[0]-1]), "dist_to_farthest": minimum}

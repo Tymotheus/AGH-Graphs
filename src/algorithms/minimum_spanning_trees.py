@@ -19,7 +19,7 @@ def kruskal(wg):
 
     n = len(wg.data)
     mst = WeightedGraph()
-    mst.data = [[0] * n for _ in range(n)]
+    mst.data = [[None] * n for _ in range(n)]
     mst_edges = []
     weight_sum = 0
     components = [i for i in range(n)]
@@ -28,7 +28,7 @@ def kruskal(wg):
     edges = []
     for i in range(0, n-1):
         for j in range(i+1, n):
-            if wg.data[i][j]:
+            if wg.data[i][j] is not None:
                 edges.append([i, j, wg.data[i][j]])
     edges.sort(key=lambda li: li[2])
 

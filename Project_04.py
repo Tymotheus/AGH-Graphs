@@ -13,7 +13,6 @@ dg1.draw()
 dg1 = Digraph(file_path="example_data/proj4_digraph2.txt")
 dg1.draw()
 
-
 # RANDOM DIGRAPH FROM G(n,p) MODEL
 dg2 = DigraphManager.make_random_digraph_probability(10, 0.3)
 dg2.draw()
@@ -47,6 +46,7 @@ johnson(wdg2)
 
 # DISTANCE MATRIX OF DIGRAPH BY BELLMAN_FORD ALGORITHM FOR EXAMPLE DIGRAPH
 wdg3 = WeightedDigraph(file_path="example_data/proj4_wdigraph1.txt")
+print(wdg3)
 distance_matrix_from_bellman_ford(wdg3)
 
 print("\n\n---------------------------------------- AD. 4.4 ----------------------------------------")

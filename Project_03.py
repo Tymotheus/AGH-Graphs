@@ -25,30 +25,30 @@ g3.draw()
 print("\n\n---------------------------------------- AD. 3.2 ----------------------------------------")
 
 # DIJKSTRA ALGORITHM
-distanceAndPaths = dijkstra(g, 1, True)
+distanceAndPaths = dijkstra(g1, 1, True)
 print(distanceAndPaths)
-g.draw()
+g1.draw()
 
 print("\n\n---------------------------------------- AD. 3.3 ----------------------------------------")
 
 # VERTEX DISTANCE MATRIX
-vertexDistanceMatrix = create_vertex_distance_matrix(g, True)
+vertexDistanceMatrix = create_vertex_distance_matrix(g1, True)
 
 # ADDITIONAL - DRAWING PATH
 for i in range(len(distanceAndPaths) - 1):
     target_vertex = i + 1
-    g.draw(vertices=distanceAndPaths[target_vertex],
+    g1.draw(vertices=distanceAndPaths[target_vertex],
            edges=[[distanceAndPaths[target_vertex][i],
                    distanceAndPaths[target_vertex][i + 1]] for i in range(len(distanceAndPaths[target_vertex]) - 1)])
 
 print("\n\n---------------------------------------- AD. 3.4 ----------------------------------------")
 
 # CENTER OF GRAPH
-center = center_of_weighted_graph(g, vertexDistanceMatrix)
+center = center_of_weighted_graph(g1, vertexDistanceMatrix)
 print("Center = " + str(center[1:]) + " (sum of distances: " + str(center[0]) + ")")
 
 # MINIMAX CENTER OF GRAPH
-minimaxCenter = minimax_center_of_weighted_graph(g, vertexDistanceMatrix)
+minimaxCenter = minimax_center_of_weighted_graph(g1, vertexDistanceMatrix)
 print("Minimax center = " + str(minimaxCenter["minimax_center"]) + " (distance to farthest: " + str(
     minimaxCenter["dist_to_farthest"]) + ")")
 

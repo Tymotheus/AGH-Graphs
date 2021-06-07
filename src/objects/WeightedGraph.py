@@ -17,17 +17,17 @@ class WeightedGraph:
             show_info - boolean whether to print information about the graph after its creation."""
 
         if file_path is None:
-            self.data = [0]
+            self.data = [[None]]
             self.representation = "AM"
         else:
             with open(file_path, 'r') as f:
-                data = [[int(num) for num in line.split(' ')] if line != '\n' else [] for line in f]
+                data = [[int(val) if '.' not in val else None for val in line.split(' ')] if line != '\n' else [] for line in f]
             if conversion_check_map[representation](data) is True:
                 self.data = data
                 self.representation = representation
                 if show_info is True:
-                    print("Graph has been read from file.")
-                    print("Graph represented by " +
+                    print("Weighted graph has been read from file.")
+                    print("Weighted graph represented by " +
                           ("adjacency matrix." if self.representation == "AM"
                            else ("incidence matrix." if self.representation == "IM"
                                  else "adjacency list.")))
@@ -74,7 +74,7 @@ class WeightedGraph:
 
         for i in range(1, n):
             for j in range(0, i):
-                if self.data[i][j]:
+                if self.data[i][j] is not None:
                     canvas.create_line(positions[i][0], positions[i][1],
                                        positions[j][0], positions[j][1],
                                        fill="gray")
@@ -95,7 +95,7 @@ class WeightedGraph:
 
         if len(edges):
             for edge in edges:
-                if self.data[edge[0]][edge[1]]:
+                if self.data[edge[0]][edge[1]] is not None:
                     canvas.create_line(positions[edge[0]][0], positions[edge[0]][1], positions[edge[1]][0], positions[edge[1]][1], fill="red")
                     canvas.create_text((2 * positions[edge[0]][0] + positions[edge[1]][0]) / 3,
                                        (2 * positions[edge[0]][1] + positions[edge[1]][1]) / 3,
@@ -105,7 +105,7 @@ class WeightedGraph:
         elif len(vertices):
             for i in range(len(vertices)-1):
                 for j in range(i+1, len(vertices)):
-                    if self.data[vertices[i]][vertices[j]]:
+                    if self.data[vertices[i]][vertices[j]] is not None:
                         canvas.create_line(positions[vertices[i]][0], positions[vertices[i]][1], positions[vertices[j]][0], positions[vertices[j]][1],
                                            fill="red")
                         canvas.create_text((2 * positions[vertices[i]][0] + positions[vertices[j]][0]) / 3,
@@ -123,7 +123,7 @@ class WeightedGraph:
         if self.data is None:
             graph_as_string = "Weighted graph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of weighted graph WG:\n" + '\n'.join([''.join(['{:5}'.format(item if item is not None else '.') for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of weighted graph WG:\n" + '\n'.join([''.join(['{:5}'.format(item if item is not None else '    .') for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe weighted graph - unknown representation."
         return graph_as_string

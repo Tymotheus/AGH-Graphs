@@ -8,5 +8,7 @@ __all__ = [
     'Digraph',
     'DigraphManager',
     'WeightedDigraph',
-    'WeightedDigraphManager'
+    'WeightedDigraphManager',
+    'FlowNetwork',
+    'FlowNetworkManager'
 ]

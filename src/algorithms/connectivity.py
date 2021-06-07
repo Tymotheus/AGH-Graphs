@@ -42,7 +42,7 @@ def construct_connected_tree(n):
 
     g = Graph.Graph()
     g.representation = "AM"
-    g.data = [[0] * n for _ in range(n)]
+    g.data = [[None] * n for _ in range(n)]
 
     while len(prufer_code) > 0:
         for elem in vertices:
@@ -76,7 +76,7 @@ def construct_connected_graph_edge_number(n, m):
     index = 0
     for i in range(1, n):
         for j in range(0, i):
-            if g.data[i][j] == 0:
+            if g.data[i][j] is None:
                 if index in indexes_of_existing_edges:
                     g.data[i][j] = g.data[j][i] = 1
                 index = index + 1
@@ -100,7 +100,7 @@ def construct_connected_graph_probability(n, p):
 
     for i in range(1, n):
         for j in range(0, i):
-            if g.data[i][j] == 0:
+            if g.data[i][j] is None:
                 if random() <= p:
                     g.data[i][j] = g.data[j][i] = 1
 

@@ -19,11 +19,11 @@ class Graph:
             show_info - boolean whether to print information about the graph after its creation."""
 
         if file_path is None:
-            self.data = [[0]]
+            self.data = [[None]]
             self.representation = "AM"
         else:
             with open(file_path, 'r') as f:
-                data = [[int(num) for num in line.split(' ')] if line != '\n' else [] for line in f]
+                data = [[int(val) if '.' not in val else None for val in line.split(' ')] if line != '\n' else [] for line in f]
             if conversion_check_map[representation](data) is True:
                 self.data = data
                 self.representation = representation
@@ -84,17 +84,17 @@ class Graph:
                                text=i+1, font=("Verdana", max(int(20 - 2*n/10), 10)))
         for i in range(1, n):
             for j in range(0, i):
-                if self.data[i][j]:
+                if self.data[i][j] is not None:
                     canvas.create_line(positions[i][0], positions[i][1], positions[j][0], positions[j][1], fill="black")
 
         if len(edges):
             for edge in edges:
-                if self.data[edge[0]][edge[1]]:
+                if self.data[edge[0]][edge[1]] is not None:
                     canvas.create_line(positions[edge[0]][0], positions[edge[0]][1], positions[edge[1]][0], positions[edge[1]][1], fill="red")
         elif len(vertices):
             for i in range(len(vertices)-1):
                 for j in range(i+1, len(vertices)):
-                    if self.data[vertices[i]][vertices[j]]:
+                    if self.data[vertices[i]][vertices[j]] is not None:
                         canvas.create_line(positions[vertices[i]][0], positions[vertices[i]][1], positions[vertices[j]][0], positions[vertices[j]][1],
                                            fill="red")
 
@@ -108,9 +108,9 @@ class Graph:
         if self.data is None:
             graph_as_string = "Graph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else '.') for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else ' .') for item in row]) for row in self.data])
         elif self.representation == "IM":
-            graph_as_string = "Incidence matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else '.') for item in row]) for row in self.data])
+            graph_as_string = "Incidence matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else ' .') for item in row]) for row in self.data])
         elif self.representation == "AL":
             graph_as_string = "Adjacency list of graph G:\n"
             i = 0

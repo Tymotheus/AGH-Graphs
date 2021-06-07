@@ -32,7 +32,7 @@ def dfs(graph, show_vertices_flow=False):
 
 def dfs_recursive(graph, n, v_component, v=0, component_number=1, show_vertices_flow=False):
     """Depth-First Search recursive function.
-        graph - Graph or Digraph object
+        graph - Graph or Digraph or WeightedGraph object
         n - number of vertices
         v_component - list of visited vertices:
             negative number means that vertex was now visited
@@ -45,7 +45,7 @@ def dfs_recursive(graph, n, v_component, v=0, component_number=1, show_vertices_
         if graph.representation != "AM":
             convert_graph_representation(graph, "AM")
         for u in range(n):
-            if graph.data[v][u]:
+            if graph.data[v][u] is not None:
                 if v_component[u] == -1:
                     if show_vertices_flow is True:
                         print(str(v+1) + " -> " + str(u+1))

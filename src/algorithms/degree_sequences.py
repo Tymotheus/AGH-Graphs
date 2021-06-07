@@ -54,7 +54,14 @@ def get_degree_sequence_from_graph(graph):
             if graph.representation != "AM":
                 convert_graph_representation(graph, "AM")
 
-            degree_seq_of_graph = [sum(elem) for elem in graph.data]
+            degree_seq_of_graph = []
+            for elem in graph.data:
+                v_degree = 0
+                for item in elem:
+                    if item is not None:
+                        v_degree += 1
+                degree_seq_of_graph.append(v_degree)
+
             seq.read_sequence_from_list(degree_seq_of_graph)
         return seq
     else:
@@ -72,7 +79,7 @@ def construct_graph_from_degree_sequence(sequence):
             n = len(sequence)
 
             graph.representation = "AM"
-            graph.data = [[0] * n for _ in range(n)]
+            graph.data = [[None] * n for _ in range(n)]
             v_and_d = [[i, sequence[i]] for i in range(n)]
 
             while True:

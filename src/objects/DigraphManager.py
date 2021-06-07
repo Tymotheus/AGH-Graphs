@@ -28,13 +28,12 @@ class DigraphManager:
             return
 
         dg = Digraph()
-        dg.data = [[0] * n for _ in range(n)]
+        dg.data = [[None] * n for _ in range(n)]
         for i in range(n):
             for j in range(n):
                 if random() <= p:
                     dg.data[i][j] = 1
-        for i in range(n):
-            dg.data[i][i] = 0
+            dg.data[i][i] = None
         if show_info is True:
             print("Random digraph has been created (Gilbert model: n = " + str(n) + ", p = " + "{:.3f}".format(p) + ").")
             print("Digraph represented by adjacency matrix.")
@@ -51,7 +50,7 @@ class DigraphManager:
 
         dg = Digraph()
         n = len(digraph.data)
-        dg.data = [[0] * n for _ in range(n)]
+        dg.data = [[None] * n for _ in range(n)]
 
         for i in range(n):
             for j in range(n):

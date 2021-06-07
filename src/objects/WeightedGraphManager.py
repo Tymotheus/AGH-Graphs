@@ -34,7 +34,7 @@ class WeightedGraphManager:
         n = len(wg.data)
         for i in range(1, n):
             for j in range(0, i):
-                if wg.data[i][j]:
+                if wg.data[i][j] is not None:
                     wg.data[i][j] = wg.data[j][i] = randint(w_min, w_max)
         return wg
 
@@ -52,6 +52,9 @@ class WeightedGraphManager:
         if m < n-1 or m > n*(n-1)/2:
             print("Random connected weighted graph cannot be created - number of edges should be between n-1 and n*(n-1)/2.")
             return
+
+        if n == 1:
+            return WeightedGraph()
 
         g = construct_connected_graph_edge_number(n, m)
         return WeightedGraphManager.make_weighted_graph_from_simple_graph(g, w_min, w_max)
@@ -71,6 +74,9 @@ class WeightedGraphManager:
         if p < 0.0 or p > 1.0:
             print("Random graph cannot be created - probability should be between 0 and 1.")
             return
+
+        if n == 1:
+            return WeightedGraph()
 
         g = construct_connected_graph_probability(n, p)
         return WeightedGraphManager.make_weighted_graph_from_simple_graph(g, w_min, w_max)
