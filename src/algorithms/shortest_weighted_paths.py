@@ -22,7 +22,7 @@ def dijkstra(wg, origin, show=False, weights=None):
     n = len(wg.data)
     for i in range(n):
         for j in range(n):
-            if w[i][j] < 0:
+            if w[i][j] is not None and w[i][j] < 0:
                 print("Cannot perform Dijkstra algorithm - passed weighted graph contains an edge with negative weight.")
                 return
 

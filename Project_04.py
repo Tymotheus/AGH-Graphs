@@ -12,9 +12,6 @@ dg1 = Digraph(file_path="example_data/proj4_digraph1.txt")
 dg1.draw()
 dg1 = Digraph(file_path="example_data/proj4_digraph2.txt")
 dg1.draw()
-print(dg1, '\n')
-for elem in dg1.data:
-    print(elem)
 
 # RANDOM DIGRAPH FROM G(n,p) MODEL
 dg2 = DigraphManager.make_random_digraph_probability(10, 0.3)

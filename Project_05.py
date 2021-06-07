@@ -28,7 +28,7 @@ fn3.draw()
 print("\n\n---------------------------------------- AD. 5.2 ----------------------------------------")
 
 # FORD-FULKERSON
-N = 4
+N = 3
 # fn_ff = FlowNetwork()
 # fn_ff = FlowNetwork('example_data/proj5_flow_network_ford_fulkerson.txt')
 fn_ff = FlowNetworkManager.construct_flow_network_edge_number(N, 2*N)

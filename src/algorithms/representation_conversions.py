@@ -10,7 +10,8 @@ def convert_from_AM_to_IM(graph):
     m = 0
     for i in range(1, n):  # i stands for a row
         for j in range(0, i):  # j stands for a column
-            m = m + graph.data[i][j]
+            if graph.data[i][j] is not None:
+                m += 1
     new_data = [[None] * m for _ in range(n)]
     m_index = 0
     for i in range(1, n):

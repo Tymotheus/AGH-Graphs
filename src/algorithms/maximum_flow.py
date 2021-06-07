@@ -57,7 +57,7 @@ def bfs_maximum_flow_augmenting_path(wd, n, p):
     while len(queue):
         v = queue.pop(0)
         for u in range(n):
-            if wd.data[v][u] is not None:
+            if wd.data[v][u]:
                 if d_s[u] is math.inf:
                     d_s[u] = d_s[v] + 1
                     p_s[u] = v

@@ -26,8 +26,8 @@ class WeightedGraph:
                 self.data = data
                 self.representation = representation
                 if show_info is True:
-                    print("Graph has been read from file.")
-                    print("Graph represented by " +
+                    print("Weighted graph has been read from file.")
+                    print("Weighted graph represented by " +
                           ("adjacency matrix." if self.representation == "AM"
                            else ("incidence matrix." if self.representation == "IM"
                                  else "adjacency list.")))
@@ -123,7 +123,7 @@ class WeightedGraph:
         if self.data is None:
             graph_as_string = "Weighted graph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of weighted graph WG:\n" + '\n'.join([''.join(['{:5}'.format(item if item is not None else ' .') for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of weighted graph WG:\n" + '\n'.join([''.join(['{:5}'.format(item if item is not None else '    .') for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe weighted graph - unknown representation."
         return graph_as_string

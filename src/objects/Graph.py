@@ -108,9 +108,9 @@ class Graph:
         if self.data is None:
             graph_as_string = "Graph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else '.') for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else ' .') for item in row]) for row in self.data])
         elif self.representation == "IM":
-            graph_as_string = "Incidence matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else '.') for item in row]) for row in self.data])
+            graph_as_string = "Incidence matrix of graph G:\n" + '\n'.join([''.join(['{:2}'.format(item if item is not None else ' .') for item in row]) for row in self.data])
         elif self.representation == "AL":
             graph_as_string = "Adjacency list of graph G:\n"
             i = 0
