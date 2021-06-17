@@ -105,11 +105,22 @@ The solutions use:
 3. FlowNetworkManager.py - allow to perform some operations connected with flow networks.
     * constructing random flow network using layers approach and Erdos-Renyi model;
     * constructing residual network of passed flow network.
-4. maximum_flow.py - allow to find maximum flow of flow network
+4. maximum_flow.py - allow to find maximum flow of flow network.
     * implementation of Ford-Fulkerson algorithm;
     * finding augmenting path (as a part of Ford-Fulkerson algorithm) in flow flow network using BFS.
 5. representation_checks.py - check correctness of flow network representation.
     * checking whether passed flow network data is correct (improved is_adjacency_matrix function)
 
 # PROJECT 6
-
+To run solutions of tasks from project it's enough to run the Project_06.py file.
+Example solutions of TSP problem (using implemented algorithm) are placed in tsp_results directory.
+The solutions use: 
+1. Some functionalities from previous projects described above.
+2. WeightedGraphManager.py - allow to perform some operations connected with weighted graphs.
+    * added constructing weighted graph from metric data;
+3. traveling_salesman_problem.py - allow to find TSP solution.
+    * getting length of cycle in weighted graph
+    * perform 2-opt algorithm on weighted graph
+    * perform simulated annealing algorithm on weighted graph
+    * implementation of Metropolis–Hastings algorithm using 2-opt and simulated annealing to find TSP solution
+    * saving found TSP solution as a diagram to a .png file

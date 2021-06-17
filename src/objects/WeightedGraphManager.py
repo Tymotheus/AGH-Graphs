@@ -1,11 +1,11 @@
 import copy
+import math
 
 from random import randint
 
 from src.objects.Graph import Graph
 from src.objects.WeightedGraph import WeightedGraph
 from src.algorithms.representation_conversions import convert_graph_representation
-from src.algorithms.connectivity import is_graph_connected
 from src.algorithms.connectivity import construct_connected_graph_edge_number, construct_connected_graph_probability
 
 
@@ -82,10 +82,24 @@ class WeightedGraphManager:
         return WeightedGraphManager.make_weighted_graph_from_simple_graph(g, w_min, w_max)
 
     @staticmethod
-    def read_from_file(path):
-        """Creating weighted graph by reading adjacency matrix from file."""
-        wg = WeightedGraph(path)
-        if is_graph_connected(wg):
-            return wg
+    def construct_complete_weighted_graph_from_grid_data(file_path=None):
+        """
+        Creates a complete weighted graph from metric data, that is:
+            1. vertices in file are described in two columns representing vertices' X and Y positions on a grid
+            2. each vertex should be described in one row
+            3. weight of and edge between two vertices is Euclidean distance between them
+        :param file_path: path to file with graph data. If not passed, the basic WeightedGraph object will be created.
+        :return: WeightedGraph object of complete weighted graph represented by adjacency matrix
+        """
+        cwg = WeightedGraph()
+        if file_path is None:
+            print("No file was passed.")
         else:
-            print("Graph read from file is not connected ")
+            with open(file_path, 'r') as f:
+                data = [[float(val) for val in line.split()] if line != '\n' else [] for line in f]
+            n = len(data)
+            cwg.data = [[None] * n for _ in range(n)]
+            for i in range(1, n):
+                for j in range(0, i):
+                    cwg.data[i][j] = cwg.data[j][i] = math.sqrt(float(data[i][0] - data[j][0]) ** 2 + float(data[i][1] - data[j][1]) ** 2)
+        return cwg

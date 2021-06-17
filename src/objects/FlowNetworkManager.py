@@ -81,7 +81,7 @@ class FlowNetworkManager:
                     second_layer_cpy = deepcopy(second_layer)
 
         if bonus_arcs:
-            bonus_arcs_indexes = []
+            # bonus_arcs_indexes = []
             if bonus_arcs >= max_num_of_arcs:
                 bonus_arcs = int(max_num_of_arcs)
                 bonus_arcs_indexes = [i for i in range(bonus_arcs)]

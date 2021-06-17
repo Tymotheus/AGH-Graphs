@@ -107,33 +107,33 @@ print(hamiltonian_cycle_of_g6)
 g6.draw()
 
 # BONUS - COMPARING NORMAL METHOD AND OPTIMIZED ONE
-# time_of_normal_version = time_of_optimized_version = 0.0
-# number_of_tests = 100
-# number_of_better_normal_version_tests = 0
-#
-# tests_start_time = time.time()
-# for i in range(number_of_tests):
-#     g6 = GraphManager.make_random_graph_probability(randint(75, 100), uniform(0.5, 0.75), show_info=False)
-#     print("TEST " + str(i+1) + " / " + str(number_of_tests))
-#
-#     time_before_normal_version = time.time()
-#     hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=False)
-#     time_after_normal_version = time.time()
-#     time_of_normal_version += time_after_normal_version - time_before_normal_version
-#
-#     time_before_optimized_version = time.time()
-#     hamiltonian_cycle_of_g6_opt = get_hamiltonian_cycle_of_graph_optimized(g6, show_cycle=False)
-#     time_after_optimized_version = time.time()
-#     time_of_optimized_version += time_after_optimized_version - time_before_optimized_version
-#
-#     if (time_after_normal_version - time_before_normal_version) < (time_after_optimized_version - time_before_optimized_version):
-#         number_of_better_normal_version_tests += 1
-# tests_finish_time = time.time()
-#
-# average_time_of_normal_version = time_of_normal_version / number_of_tests
-# average_time_of_optimized_version = time_of_optimized_version / number_of_tests
-# print("Testing elapsed: ", tests_finish_time-tests_start_time)
-# print("On average normal version elapsed: ", average_time_of_normal_version)
-# print("On average optimized version elapsed: ", average_time_of_optimized_version)
-# print("Elapsed time ratio (normal version to optimized version): " + "{:.3f}".format(average_time_of_normal_version / average_time_of_optimized_version))
-# print("Normal version was faster in " + str(number_of_better_normal_version_tests) + " tests out of " + str(number_of_tests) + ".")
+time_of_normal_version = time_of_optimized_version = 0.0
+number_of_tests = 100
+number_of_better_normal_version_tests = 0
+
+tests_start_time = time.time()
+for i in range(number_of_tests):
+    g6 = GraphManager.make_random_graph_probability(randint(75, 100), uniform(0.5, 0.75), show_info=False)
+    print("TEST " + str(i+1) + " / " + str(number_of_tests))
+
+    time_before_normal_version = time.time()
+    hamiltonian_cycle_of_g6 = get_hamiltonian_cycle_of_graph(g6, show_cycle=False)
+    time_after_normal_version = time.time()
+    time_of_normal_version += time_after_normal_version - time_before_normal_version
+
+    time_before_optimized_version = time.time()
+    hamiltonian_cycle_of_g6_opt = get_hamiltonian_cycle_of_graph_optimized(g6, show_cycle=False)
+    time_after_optimized_version = time.time()
+    time_of_optimized_version += time_after_optimized_version - time_before_optimized_version
+
+    if (time_after_normal_version - time_before_normal_version) < (time_after_optimized_version - time_before_optimized_version):
+        number_of_better_normal_version_tests += 1
+tests_finish_time = time.time()
+
+average_time_of_normal_version = time_of_normal_version / number_of_tests
+average_time_of_optimized_version = time_of_optimized_version / number_of_tests
+print("Testing elapsed: ", tests_finish_time-tests_start_time)
+print("On average normal version elapsed: ", average_time_of_normal_version)
+print("On average optimized version elapsed: ", average_time_of_optimized_version)
+print("Elapsed time ratio (normal version to optimized version): " + "{:.3f}".format(average_time_of_normal_version / average_time_of_optimized_version))
+print("Normal version was faster in " + str(number_of_better_normal_version_tests) + " tests out of " + str(number_of_tests) + ".")

@@ -1,8 +1,6 @@
-from random import random, sample, uniform
+from random import random
 
 from src.objects.Digraph import Digraph
-
-from src.algorithms.representation_conversions import convert_graph_representation
 
 
 class DigraphManager:

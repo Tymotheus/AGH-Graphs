@@ -1,5 +1,6 @@
 import tkinter as tk
 import math
+from decimal import Decimal
 
 from src.algorithms.representation_checks import *
 
@@ -123,7 +124,7 @@ class WeightedGraph:
         if self.data is None:
             graph_as_string = "Weighted graph is empty (no data)."
         elif self.representation == 'AM':
-            graph_as_string = "Adjacency matrix of weighted graph WG:\n" + '\n'.join([''.join(['{:5}'.format(item if item is not None else '    .') for item in row]) for row in self.data])
+            graph_as_string = "Adjacency matrix of weighted graph WG:\n" + '\n'.join([''.join(["{:10}".format(Decimal(item).quantize(Decimal('0.01')) if item is not None else '         .') for item in row]) for row in self.data])
         else:
             graph_as_string = "Cannot describe weighted graph - unknown representation."
         return graph_as_string
