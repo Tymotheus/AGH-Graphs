@@ -9,6 +9,7 @@ def kosaraju(dg):
     Implementation of Kosaraju algorithm on a Digraph object.
     :param dg: Digraph object
     :return: list of lists of vertices in the same strong component
+        Vertices are numbered from 1 for visualisation purposes.
     """
     if not isinstance(dg, Digraph):
         print("Passed argument is not a digraph.")
@@ -36,7 +37,7 @@ def kosaraju(dg):
 
     vertices_in_comps = [[] for _ in range(max(comp))]
     for i in range(n):
-        vertices_in_comps[comp[i]-1].append(i)
+        vertices_in_comps[comp[i]-1].append(i+1)
 
     return vertices_in_comps
 
@@ -136,6 +137,10 @@ def dfs_tarjan(graph, n, i, start_time, t, low):
 def construct_strongly_connected_digraph(n, p, show_info=True):
     """
     Function creating strongly connected digraph.
+        Firstly function creates random strongly connected digraph using Tarjan algorithm.
+        Then it adds bonus arcs using Gilbert G(n,p) model on the non-existing arcs.
+        On average, obtained digraph is composed of more than n*(n-1)*p arcs, which is the average number of arcs for random digraphs in Gilbert G(n,p) model.
+        To obtain just strongly connected digraph it is enough to pass p=0 to the function.
     :param n: order of digraph
     :param p: probability of edge existence
     :param show_info: boolean whether to show creating information or not
@@ -176,8 +181,8 @@ def construct_strongly_connected_digraph(n, p, show_info=True):
 
     for i in range(n):
         for j in range(n):
-            if not dg.data[i][j]:
-                if random() <= p:
+            if dg.data[i][j] is None:
+                if random() < p:
                     dg.data[i][j] = 1
         dg.data[i][i] = None
 

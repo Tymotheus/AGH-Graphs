@@ -40,6 +40,7 @@ class WeightedDigraphManager:
     @staticmethod
     def construct_strongly_connected_weighted_digraph_probability(n, p, w_min=1, w_max=10):
         """Creates and returns a strongly connected weighted digraph of order n and probability of arc existence equal to p.
+        The digraph D(V,A) is constructed using construct_strongly_connected_digraph function.
         It's weights are defined by passed arguments.
             n - number of vertices (should be greater than 0)
             p - probability with which each arc occurs independently (should be between 0 and 1)
